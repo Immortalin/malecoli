@@ -1,18 +1,18 @@
-;;;; 2008-08-21 09:30:59
+;;;; 2008-08-21 11:50:25
 
-(defpackage #:mlcl-dataset-asd
+(defpackage #:mlcl-cbr-asd
   (:use :cl :asdf))
 
-(in-package :mlcl-dataset-asd)
+(in-package :mlcl-cbr-asd)
 
-(defsystem mlcl-dataset
-  :name "mlcl-dataset"
+(defsystem mlcl-cbr
+  :name "mlcl-cbr"
   :version "0.1"
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
                (:module kb
                	:components
-	        	((:file "dataset-kb" :depends-on ()))
+	        	((:file "cbr-kb" :depends-on ()))
                  :depends-on ("package")))
-  :depends-on ("mlcl-kb"))
+  :depends-on ("mlcl-kb" "mlcl-dataset"))
