@@ -13,6 +13,13 @@
 	        	((:file "defpackage" :depends-on ())))
                (:module kb
                	:components
-	        	((:file "neg-kb" :depends-on ()))
-                 :depends-on ("package")))
+	        	((:file "negotiation-kb" :depends-on ())
+	        	 (:file "onenegotiation-kb" :depends-on ("negotiation-kb"))
+	        	 (:file "gare-kb" :depends-on ("negotiation-kb"))	
+  	        	 (:file "gare-instances-kb" :depends-on ("gare-kb" "negotiation-kb")))
+                 :depends-on ("package"))
+               (:module gare
+               	:components
+	        	((:file "gare2protege" :depends-on ()))
+                 :depends-on ("package" "kb")))
   :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr"))

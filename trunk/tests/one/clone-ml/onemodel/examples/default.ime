@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:negmod="http://NegotiationMetaModel_v1.3.1.ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation">
+  <negmod:InformationModel xmi:id="_SXSOIAYYEd2KdaUe8A-FLw" id="not-defined" name="" root="" ancestor="" mmVersion="1.3.1" version="" subject="" description="" isDynamic="false" isAllowedToParticipant="false">
+    <primitiveType xmi:type="negmod:OneBoolean" xmi:id="_SXSOIQYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneByte" xmi:id="_SXSOIgYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneChar" xmi:id="_SXSOIwYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneDate" xmi:id="_SXSOJAYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneDouble" xmi:id="_SXSOJQYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneFloat" xmi:id="_SXSOJgYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneInteger" xmi:id="_SXSOJwYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneLong" xmi:id="_SXSOKAYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneShort" xmi:id="_SXSOKQYYEd2KdaUe8A-FLw"/>
+    <primitiveType xmi:type="negmod:OneString" xmi:id="_SXSOKgYYEd2KdaUe8A-FLw"/>
+    <complexType xmi:type="negmod:OneAmount" xmi:id="_SXSOKwYYEd2KdaUe8A-FLw"/>
+    <complexType xmi:type="negmod:OneCurrency" xmi:id="_SXSOLAYYEd2KdaUe8A-FLw"/>
+    <complexType xmi:type="negmod:OneImage" xmi:id="_SXSOLQYYEd2KdaUe8A-FLw" mimeType=""/>
+    <complexType xmi:type="negmod:OneBinaryDocument" xmi:id="_SXSOLgYYEd2KdaUe8A-FLw" mimeType=""/>
+    <complexType xmi:type="negmod:OneXmlDocuemnt" xmi:id="_SXSOLwYYEd2KdaUe8A-FLw"/>
+  </negmod:InformationModel>
+  <notation:Diagram xmi:id="_SXSOMAYYEd2KdaUe8A-FLw" visible="true" type="Information Model" element="_SXSOIAYYEd2KdaUe8A-FLw" name="default.ime" measurementUnit="Pixel">
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_SXSOMQYYEd2KdaUe8A-FLw" pageX="0" pageY="0" pageWidth="100" pageHeight="100" description=""/>
+  </notation:Diagram>
+</xmi:XMI>

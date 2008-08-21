@@ -5,7 +5,7 @@
 
 (defpackage :clone-ml
   (:nicknames :clone-ml)
-  (:use :cl)
+  (:use :cl :mlcl-kb)
   (:export
   
    ;; Exported symbols go here
