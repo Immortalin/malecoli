@@ -5,7 +5,15 @@
 
 (progn
   (defvar *cbr-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
+  (eval-when (:COMPILE-TOPLEVEL)
+    (if (null (boundp '*cbr-kb-pathname*))
+        (setq *cbr-kb-pathname*            
+              #-sbcl (merge-pathnames
+                      (make-pathname
+                       :name "cbr" :type "xml" :case :local)
+                      *compile-file-truename*)
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-cbr/kb/cbr.xml")))
+  (eval-when (:LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*cbr-kb-pathname*))
         (setq *cbr-kb-pathname*            
               #-sbcl (merge-pathnames
@@ -14,10 +22,10 @@
                       *load-truename*)
               #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-cbr/kb/cbr.xml"))))
 
-(mlcl-kb:def-kb "CBR-KB" :protege-file *cbr-kb-pathname*)
+(mlcl-kb:def-kb "CBR-KB"
+                :use (list mlcl-kbs::PROTEGE-KB) 
+                :protege-file *cbr-kb-pathname*)
 
 (mlcl-kb:in-kb "CBR-KB")
-
-(mlcl-kb:use-kb mlcl-kbs::PROTEGE-KB)
 
 (mlcl-kb:def-cls-ref "cbr_case")
