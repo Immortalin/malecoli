@@ -21,5 +21,10 @@
                (:module gare
                	:components
 	        	((:file "gare2protege" :depends-on ()))
+                 :depends-on ("package" "kb"))
+               (:module onemodel
+               	:components
+	        	((:file "model" :depends-on ())
+	        	 (:file "model2protege" :depends-on ("model")))
                  :depends-on ("package" "kb")))
-  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr"))
+  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr" "cl-xmlspam"))

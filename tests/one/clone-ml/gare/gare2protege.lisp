@@ -8,7 +8,7 @@
    (make-pathname
     :directory '(:relative "data" "lisp")
     :name fn :type "l" :case :local)
-   #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare"))
+   #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/"))
 
 (defun generate-gare-instances ()
   (mlcl-kb:kb-clear mlcl-kbs::gare-instances-kb)
