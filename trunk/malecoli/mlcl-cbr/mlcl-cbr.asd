@@ -14,5 +14,9 @@
                (:module kb
                	:components
 	        	((:file "cbr-kb" :depends-on ()))
-                 :depends-on ("package")))
+                 :depends-on ("package"))
+               (:module cbr
+               	:components
+	        	((:file "cbr" :depends-on ()))
+                 :depends-on ("package" "kb")))
   :depends-on ("mlcl-kb" "mlcl-dataset"))
