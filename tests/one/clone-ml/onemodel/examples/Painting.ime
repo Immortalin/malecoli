@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:negmod="http://NegotiationMetaModel_v1.3.1.ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation">
+  <negmod:InformationModel xmi:id="_c8KGEPvbEdywltH1xGbGYw" id="not-defined" name="Painting" root="" ancestor="" mmVersion="1.3.1" version="" subject="" description="" isDynamic="false" isAllowedToParticipant="false">
+    <item xmi:type="negmod:Item" xmi:id="_dq8esPvbEdywltH1xGbGYw" id="" name="Painting" score="" isStatic="true" isFinal="true">
+      <attribute xmi:type="negmod:Attribute" xmi:id="_gq3zgPvbEdywltH1xGbGYw" name="subject" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_HHzMcPvcEdywltH1xGbGYw" name="style" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_LUUQMPvcEdywltH1xGbGYw" name="painter" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_9y42EPvcEdywltH1xGbGYw" name="description" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_QzRWwPvdEdywltH1xGbGYw" name="creationDate" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGFPvbEdywltH1xGbGYw" value="" kindOf="Date"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_V_tmcPvdEdywltH1xGbGYw" name="isOriginal" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGEfvbEdywltH1xGbGYw" value="" kindOf="Boolean"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_YJsxwPvdEdywltH1xGbGYw" name="medium" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_aKmSgPvdEdywltH1xGbGYw" name="picture" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGHfvbEdywltH1xGbGYw" value="" kindOf="Image"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_eea4IPvdEdywltH1xGbGYw" name="condition" isMandatory="false" isConstant="false" isStatic="true" type="_rn4owPvdEdywltH1xGbGYw" value="" kindOf="conditions"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_uIXogPvdEdywltH1xGbGYw" name="framingStyle" isMandatory="false" isConstant="false" isStatic="true" type="_1knXoPvdEdywltH1xGbGYw" value="" kindOf="frame"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_20fEEPvdEdywltH1xGbGYw" name="frameWidth" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGF_vbEdywltH1xGbGYw" value="" kindOf="Integer"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_5h7hwPvdEdywltH1xGbGYw" name="frameHeight" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGF_vbEdywltH1xGbGYw" value="" kindOf="Integer"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_9WweQPvdEdywltH1xGbGYw" name="imageWidth" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGF_vbEdywltH1xGbGYw" value="" kindOf="Integer"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="__Y_bwPvdEdywltH1xGbGYw" name="imageHeight" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGF_vbEdywltH1xGbGYw" value="" kindOf="Integer"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_DkUzwPveEdywltH1xGbGYw" name="shippingCost" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGGvvbEdywltH1xGbGYw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_GTQfMPveEdywltH1xGbGYw" name="certificate" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGHvvbEdywltH1xGbGYw" value="" kindOf="BinaryDocument"/>
+      <issue xmi:type="negmod:Issue" xmi:id="_LrUwEPveEdywltH1xGbGYw" id="" name="Price" score="" weight="">
+        <attribute xmi:type="negmod:Attribute" xmi:id="_VRs0cPveEdywltH1xGbGYw" name="amount" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGG_vbEdywltH1xGbGYw" value="" kindOf="Amount"/>
+        <attribute xmi:type="negmod:Attribute" xmi:id="_XzO9EPveEdywltH1xGbGYw" name="currency" isMandatory="false" isConstant="false" isStatic="true" type="_c8KGHPvbEdywltH1xGbGYw" value="" kindOf="Currency"/>
+      </issue>
+    </item>
+    <primitiveType xmi:type="negmod:OneBoolean" xmi:id="_c8KGEfvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneByte" xmi:id="_c8KGEvvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneChar" xmi:id="_c8KGE_vbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneDate" xmi:id="_c8KGFPvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneDouble" xmi:id="_c8KGFfvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneFloat" xmi:id="_c8KGFvvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneInteger" xmi:id="_c8KGF_vbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneLong" xmi:id="_c8KGGPvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneShort" xmi:id="_c8KGGfvbEdywltH1xGbGYw"/>
+    <primitiveType xmi:type="negmod:OneString" xmi:id="_c8KGGvvbEdywltH1xGbGYw"/>
+    <complexType xmi:type="negmod:OneAmount" xmi:id="_c8KGG_vbEdywltH1xGbGYw"/>
+    <complexType xmi:type="negmod:OneCurrency" xmi:id="_c8KGHPvbEdywltH1xGbGYw"/>
+    <complexType xmi:type="negmod:OneImage" xmi:id="_c8KGHfvbEdywltH1xGbGYw" mimeType=""/>
+    <complexType xmi:type="negmod:OneBinaryDocument" xmi:id="_c8KGHvvbEdywltH1xGbGYw" mimeType=""/>
+    <complexType xmi:type="negmod:OneXmlDocuemnt" xmi:id="_c8KGH_vbEdywltH1xGbGYw"/>
+    <enumeration xmi:type="negmod:Enumeration" xmi:id="_rn4owPvdEdywltH1xGbGYw" name="conditions">
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_rn4owfvdEdywltH1xGbGYw" name="perfect"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_rn4owvvdEdywltH1xGbGYw" name="good"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_rn4ow_vdEdywltH1xGbGYw" name="fair"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_rn4oxPvdEdywltH1xGbGYw" name="bad"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_rn4oxfvdEdywltH1xGbGYw" name="ruined"/>
+    </enumeration>
+    <enumeration xmi:type="negmod:Enumeration" xmi:id="_1knXoPvdEdywltH1xGbGYw" name="frame">
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_1knXofvdEdywltH1xGbGYw" name="rigid"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_1knXovvdEdywltH1xGbGYw" name="no frame"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_1knXo_vdEdywltH1xGbGYw" name="big frame"/>
+    </enumeration>
+  </negmod:InformationModel>
+  <notation:Diagram xmi:id="_c8dBAPvbEdywltH1xGbGYw" visible="true" type="Information Model" element="_c8KGEPvbEdywltH1xGbGYw" name="ParkingInformationModel.ime" measurementUnit="Pixel">
+    <children xmi:type="notation:Node" xmi:id="_dtxwQPvbEdywltH1xGbGYw" visible="true" type="1001" element="_dq8esPvbEdywltH1xGbGYw">
+      <children xmi:type="notation:Node" xmi:id="_dtxwQ_vbEdywltH1xGbGYw" visible="true" type="4003"/>
+      <children xmi:type="notation:Node" xmi:id="_dtxwRPvbEdywltH1xGbGYw" visible="true" type="5001">
+        <children xmi:type="notation:Node" xmi:id="_gq3zgfvbEdywltH1xGbGYw" visible="true" type="2001" element="_gq3zgPvbEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_gq3zgvvbEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_HH89cPvcEdywltH1xGbGYw" visible="true" type="2001" element="_HHzMcPvcEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_HH89cfvcEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_LUUQMfvcEdywltH1xGbGYw" visible="true" type="2001" element="_LUUQMPvcEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_LUUQMvvcEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_9y42EfvcEdywltH1xGbGYw" visible="true" type="2001" element="_9y42EPvcEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_9y42EvvcEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_QzRWwfvdEdywltH1xGbGYw" visible="true" type="2001" element="_QzRWwPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_QzRWwvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_V_tmcfvdEdywltH1xGbGYw" visible="true" type="2001" element="_V_tmcPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_V_tmcvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_YJsxwfvdEdywltH1xGbGYw" visible="true" type="2001" element="_YJsxwPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_YJsxwvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_aKmSgfvdEdywltH1xGbGYw" visible="true" type="2001" element="_aKmSgPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_aKmSgvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_eekCEPvdEdywltH1xGbGYw" visible="true" type="2001" element="_eea4IPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_eekCEfvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_uIXogfvdEdywltH1xGbGYw" visible="true" type="2001" element="_uIXogPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_uIXogvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_20fEEfvdEdywltH1xGbGYw" visible="true" type="2001" element="_20fEEPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_20fEEvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_5h7hwfvdEdywltH1xGbGYw" visible="true" type="2001" element="_5h7hwPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_5h7hwvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_9WweQfvdEdywltH1xGbGYw" visible="true" type="2001" element="_9WweQPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_9WweQvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="__Y_bwfvdEdywltH1xGbGYw" visible="true" type="2001" element="__Y_bwPvdEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="__Y_bwvvdEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_DkUzwfveEdywltH1xGbGYw" visible="true" type="2001" element="_DkUzwPveEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_DkUzwvveEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_GTQfMfveEdywltH1xGbGYw" visible="true" type="2001" element="_GTQfMPveEdywltH1xGbGYw">
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_GTQfMvveEdywltH1xGbGYw" x="0" y="0"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_dtxwRfvbEdywltH1xGbGYw" showTitle="true"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_dtxwRvvbEdywltH1xGbGYw" sorting="None"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_dtxwR_vbEdywltH1xGbGYw" filtering="None"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_dtxwSPvbEdywltH1xGbGYw" visible="true" type="5002">
+        <children xmi:type="notation:Node" xmi:id="_LrUwEfveEdywltH1xGbGYw" visible="true" type="2002" element="_LrUwEPveEdywltH1xGbGYw">
+          <children xmi:type="notation:Node" xmi:id="_LrehEPveEdywltH1xGbGYw" visible="true" type="4002"/>
+          <children xmi:type="notation:Node" xmi:id="_LrehEfveEdywltH1xGbGYw" visible="true" type="5003">
+            <children xmi:type="notation:Node" xmi:id="_VR2lcPveEdywltH1xGbGYw" visible="true" type="2003" element="_VRs0cPveEdywltH1xGbGYw">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_VR2lcfveEdywltH1xGbGYw" x="0" y="0"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_XzO9EfveEdywltH1xGbGYw" visible="true" type="2003" element="_XzO9EPveEdywltH1xGbGYw">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_XzO9EvveEdywltH1xGbGYw" x="0" y="0"/>
+            </children>
+            <styles xmi:type="notation:TitleStyle" xmi:id="_LrehEvveEdywltH1xGbGYw" showTitle="true"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_LrehE_veEdywltH1xGbGYw" sorting="None"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_LrehFPveEdywltH1xGbGYw" filtering="None"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_LrehFfveEdywltH1xGbGYw" visible="true" type="5004">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_LrehFvveEdywltH1xGbGYw" showTitle="true"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_LrehF_veEdywltH1xGbGYw" sorting="None"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_LrehGPveEdywltH1xGbGYw" filtering="None"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_LrUwEvveEdywltH1xGbGYw" fontColor="0" fontName="Tahoma" fontHeight="9" bold="false" italic="false" underline="false" strikeThrough="false" description="" fillColor="16777215" lineColor="11579568"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LrUwE_veEdywltH1xGbGYw" x="43" y="11" width="157" height="113"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_dtxwSfvbEdywltH1xGbGYw" showTitle="true"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_dtxwSvvbEdywltH1xGbGYw" sorting="None"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_dtxwS_vbEdywltH1xGbGYw" filtering="None"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_dtxwQfvbEdywltH1xGbGYw" fontColor="0" fontName="Tahoma" fontHeight="9" bold="false" italic="false" underline="false" strikeThrough="false" description="" fillColor="16777215" lineColor="11579568"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dtxwQvvbEdywltH1xGbGYw" x="24" y="12" width="375" height="421"/>
+    </children>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_c8dBAfvbEdywltH1xGbGYw" pageX="0" pageY="0" pageWidth="100" pageHeight="100" description=""/>
+  </notation:Diagram>
+</xmi:XMI>

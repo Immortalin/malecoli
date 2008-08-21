@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:negmod="http://NegotiationMetaModel_v1.3.1.ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation">
+  <negmod:NegotiationModel xmi:id="_W23HAAb4Ed2hH78qlvnLGw" id="not-defined" name="" root="" ancestor="" mmVersion="1.3.1" version="" subject="" description="">
+    <negotiation xmi:type="negmod:Negotiation" xmi:id="_W23HAQb4Ed2hH78qlvnLGw">
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HAgb4Ed2hH78qlvnLGw" name="id" isMandatory="false" isConstant="false" isStatic="true" type="_W23HPgb4Ed2hH78qlvnLGw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HAwb4Ed2hH78qlvnLGw" name="creationDate" isMandatory="false" isConstant="false" isStatic="true" type="_W23HOAb4Ed2hH78qlvnLGw" value="" kindOf="Date"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HBAb4Ed2hH78qlvnLGw" name="name" isMandatory="false" isConstant="false" isStatic="true" type="_W23HPgb4Ed2hH78qlvnLGw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HBQb4Ed2hH78qlvnLGw" name="visibility" isMandatory="false" isConstant="false" isStatic="true" type="_W23HRAb4Ed2hH78qlvnLGw" value="" kindOf="VisibilityKind"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HBgb4Ed2hH78qlvnLGw" name="parentId" isMandatory="false" isConstant="false" isStatic="true" type="_W23HPgb4Ed2hH78qlvnLGw" value="" kindOf="String"/>
+      <attribute xmi:type="negmod:Attribute" xmi:id="_W23HBwb4Ed2hH78qlvnLGw" name="allowNested" isMandatory="false" isConstant="false" isStatic="true" type="_W23HNQb4Ed2hH78qlvnLGw" value="" kindOf="Boolean"/>
+      <negotiationProtocol xmi:type="negmod:NegotiationProtocol" xmi:id="_W23HCAb4Ed2hH78qlvnLGw" id="" name="" startDate="1970-01-01T03:00:00.000+0300" endDate="1970-01-01T03:00:00.000+0300">
+        <negotiationRole xmi:type="negmod:Owner" xmi:id="_W23HCQb4Ed2hH78qlvnLGw">
+          <protocolBehaviour xmi:type="negmod:ProtocolBehaviour" xmi:id="_W23HCgb4Ed2hH78qlvnLGw" id="Owner">
+            <initialStage xmi:type="negmod:InitialStage" xmi:id="_W23HCwb4Ed2hH78qlvnLGw" outgoing="_W23HEwb4Ed2hH78qlvnLGw"/>
+            <admission xmi:type="negmod:Admission" xmi:id="_W23HDAb4Ed2hH78qlvnLGw" incoming="_W23HEwb4Ed2hH78qlvnLGw" outgoing="_W23HFAb4Ed2hH78qlvnLGw" name="Admission"/>
+            <readiness xmi:type="negmod:Readiness" xmi:id="_W23HDQb4Ed2hH78qlvnLGw" incoming="_W23HFAb4Ed2hH78qlvnLGw" outgoing="_W23HFQb4Ed2hH78qlvnLGw" name="Readiness"/>
+            <negotiating xmi:type="negmod:Negotiating" xmi:id="_W23HDgb4Ed2hH78qlvnLGw" incoming="_W23HFQb4Ed2hH78qlvnLGw" outgoing="_W23HFgb4Ed2hH78qlvnLGw" name="Negotiating"/>
+            <acceptance xmi:type="negmod:Acceptance" xmi:id="_W23HDwb4Ed2hH78qlvnLGw" incoming="_W23HFgb4Ed2hH78qlvnLGw" outgoing="_W23HFwb4Ed2hH78qlvnLGw _W23HGAb4Ed2hH78qlvnLGw _W23HGQb4Ed2hH78qlvnLGw" name="Acceptance"/>
+            <finalStage xmi:type="negmod:Agreed" xmi:id="_W23HEAb4Ed2hH78qlvnLGw" incoming="_W23HFwb4Ed2hH78qlvnLGw"/>
+            <finalStage xmi:type="negmod:NotAgreed" xmi:id="_W23HEQb4Ed2hH78qlvnLGw" incoming="_W23HGAb4Ed2hH78qlvnLGw"/>
+            <finalStage xmi:type="negmod:Cancelled" xmi:id="_W23HEgb4Ed2hH78qlvnLGw" incoming="_W23HGQb4Ed2hH78qlvnLGw"/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HEwb4Ed2hH78qlvnLGw" name="" source="_W23HCwb4Ed2hH78qlvnLGw" target="_W23HDAb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HFAb4Ed2hH78qlvnLGw" name="" source="_W23HDAb4Ed2hH78qlvnLGw" target="_W23HDQb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HFQb4Ed2hH78qlvnLGw" name="" source="_W23HDQb4Ed2hH78qlvnLGw" target="_W23HDgb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HFgb4Ed2hH78qlvnLGw" name="" source="_W23HDgb4Ed2hH78qlvnLGw" target="_W23HDwb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HFwb4Ed2hH78qlvnLGw" name="" source="_W23HDwb4Ed2hH78qlvnLGw" target="_W23HEAb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HGAb4Ed2hH78qlvnLGw" name="" source="_W23HDwb4Ed2hH78qlvnLGw" target="_W23HEQb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HGQb4Ed2hH78qlvnLGw" name="" source="_W23HDwb4Ed2hH78qlvnLGw" target="_W23HEgb4Ed2hH78qlvnLGw" label=""/>
+          </protocolBehaviour>
+        </negotiationRole>
+        <negotiationRole xmi:type="negmod:Participant" xmi:id="_W23HGgb4Ed2hH78qlvnLGw">
+          <protocolBehaviour xmi:type="negmod:ProtocolBehaviour" xmi:id="_W23HGwb4Ed2hH78qlvnLGw" id="Participant">
+            <initialStage xmi:type="negmod:InitialStage" xmi:id="_W23HHAb4Ed2hH78qlvnLGw" outgoing="_W23HJAb4Ed2hH78qlvnLGw"/>
+            <admission xmi:type="negmod:Admission" xmi:id="_W23HHQb4Ed2hH78qlvnLGw" incoming="_W23HJAb4Ed2hH78qlvnLGw" outgoing="_W23HJQb4Ed2hH78qlvnLGw" name="Admission"/>
+            <readiness xmi:type="negmod:Readiness" xmi:id="_W23HHgb4Ed2hH78qlvnLGw" incoming="_W23HJQb4Ed2hH78qlvnLGw" outgoing="_W23HJgb4Ed2hH78qlvnLGw" name="Readiness"/>
+            <negotiating xmi:type="negmod:Negotiating" xmi:id="_W23HHwb4Ed2hH78qlvnLGw" incoming="_W23HJgb4Ed2hH78qlvnLGw" outgoing="_W23HJwb4Ed2hH78qlvnLGw" name="Negotiating"/>
+            <acceptance xmi:type="negmod:Acceptance" xmi:id="_W23HIAb4Ed2hH78qlvnLGw" incoming="_W23HJwb4Ed2hH78qlvnLGw" outgoing="_W23HKAb4Ed2hH78qlvnLGw _W23HKQb4Ed2hH78qlvnLGw _W23HKgb4Ed2hH78qlvnLGw" name="Acceptance"/>
+            <finalStage xmi:type="negmod:Agreed" xmi:id="_W23HIQb4Ed2hH78qlvnLGw" incoming="_W23HKAb4Ed2hH78qlvnLGw"/>
+            <finalStage xmi:type="negmod:NotAgreed" xmi:id="_W23HIgb4Ed2hH78qlvnLGw" incoming="_W23HKQb4Ed2hH78qlvnLGw"/>
+            <finalStage xmi:type="negmod:Cancelled" xmi:id="_W23HIwb4Ed2hH78qlvnLGw" incoming="_W23HKgb4Ed2hH78qlvnLGw"/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HJAb4Ed2hH78qlvnLGw" name="" source="_W23HHAb4Ed2hH78qlvnLGw" target="_W23HHQb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HJQb4Ed2hH78qlvnLGw" name="" source="_W23HHQb4Ed2hH78qlvnLGw" target="_W23HHgb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HJgb4Ed2hH78qlvnLGw" name="" source="_W23HHgb4Ed2hH78qlvnLGw" target="_W23HHwb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HJwb4Ed2hH78qlvnLGw" name="" source="_W23HHwb4Ed2hH78qlvnLGw" target="_W23HIAb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HKAb4Ed2hH78qlvnLGw" name="" source="_W23HIAb4Ed2hH78qlvnLGw" target="_W23HIQb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HKQb4Ed2hH78qlvnLGw" name="" source="_W23HIAb4Ed2hH78qlvnLGw" target="_W23HIgb4Ed2hH78qlvnLGw" label=""/>
+            <transition xmi:type="negmod:Transition" xmi:id="_W23HKgb4Ed2hH78qlvnLGw" name="" source="_W23HIAb4Ed2hH78qlvnLGw" target="_W23HIwb4Ed2hH78qlvnLGw" label=""/>
+          </protocolBehaviour>
+        </negotiationRole>
+        <negotiationMessage xmi:type="negmod:Information" xmi:id="_W23HKwb4Ed2hH78qlvnLGw" id="" name="Information"/>
+        <negotiationMessage xmi:type="negmod:RequestForInformation" xmi:id="_W23HLAb4Ed2hH78qlvnLGw" id="" name="Request for Information"/>
+        <negotiationMessage xmi:type="negmod:Notification" xmi:id="_W23HLQb4Ed2hH78qlvnLGw" id="" name="Notification"/>
+        <negotiationMessage xmi:type="negmod:Reason" xmi:id="_W23HLgb4Ed2hH78qlvnLGw" id="" name="Reason"/>
+        <negotiationMessage xmi:type="negmod:AdmissionRequest" xmi:id="_W23HLwb4Ed2hH78qlvnLGw" id="" name="Admission Request"/>
+        <negotiationMessage xmi:type="negmod:AdmissionResponse" xmi:id="_W23HMAb4Ed2hH78qlvnLGw" id="" name="Admission Response" value="Accept"/>
+        <negotiationMessage xmi:type="negmod:Offer" xmi:id="_W23HMQb4Ed2hH78qlvnLGw" id="" name="Offer"/>
+        <negotiationMessage xmi:type="negmod:OfferResponse" xmi:id="_W23HMgb4Ed2hH78qlvnLGw" id="" name="Offer Response" value="Accept"/>
+        <negotiationMessage xmi:type="negmod:RequestForProposal" xmi:id="_W23HMwb4Ed2hH78qlvnLGw" id="" name="Request for Proposal"/>
+        <negotiationMessage xmi:type="negmod:Agreement" xmi:id="_W23HNAb4Ed2hH78qlvnLGw" id="" name="Agreement"/>
+      </negotiationProtocol>
+    </negotiation>
+    <primitiveType xmi:type="negmod:OneBoolean" xmi:id="_W23HNQb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneByte" xmi:id="_W23HNgb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneChar" xmi:id="_W23HNwb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneDate" xmi:id="_W23HOAb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneDouble" xmi:id="_W23HOQb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneFloat" xmi:id="_W23HOgb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneInteger" xmi:id="_W23HOwb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneLong" xmi:id="_W23HPAb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneShort" xmi:id="_W23HPQb4Ed2hH78qlvnLGw"/>
+    <primitiveType xmi:type="negmod:OneString" xmi:id="_W23HPgb4Ed2hH78qlvnLGw"/>
+    <complexType xmi:type="negmod:OneAmount" xmi:id="_W23HPwb4Ed2hH78qlvnLGw"/>
+    <complexType xmi:type="negmod:OneCurrency" xmi:id="_W23HQAb4Ed2hH78qlvnLGw"/>
+    <complexType xmi:type="negmod:OneImage" xmi:id="_W23HQQb4Ed2hH78qlvnLGw" mimeType=""/>
+    <complexType xmi:type="negmod:OneBinaryDocument" xmi:id="_W23HQgb4Ed2hH78qlvnLGw" mimeType=""/>
+    <complexType xmi:type="negmod:OneXmlDocuemnt" xmi:id="_W23HQwb4Ed2hH78qlvnLGw"/>
+    <enumeration xmi:type="negmod:Enumeration" xmi:id="_W23HRAb4Ed2hH78qlvnLGw" name="VisibilityKind">
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_W23HRQb4Ed2hH78qlvnLGw" name="public"/>
+      <literal xmi:type="negmod:EnumerationLiteral" xmi:id="_W23HRgb4Ed2hH78qlvnLGw" name="private"/>
+    </enumeration>
+  </negmod:NegotiationModel>
+  <notation:Diagram xmi:id="_W35o0Ab4Ed2hH78qlvnLGw" visible="true" type="Negotiation Model" element="_W23HAAb4Ed2hH78qlvnLGw" name="default.nme" measurementUnit="Pixel">
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_W35o0Qb4Ed2hH78qlvnLGw" pageX="0" pageY="0" pageWidth="100" pageHeight="100" description=""/>
+  </notation:Diagram>
+</xmi:XMI>
