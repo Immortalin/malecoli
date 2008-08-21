@@ -8,11 +8,7 @@
    (make-pathname
     :directory '(:relative "data" "lisp")
     :name fn :type "l" :case :local)
-   #-sbcl (make-pathname 
-            :directory (pathname-directory *load-truename*)
-            :host (pathname-host *load-truename*)
-            :device (pathname-device *load-truename*))
-   #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/gare/"))
+   #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare"))
 
 (defun generate-gare-instances ()
   (mlcl-kb:kb-clear mlcl-kbs::gare-instances-kb)
