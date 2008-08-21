@@ -76,8 +76,8 @@
     kb-interned-elements
     kb-use-list
     kb-protege-file
-    kb-import
-    kb-export
+    kb-load
+    kb-save
     
     make-kb
     delete-kb

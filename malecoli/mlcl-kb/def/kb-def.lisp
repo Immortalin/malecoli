@@ -10,7 +10,7 @@
 ; kb def
 ;
 
-(defmacro def-kb (name &key (use nil) (protege-file nil))
+(defmacro def-kb (name &key (use nil) (protege-file nil) (autoload t))
   (declare (type string name))
   (let ((s (intern name (find-package :mlcl-kbs))))
     `(progn
@@ -19,7 +19,8 @@
                      (if (null (boundp (quote ,s)))
                          (progn
                            (setq ,s (make-kb ,name :use ,use :protege-file ,protege-file))
-                           (kb-load ,s)))))))
+                           (if ,autoload
+                               (kb-load ,s))))))))
 
 (defmacro in-kb (kbname)
   `(eval-when (:compile-toplevel :load-toplevel :execute)
