@@ -1,4 +1,4 @@
-; Thu Aug 21 12:25:29 CEST 2008
+; Thu Aug 21 14:39:37 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -20,9 +20,9 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[dataset_ProjectKB_Instance_74]
-		[dataset_ProjectKB_Instance_75]
-		[dataset_ProjectKB_Instance_76]))
+		[dataset_ProjectKB_Instance_71]
+		[dataset_ProjectKB_Instance_72]
+		[dataset_ProjectKB_Instance_73]))
 
 ([CLSES_TAB] of  Widget
 
@@ -342,17 +342,17 @@
 ([dataset_ProjectKB_Instance_70] of  Property_List
 )
 
-([dataset_ProjectKB_Instance_74] of  String
+([dataset_ProjectKB_Instance_71] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([dataset_ProjectKB_Instance_75] of  String
+([dataset_ProjectKB_Instance_72] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([dataset_ProjectKB_Instance_76] of  String
+([dataset_ProjectKB_Instance_73] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
@@ -397,7 +397,7 @@
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_325872_Instance_0] of  Map
+([KB_300422_Instance_0] of  Map
 )
 
 ([KB_489810_Instance_0] of  String
