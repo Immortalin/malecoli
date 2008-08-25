@@ -22,14 +22,13 @@
   
 
 (defun test01 ()
-  (let ((kb (clone-ml::import-one-model *english-auction-model*)))
+  (let ((kb (clone-ml::onemodel-import *english-auction-model*)))
 ;    (cl-protege-kb:kb-export-to-xml-file *english-auction-output* :kb kb)
     kb))
 
   
 (defun test02 ()
-  (let ((kb (clone-ml::import-one-model *gare-model*)))
+  (let ((kb (clone-ml::onemodel-import *gare-model*)))
 ;    (cl-protege-kb:kb-export-to-xml-file *gare-output* :kb kb)
     kb))                   
-        
-                                                               
+                   

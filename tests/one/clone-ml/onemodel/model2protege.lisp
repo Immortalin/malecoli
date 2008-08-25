@@ -9,24 +9,6 @@
         (setq *default-one-model-kb-pathname*            
               #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/kb/"))))
 
-(defun import-one-model (modelfile)
-  (let ((model (load-model modelfile)))
-    (let ((case-prefix (format nil "~A~A" (model-name model) (model-version model))))
-      (let ((kb (make-kb case-prefix 
-                         :use (list 
-                               mlcl-kbs::PROTEGE-KB 
-                               mlcl-kbs::negotiation-kb
-                               mlcl-kbs::onenegotiation-kb)
-                         :protege-file (merge-pathnames
-                                        (make-pathname
-                                         :directory '(:relative ".")
-                                         :name case-prefix :type "xml" :case :local)
-                                        *default-one-model-kb-pathname*))))
-        (convert-one-model model kb)
-        (kb-save kb)
-        kb))))
-
-
 (defun convert-one-model (model kb)
   (let ((case-prefix (format nil "~A~A" (model-name model) (model-version model))))
     (let ((case-id (format nil "case @ ~A" case-prefix)) 
