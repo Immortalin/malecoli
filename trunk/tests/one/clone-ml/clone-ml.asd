@@ -25,6 +25,7 @@
                (:module onemodel
                	:components
 	        	((:file "model" :depends-on ())
+	        	 (:file "xml" :depends-on ("model"))
 	        	 (:file "model2protege" :depends-on ("model")))
                  :depends-on ("package" "kb")))
-  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr" "cl-xmlspam"))
+  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr"))
