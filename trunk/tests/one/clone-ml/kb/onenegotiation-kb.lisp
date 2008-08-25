@@ -27,6 +27,7 @@
 
 (mlcl-kb:in-kb "ONENEGOTIATION-KB")
 
+(mlcl-kb:def-cls-ref "one_model")
 
 (mlcl-kb:def-cls-ref "one_case")
 (mlcl-kb:def-cls-ref "one_context")
