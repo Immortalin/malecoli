@@ -41,7 +41,8 @@
                             "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                             "xsi:schemaLocation=\"http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd\">")
                     (dolist (el (reverse (kb-interned-elements kb)))
-                      (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t)))
+                      ;(format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty nil)))
+                      (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty nil)))
                     (format strm "~a~%" "</knowledge_base>"))))
 
 
@@ -253,9 +254,10 @@
   (let ((lxml (call-next-method))
         (supcl (mapcar #'(lambda (x) (list 'protege-ns:|superslot| (frame-name x))) (slot-direct-superslots element))))
     (setf lxml (append
-     lxml
-     supcl))
+                lxml
+                supcl))
     (cons 'protege-ns:|slot| lxml)))
+
 
 (defmethod kb-element-export-to-lxml (kb (element facet))
   (declare (ignore kb)
