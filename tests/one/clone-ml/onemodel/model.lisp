@@ -3,40 +3,49 @@
 (in-package :clone-ml)
 
 (defstruct onetype 
-  (name nil)
-  (id nil)
-  (vals nil)
-  (kind))
+  (name)
+  (id)
+  (kind)
+  (globalp nil)
+  (vals nil))
 
-
-(defstruct item-attribute
+(defstruct attribute
   (name)
   (onetype))
 
-(defstruct item-issue
+(defstruct issue
   (name)
-  (attributes))
-
+  (attributes nil))
 
 (defstruct item
-  (name nil)
+  (name)
   (attributes nil)
   (issues nil))
 
-(defstruct im
-  (name nil)
-  (item)
-  (types))
+(defstruct infomodel
+  (name)
+  (item (make-item)))
 
 (defstruct model
   (name)
   (version)
-  (im)
-  (types))
+  (infomodel (make-infomodel))
+  (types nil))
 
+(defstruct instance-model 
+  (model-kb nil)
+  (vals nil))
+
+
+;
+; functions
+;
 
 (defun model-get-type (model typeid)
-  (let ((el (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (im-types (model-im model)))))
-    (if el
-        (values el t)
-        (values (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model)) nil))))
+  (let ((typ (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model))))
+    (if (null typ)
+        (progn 
+          (setf typ (make-onetype :id typeid))
+          (push typ (model-types model))))
+    typ))
+  

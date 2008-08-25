@@ -44,3 +44,6 @@
 (mlcl-kb:def-slot-ref "neg_case_conclusion_date")
 (mlcl-kb:def-slot-ref "neg_case_winner")
 
+(mlcl-kb:def-slot-ref "neg_model_id")
+(mlcl-kb:def-slot-ref "neg_model_version")
+
