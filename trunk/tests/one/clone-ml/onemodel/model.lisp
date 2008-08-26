@@ -22,13 +22,21 @@
   (attributes nil)
   (issues nil))
 
+(defstruct neginfo 
+  (attributes))
+
+(defstruct protoinfo 
+  (attributes))
+
 (defstruct infomodel
   (name)
   (item (make-item)))
-
+  
 (defstruct model
   (name)
   (version)
+  (neginfo (make-neginfo))
+  (protoinfo (make-protoinfo))
   (infomodel (make-infomodel))
   (types nil))
 
@@ -41,11 +49,20 @@
 ; functions
 ;
 
-(defun model-get-type (model typeid)
-  (let ((typ (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model))))
+(defun model-get-type (model typeid name)
+  (let ((typ (or
+              (and typeid (model-get-type-by-id model typeid))
+              (and name (model-get-type-by-name model name)))))
     (if (null typ)
         (progn 
-          (setf typ (make-onetype :id typeid))
+          (setf typ (make-onetype :id typeid :name name))
           (push typ (model-types model))))
     typ))
-  
+
+(defun model-get-type-by-id (model typeid)
+  (let ((typ (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model))))
+    typ))
+
+(defun model-get-type-by-name (model name)
+  (let ((typ (find-if #'(lambda (x) (string= (onetype-name x) name)) (model-types model))))
+    typ))
