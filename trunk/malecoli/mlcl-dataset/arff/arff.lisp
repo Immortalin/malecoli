@@ -3,12 +3,24 @@
 (in-package :mlcl-dataset)
 
 (defun arff-import (pathname)
-  (let ((kb nil))
+  (let* ((fn (file-namestring (merge-pathnames
+              (make-pathname :type "")
+              pathname)))
+         (kb (mlcl-kb:find-kb fn)))
     (with-open-file (strm pathname)
                     (multiple-value-bind (relation-name attributes comments) (arff-import-header strm)
+                      (if (null kb)
+                          (setf kb (mlcl-kb:make-kb fn
+                                                    :use (list mlcl-kbs::DATASET-KB)
+                                                    :protege-file (merge-pathnames
+                                                                   (make-pathname 
+                                                                    ;:directory '(:relative "mlcl-tmp")
+                                                                    :type "xml")
+                                                                   pathname)))
+                          (mlcl-kb:kb-clear kb))
                       (arff-import-data kb attributes strm)))
+    (mlcl-kb:kb-save kb)
     kb))
-
 
 (defun arff-import-read-type (v3 v4)
   (if v3
@@ -19,7 +31,7 @@
        ((string-equal v3 "string") 'string)
        ((string-equal v3 "date") 'date))
       (progn
-        (format t "$$ ~A~%" v4)
+        ;(format t "$$ ~A~%" v4)
         (list 'nominal (cl-ppcre:split "[#\,\\s]" v4)))))
 
 (defun arff-import-read-line (strm)
@@ -81,7 +93,6 @@
         (progn
           (do ((v (rest line) (cdr v)) (attr attributes (cdr attr)))
               ((and (null attr) (null v)))
-            (format t "~A=~A " (car (car attr)) (car v)))
-          (format t "~%"))))
-  (dolist (attr attributes) 
-    (format t "~A~%" attr)))
+            )
+         ;   (format t "~A=~A " (car (car attr)) (car v)))
+          ))))

@@ -14,5 +14,9 @@
                (:module kb
                	:components
 	        	((:file "dataset-kb" :depends-on ()))
-                 :depends-on ("package")))
+                 :depends-on ("package"))
+               (:module arff
+               	:components
+	        	((:file "arff" :depends-on ()))
+                 :depends-on ("kb")))
   :depends-on ("mlcl-kb" "cl-ppcre"))
