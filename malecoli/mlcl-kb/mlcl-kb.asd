@@ -19,7 +19,8 @@
                  :depends-on ("package"))
                (:module xml
                	:components
-	        	((:file "xml" :depends-on ()))
+	        	((:file "xml" :depends-on ("pprj"))
+	        	 (:file "pprj" :depends-on ()))
                  :depends-on ("package" "kb"))
                (:module def
                	:components
@@ -30,4 +31,4 @@
 	        	((:file "protege-kb" :depends-on ())
 	                 (:file "frame" :depends-on ("protege-kb")))
                  :depends-on ("package" "kb" "def")))
-  :depends-on ("s-xml"))
+  :depends-on ("s-xml" "cl-ppcre"))

@@ -22,15 +22,15 @@
         (lxml nil)
         (genlxml nil))
     (if (null kb)
-        (setf kb (mlcl-kb:make-kb "ciao" :use (list (mlcl-kb:find-kb "PROTEGE-KB")))))
+        (setf kb (mlcl-kb:make-kb "ciao" :use (list (mlcl-kb:find-kb "PROTEGE-KB")) :protege-file *output*)))
     (mlcl-kb:kb-clear kb)
     (setf lxml (mlcl-kb::kb-import-from-protege-xml *protege-ex-01* kb))
     (setf genlxml (mlcl-kb::kb-export-to-protege-xml *output* kb))
     (with-open-file (strm *output-txt* :direction :output :if-exists :supersede)
                     (mlcl-kb::kb-dump strm kb))
+    (mlcl-kb:kb-save kb)
     ;(format t "~%~%~A~%~A" lxml genlxml)
     kb))
-
 
 (mlcl-kb:def-kb "newpaper" 
                       :use '("PROTEGE-KB") 

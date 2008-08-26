@@ -14,7 +14,10 @@
 
 (defun kb-save (&optional (kb *kb*))
   (if (kb-protege-file kb)
-      (kb-export-to-protege-xml (kb-protege-file kb) kb)))
+      (progn
+        (kb-export-to-protege-xml (kb-protege-file kb) kb)
+        (save-new-pprj kb))))
+      
 
 ;
 ; import a protege kb 
