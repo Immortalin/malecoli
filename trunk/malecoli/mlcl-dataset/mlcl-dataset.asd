@@ -15,4 +15,4 @@
                	:components
 	        	((:file "dataset-kb" :depends-on ()))
                  :depends-on ("package")))
-  :depends-on ("mlcl-kb"))
+  :depends-on ("mlcl-kb" "cl-ppcre"))
