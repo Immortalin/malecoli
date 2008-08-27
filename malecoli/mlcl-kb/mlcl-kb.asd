@@ -29,6 +29,7 @@
                (:module protege
                	:components
 	        	((:file "protege-kb" :depends-on ())
-	                 (:file "frame" :depends-on ("protege-kb")))
+	        	 (:file "kb" :depends-on ("protege-kb"))
+	                 (:file "frame" :depends-on ("kb")))
                  :depends-on ("package" "kb" "def")))
   :depends-on ("s-xml" "cl-ppcre"))

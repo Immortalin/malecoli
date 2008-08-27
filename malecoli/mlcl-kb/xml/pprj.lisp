@@ -9,9 +9,10 @@
         (setq *empty-pprj-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "empty" :type "pprj" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-kb/xml/empty.pprj"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-kb/resources/empty.pprj"))))
 
 (defun save-new-pprj (kb)
   (let ((fn (file-namestring (kb-protege-file kb)))

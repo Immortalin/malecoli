@@ -1,7 +1,7 @@
 ;;;; 2008-08-05 15:59:48
 
 (defpackage #:mlcl-kb-test-asd
-  (:use :mlcl-kb :asdf))
+  (:use :asdf))
 
 (in-package :mlcl-kb-test-asd)
 
