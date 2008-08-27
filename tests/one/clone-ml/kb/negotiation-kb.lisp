@@ -9,17 +9,19 @@
         (setq *negotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "negotiation" :type "xml" :case :local)
                       *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/negotiation.xml")))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml")))
   (eval-when (:LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*negotiation-kb-pathname*))
         (setq *negotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "negotiation" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/negotiation.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml"))))
 
 (mlcl-kb:def-kb "NEGOTIATION-KB"
                 :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::dataset-kb) 

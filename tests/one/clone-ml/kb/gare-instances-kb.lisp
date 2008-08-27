@@ -7,7 +7,7 @@
   (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*gare-instances-kb-pathname*))
         (setq *gare-instances-kb-pathname*            
-              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/kb/gare-instances.xml"))))
+              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.xml"))))
 
 
 (mlcl-kb:def-kb "GARE-INSTANCES-KB"

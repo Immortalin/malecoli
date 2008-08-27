@@ -10,17 +10,19 @@
         (setq *gare-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "gare" :type "xml" :case :local)
                       *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/gare.xml")))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/gare.xml")))
   (eval-when (:LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*gare-kb-pathname*))
         (setq *gare-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "gare" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/gare.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/gare.xml"))))
 
 
 (mlcl-kb:def-kb "GARE-KB"

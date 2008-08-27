@@ -9,17 +9,19 @@
         (setq *onenegotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "onenegotiation" :type "xml" :case :local)
                       *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/onenegotiation.xml")))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml")))
   (eval-when (:LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*onenegotiation-kb-pathname*))
         (setq *onenegotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "onenegotiation" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/kb/onenegotiation.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml"))))
 
 (mlcl-kb:def-kb "ONENEGOTIATION-KB"
                 :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::negotiation-kb) 
