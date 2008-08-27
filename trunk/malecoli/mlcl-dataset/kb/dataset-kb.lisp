@@ -10,21 +10,23 @@
         (setq *dataset-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "dataset" :type "xml" :case :local)
                       *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/kb/dataset.xml")))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/resources/dataset.xml")))
   (eval-when (:LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*dataset-kb-pathname*))
         (setq *dataset-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
+                       :directory '(:relative ".." "resources")
                        :name "dataset" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/kb/dataset.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/resources/dataset.xml"))))
   
 
 (mlcl-kb:def-kb "DATASET-KB" 
-                :use (list mlcl-kbs::PROTEGE-KB) 
+                :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::KB) 
                 :protege-file *dataset-kb-pathname*)
 
 (mlcl-kb:in-kb mlcl-kbs::DATASET-KB)

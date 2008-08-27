@@ -1,4 +1,4 @@
-; Wed Aug 27 10:33:31 CEST 2008
+; Wed Aug 27 11:04:47 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -173,7 +173,7 @@
 	(name "source_file_name")
 	(string_value "kb.xml"))
 
-([KB_406371_Instance_3] of  Map
+([KB_908608_Instance_3] of  Map
 )
 
 ([kb_ProjectKB_Instance_10] of  Widget
