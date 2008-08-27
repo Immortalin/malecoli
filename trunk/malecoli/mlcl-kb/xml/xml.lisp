@@ -45,7 +45,7 @@
                             "xsi:schemaLocation=\"http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd\">")
                     (dolist (el (reverse (kb-interned-elements kb)))
                       ;(format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty nil)))
-                      (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty nil)))
+                      (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t)))
                     (format strm "~a~%" "</knowledge_base>"))))
 
 
