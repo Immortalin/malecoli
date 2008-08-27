@@ -1,0 +1,144 @@
+<knowledge_base xmlns="http://protege.stanford.edu/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd">
+
+<class>
+  <name>DatasetThing</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>:THING</superclass>
+</class>
+
+<class>
+  <name>one_context</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_context</superclass>
+</class>
+
+<class>
+  <name>one_conclusion</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_conclusion</superclass>
+</class>
+
+<class>
+  <name>one_protocol</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_protocol</superclass>
+</class>
+
+<class>
+  <name>one_process</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_process</superclass>
+</class>
+
+<class>
+  <name>one_item</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_item</superclass>
+</class>
+
+<class>
+  <name>one_party</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Concrete</value>
+  </own_slot_value>
+  <superclass>neg_party</superclass>
+</class>
+
+<class>
+  <name>one_proposal</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_proposal</superclass>
+</class>
+
+<class>
+  <name>one_model</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Concrete</value>
+  </own_slot_value>
+  <superclass>neg_model</superclass>
+</class>
+
+<class>
+  <name>one_issue</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_issue</superclass>
+</class>
+
+<class>
+  <name>DatasetCase</name>
+</class>
+
+<class>
+  <name>dataset_case</name>
+</class>
+
+<class>
+  <name>one_case</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Abstract</value>
+  </own_slot_value>
+  <superclass>neg_case</superclass>
+</class>
+
+<class>
+  <name>one_image</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Concrete</value>
+  </own_slot_value>
+  <superclass>DatasetThing</superclass>
+</class>
+
+<class>
+  <name>one_binary_document</name>
+  <type>:STANDARD-CLASS</type>
+  <own_slot_value>
+    <slot_reference>:ROLE</slot_reference>
+    <value value_type="string">Concrete</value>
+  </own_slot_value>
+  <superclass>DatasetThing</superclass>
+</class>
+
+<class>
+  <name>issue-slot</name>
+</class>
+</knowledge_base>
