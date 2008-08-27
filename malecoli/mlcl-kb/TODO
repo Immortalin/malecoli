@@ -1,0 +1,6 @@
+protege-kb:
+	* extend
+		- project file (import)
+		- default use (kb)
+	* review
+		- usability

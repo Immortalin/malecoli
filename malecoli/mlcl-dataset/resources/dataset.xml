@@ -28,6 +28,45 @@
 		<template_slot>:ROLE</template_slot>
 		<template_slot>:DOCUMENTATION</template_slot>
 		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
 	</class>
 
 	<class>
@@ -38,6 +77,102 @@
 			<value value_type="string">Concrete</value>
 		</own_slot_value>
 		<superclass>:SLOT</superclass>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
 		<template_slot>:DOCUMENTATION</template_slot>
 		<template_slot>:SLOT-CONSTRAINTS</template_slot>
 		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
@@ -73,10 +208,14 @@
 		</own_slot_value>
 		<superclass>:THING</superclass>
 		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
 	</class>
 
 	<class>
-		<name>DataType</name>
+		<name>DatasetThing</name>
 		<type>:STANDARD-CLASS</type>
 		<own_slot_value>
 			<slot_reference>:ROLE</slot_reference>
@@ -86,20 +225,43 @@
 	</class>
 
 	<class>
-		<name>date</name>
+		<name>DatasetCase</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>DatasetInfo</name>
 		<type>:STANDARD-CLASS</type>
 		<own_slot_value>
 			<slot_reference>:ROLE</slot_reference>
 			<value value_type="string">Concrete</value>
 		</own_slot_value>
-		<superclass>DataType</superclass>
-		<template_slot>date_month</template_slot>
-		<template_slot>date_day</template_slot>
-		<template_slot>date_year</template_slot>
+		<superclass>:THING</superclass>
+		<template_slot>dataset_name</template_slot>
+		<template_slot>dataset_version</template_slot>
+		<template_slot>dataset_case_class</template_slot>
+		<template_slot>dataset_default_target_slot</template_slot>
+	</class>
+
+	<class>
+		<name>Dataset</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>:THING</superclass>
+		<template_slot>dataset_cases</template_slot>
+		<template_slot>dataset_info</template_slot>
 	</class>
 
 	<slot>
-		<name>date_day</name>
+		<name>dataset_case_class</name>
 		<type>:STANDARD-SLOT</type>
 		<own_slot_value>
 			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
@@ -110,30 +272,42 @@
 			<value value_type="integer">1</value>
 		</own_slot_value>
 		<own_slot_value>
+			<slot_reference>:SLOT-DEFAULTS</slot_reference>
+			<value value_type="class">DatasetCase</value>
+		</own_slot_value>
+		<own_slot_value>
 			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
-			<value value_type="string">Integer</value>
+			<value value_type="string">Class</value>
+			<value value_type="class">DatasetCase</value>
 		</own_slot_value>
 	</slot>
 
 	<slot>
-		<name>date_month</name>
+		<name>dataset_cases</name>
 		<type>:STANDARD-SLOT</type>
 		<own_slot_value>
-			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
-			<value value_type="integer">1</value>
-		</own_slot_value>
-		<own_slot_value>
-			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
-			<value value_type="integer">1</value>
-		</own_slot_value>
-		<own_slot_value>
 			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
-			<value value_type="string">Integer</value>
+			<value value_type="string">Instance</value>
+			<value value_type="class">DatasetCase</value>
 		</own_slot_value>
 	</slot>
 
 	<slot>
-		<name>date_year</name>
+		<name>dataset_default_target_slot</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Class</value>
+			<value value_type="class">:STANDARD-SLOT</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>dataset_info</name>
 		<type>:STANDARD-SLOT</type>
 		<own_slot_value>
 			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
@@ -145,7 +319,46 @@
 		</own_slot_value>
 		<own_slot_value>
 			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
-			<value value_type="string">Integer</value>
+			<value value_type="string">Instance</value>
+			<value value_type="class">DatasetInfo</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>dataset_name</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>dataset_version</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-DEFAULTS</slot_reference>
+			<value value_type="string">0.0.1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
 		</own_slot_value>
 	</slot>
 
@@ -371,7 +584,7 @@
 	</slot>
 
 	<simple_instance>
-		<name>kb</name>
+		<name>dataset</name>
 		<type>KB</type>
 		<own_slot_value>
 			<slot_reference>kb_version</slot_reference>
