@@ -11,7 +11,7 @@
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
-               (:module kb
+               (:module core
                	:components
 	        	((:file "frame" :depends-on ("kb-core"))
 	        	 (:file "kb-core" :depends-on ())
@@ -21,15 +21,15 @@
                	:components
 	        	((:file "xml" :depends-on ("pprj"))
 	        	 (:file "pprj" :depends-on ()))
-                 :depends-on ("package" "kb"))
+                 :depends-on ("package" "core"))
                (:module def
                	:components
 	        	((:file "kb-def" :depends-on ()))
-                 :depends-on ("package" "kb" "xml"))
-               (:module protege
+                 :depends-on ("package" "core" "xml"))
+               (:module kb
                	:components
 	        	((:file "protege-kb" :depends-on ())
 	        	 (:file "kb" :depends-on ("protege-kb"))
 	                 (:file "frame" :depends-on ("kb")))
-                 :depends-on ("package" "kb" "def")))
+                 :depends-on ("package" "core" "def")))
   :depends-on ("s-xml" "cl-ppcre"))
