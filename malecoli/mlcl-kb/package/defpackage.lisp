@@ -66,6 +66,7 @@
     facet-value%-facet
     facet-value%-values
         
+    find-frame 
     #|
     KB
     |#
@@ -146,4 +147,6 @@
     string->type-value
     string->role
    ))
+
+(defpackage :mlcl-kbs)
 

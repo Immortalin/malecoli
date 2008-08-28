@@ -25,9 +25,7 @@
               #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-kb/resources/kb.xml"))))
   
 
-(mlcl-kb:def-kb "KB" 
-                :use (list mlcl-kbs::PROTEGE-KB) 
-                :protege-file *kb-pathname*)
-
-
-(mlcl-kb:in-kb "KB")
+(eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "KB"))
+      (let ((kb (mlcl-kb:make-kb "KB" :use '(mlcl-kbs:protege-kb) :protege-file *kb-pathname*)))
+        (mlcl-kb:kb-load kb))))
