@@ -1,22 +1,6 @@
 ;;;; Created on 2008-08-18 11:41:45
 
 (in-package :mlcl-kb)
-
-;
-; protege load/save
-;
-
-(defun kb-load (&optional (kb *kb*))
-  (if (and (kb-protege-file kb) (not (kb-loadedp kb)))
-      (progn
-        (kb-import-from-protege-xml (kb-protege-file kb) kb)
-        (setf (kb-loadedp kb) t))))
-
-(defun kb-save (&optional (kb *kb*))
-  (if (kb-protege-file kb)
-      (progn
-        (kb-export-to-protege-xml (kb-protege-file kb) kb)
-        (save-new-pprj kb))))
       
 
 ;
@@ -24,13 +8,15 @@
 ;
 
 (defun kb-import-from-protege-xml (filename &optional (kb *kb*))
-  (with-open-file (strm filename :direction :input)
-                  (s-xml:start-parse-xml strm
-                                         (make-instance 's-xml:xml-parser-state
-                                                        :seed (make-seed :kb kb)
-                                                        :new-element-hook #'kb-import-new-element-hook
-                                                        :finish-element-hook #'kb-import-finish-element-hook
-                                                        :text-hook #'kb-import-text-hook))))
+  (let ((*kb* kb))
+    (with-open-file (strm filename :direction :input)
+                    (s-xml:start-parse-xml strm
+                                           (make-instance 's-xml:xml-parser-state
+                                                          :seed (make-seed)
+                                                          :new-element-hook #'kb-import-new-element-hook
+                                                          :finish-element-hook #'kb-import-finish-element-hook
+                                                          :text-hook #'kb-import-text-hook)))))
+
 
 ;
 ; export a kb into a protege kb
@@ -44,7 +30,7 @@
                             "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                             "xsi:schemaLocation=\"http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd\">")
                     (dolist (el (reverse (kb-interned-elements kb)))
-                      ;(format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty nil)))
+                      (format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t))
                       (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t)))
                     (format strm "~a~%" "</knowledge_base>"))))
 
@@ -87,7 +73,7 @@
 (defgeneric kb-import-element (el seed)
   (:method ((el instance) seed)
     (setf (instance-direct-types el) (seed-types seed))
-    (setf (frame-own-slot-values% el) (seed-own-slot-values seed))
+    (setf (frame-own-slot-values-list el) (seed-own-slot-values seed))
     (setf (kb-element-definedp el) t))
   (:method ((el slot) seed)
     (call-next-method)
@@ -96,12 +82,11 @@
     (call-next-method)
     (setf (cls-direct-superclses el) (seed-superclasses seed))
     (setf (cls-direct-template-slots el) (seed-template-slots seed))
-    (setf (cls-direct-template-facet-values% el) (seed-template-facet-values seed))))
+    (setf (cls-direct-template-facet-values-list el) (seed-template-facet-values seed))))
 
 ; seed
 
 (defstruct seed
-  (kb nil)
   (vals nil)
   (slot-reference nil)
   (facet-reference nil)
@@ -117,7 +102,7 @@
 ; hooks
 
 (defun kb-import-new-element-hook (name attributes seed)
-  (let ((new-seed (make-seed :kb (seed-kb seed))))
+  (let ((new-seed (make-seed)))
     (cond 
      ((eq name 'protege-ns:|knowledge_base|)
       nil)
@@ -159,44 +144,44 @@
    ((eq name 'protege-ns:|knowledge_base|)
     nil)
    ((eq name 'protege-ns:|class|)
-    (let ((el (kb-get-cls (seed-name seed) :kb (seed-kb seed))))
+    (let ((el (kb-get-cls (seed-name seed))))
       (if (not (kb-element-definedp el))
           (kb-import-element el seed))))
    ((eq name 'protege-ns:|slot|)
-    (let ((el (kb-get-slot (seed-name seed) :kb (seed-kb seed))))
+    (let ((el (kb-get-slot (seed-name seed))))
       (if (not (kb-element-definedp el))
           (kb-import-element el seed))))
    ((eq name 'protege-ns:|facet|)
-    (let ((el (kb-get-facet (seed-name seed) :kb (seed-kb seed))))
+    (let ((el (kb-get-facet (seed-name seed))))
       (if (not (kb-element-definedp el))
           (kb-import-element el seed))))
    ((eq name 'protege-ns:|simple_instance|)
-    (let ((el (kb-get-simple-instance (seed-name seed) :kb (seed-kb seed))))
+    (let ((el (kb-get-simple-instance (seed-name seed))))
       (if (not (kb-element-definedp el))
           (kb-import-element el seed))))
    ((eq name 'protege-ns:|name|)
     (setf (seed-name parent-seed) (seed-text seed)))
    ((eq name 'protege-ns:|type|)
-    (push (kb-get-cls (seed-text seed)  :kb (seed-kb seed)) (seed-types parent-seed)))
+    (push (kb-get-cls (seed-text seed)) (seed-types parent-seed)))
    ((eq name 'protege-ns:|own_slot_value|)
-    (push (make-slot-value% :slot (seed-slot-reference seed) :values (nreverse (seed-vals seed))) (seed-own-slot-values parent-seed)))
+    (push (make-slot-value% :slot (seed-slot-reference seed) :vals (nreverse (seed-vals seed))) (seed-own-slot-values parent-seed)))
    ((eq name 'protege-ns:|superclass|)
-    (push (kb-get-cls (seed-text seed) :kb (seed-kb seed)) (seed-superclasses parent-seed)))
+    (push (kb-get-cls (seed-text seed)) (seed-superclasses parent-seed)))
    ((eq name 'protege-ns:|template_slot|)
-    (let ((slot (kb-get-slot (seed-text seed) :kb (seed-kb seed))))
+    (let ((slot (kb-get-slot (seed-text seed))))
       (if (not (find slot (seed-template-slots parent-seed)))
           (push slot (seed-template-slots parent-seed)))))
    ((eq name 'protege-ns:|template_facet_value|)
     (push (make-facet-value% :slot (seed-slot-reference seed) :facet (seed-facet-reference seed) 
-                                         :values (nreverse (seed-vals seed))) (seed-template-facet-values parent-seed)))
+                                         :vals (nreverse (seed-vals seed))) (seed-template-facet-values parent-seed)))
    ((eq name 'protege-ns:|superslot|)
-    (push (kb-get-slot (seed-text seed) :kb (seed-kb seed)) (seed-superslots parent-seed)))
+    (push (kb-get-slot (seed-text seed)) (seed-superslots parent-seed)))
    ((eq name 'protege-ns:|slot_reference|)
-    (setf (seed-slot-reference parent-seed) (kb-get-slot (seed-text seed) :kb (seed-kb seed))))
+    (setf (seed-slot-reference parent-seed) (kb-get-slot (seed-text seed))))
    ((eq name 'protege-ns:|facet_reference|)
-    (setf (seed-facet-reference parent-seed) (kb-get-facet (seed-text seed) :kb (seed-kb seed))))
+    (setf (seed-facet-reference parent-seed) (kb-get-facet (seed-text seed))))
    ((eq name 'protege-ns:|value|)
-    (push  (make-value-from-string (seed-kb seed) (cdr (assoc :|value_type| attributes)) (seed-text seed))
+    (push  (make-value-from-string (cdr (assoc :|value_type| attributes)) (seed-text seed))
            (seed-vals parent-seed)))
    (t
     (format t "<== ~A  || ~A  || ~A ~%" name attributes seed)
@@ -228,8 +213,8 @@
         (ownsv (mapcar #'(lambda (x) (cons 'protege-ns:|own_slot_value| 
                                            (cons 
                                             (list 'protege-ns:|slot_reference| (frame-name (slot-value%-slot x)))
-                                            (make-lxml-from-values (slot-value%-values x)))))
-                       (frame-own-slot-values% element))))
+                                            (make-lxml-from-values (slot-value%-vals x)))))
+                       (frame-own-slot-values-list element))))
     (cons name
           (append types ownsv))))
       
@@ -243,8 +228,8 @@
                                             (list 'protege-ns:|slot_reference| (frame-name (facet-value%-slot x)))
                                             (cons 
                                              (list 'protege-ns:|facet_reference| (frame-name (facet-value%-facet x)))
-                                             (make-lxml-from-values (facet-value%-values x))))))
-                       (cls-direct-template-facet-values% element))))
+                                             (make-lxml-from-values (facet-value%-vals x))))))
+                       (cls-direct-template-facet-values-list element))))
     (setf lxml (append
                 lxml
                 supcl
@@ -278,7 +263,7 @@
 ; values
 ;
 
-(defun make-value-from-string (kb ty v)
+(defun make-value-from-string (ty v)
   (cond
    ((string= ty "boolean")
     (string= v "true"))
@@ -289,13 +274,13 @@
    ((string= ty "string")
     v)
    ((string= ty "class")
-    (kb-get-cls v :kb kb))
+    (kb-get-cls v))
    ((string= ty "slot")
-    (kb-get-slot v :kb kb))
+    (kb-get-slot v))
    ((string= ty "facet")
-    (kb-get-facet v :kb kb))
+    (kb-get-facet v))
    ((string= ty "simple_instance")
-    (kb-get-simple-instance v :kb kb))))
+    (kb-get-simple-instance v))))
 
 (defun value-type-as-string (val)
   (cond
@@ -346,5 +331,4 @@
                                     (value-type-as-string val))
                               (list (value-val-as-string val))))
           vals))
-
 

@@ -2,9 +2,6 @@
 
 (in-package :mlcl-kb)
 
-(defpackage :mlcl-kbs)
-
-(in-package :mlcl-kb)
 
 ;
 ; kb def
@@ -33,12 +30,18 @@
 ;
 
 (defmacro def-instance-ref (name make-code)
+  `(eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
+     (if (null (kb-find-element ,name))
+         ,make-code)))
+  #|
   (let ((s (intern name (kb-package *kb*))))
     `(progn
-       (defvar ,s)
+       ;(defvar ,s)
        (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
          (if (null (boundp (quote ,s)))
-               (setq ,s ,make-code))))))
+               (setf (symbol-value ,s) ,make-code))))))
+|#
+    
 
 (defmacro def-instance-init (name init-code)
   `(let ((it (kb-find-element ,name)))
