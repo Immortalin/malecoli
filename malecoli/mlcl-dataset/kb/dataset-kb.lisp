@@ -25,6 +25,7 @@
               #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/resources/dataset.xml"))))
   
 
+#|
 (mlcl-kb:def-kb "DATASET-KB" 
                 :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::KB) 
                 :protege-file *dataset-kb-pathname*)
@@ -32,3 +33,9 @@
 (mlcl-kb:in-kb mlcl-kbs::DATASET-KB)
 
 (mlcl-kb:def-cls-ref "dataset_case")
+|#
+
+(eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "DATASET-KB"))
+      (let ((kb (mlcl-kb:make-kb "DATASET-KB" :use '(mlcl-kbs:kb mlcl-kbs:protege-kb) :protege-file *dataset-kb-pathname*)))
+        (mlcl-kb:kb-load kb))))
