@@ -16,7 +16,7 @@
     
     frame
     frame-kb
-    frame-own-slot-values%
+    frame-own-slot-values-list
     frame-name
     frame-symbol
     frame-own-slot-values
@@ -34,7 +34,7 @@
     cls
     cls-direct-superclses
     cls-direct-template-slots
-    cls-direct-template-facet-values%
+    cls-direct-template-facet-values-list
     cls-add-direct-supercls
     cls-remove-direct-supercls
     cls-has-direct-supercls
@@ -77,8 +77,14 @@
     kb-interned-elements
     kb-use-list
     kb-protege-file
-    kb-load
+
+    kb-open
+    kb-close
+    kb-openedp
     kb-save
+        
+    kb-import-from-protege
+    kb-export-to-protege
     
     make-kb
     delete-kb

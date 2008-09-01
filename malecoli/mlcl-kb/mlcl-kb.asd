@@ -22,19 +22,15 @@
 	        	((:file "xml" :depends-on ("pprj"))
 	        	 (:file "pprj" :depends-on ()))
                  :depends-on ("package" "core"))
-               (:module loader
-               	:components
-	        	((:file "load" :depends-on ()))
-                 :depends-on ("package" "core" "xml"))
                (:module def
                	:components
-	        	((:file "kb-def" :depends-on ()))
-                 :depends-on ("package" "core" "loader"))
+		       	((:file "kb-def" :depends-on ()))
+                 :depends-on ("package" "core" "kb"))
                (:module kb
                	:components
 	        	((:file "protege-kb" :depends-on ())
-	        	 ;(:file "kb" :depends-on ("protege-kb"))
-	                 ;:file "frame" :depends-on ("kb")))
+	        	 (:file "kb" :depends-on ("protege-kb"))
+	                 (:file "frame" :depends-on ("kb" "protege-kb"))
 	        	 )
-                 :depends-on ("package" "core" "def")))
+                 :depends-on ("package" "core")))
   :depends-on ("s-xml" "cl-ppcre"))
