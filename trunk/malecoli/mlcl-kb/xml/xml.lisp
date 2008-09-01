@@ -7,32 +7,44 @@
 ; import a protege kb 
 ;
 
-(defun kb-import-from-protege-xml (filename &optional (kb *kb*))
-  (let ((*kb* kb))
-    (with-open-file (strm filename :direction :input)
-                    (s-xml:start-parse-xml strm
-                                           (make-instance 's-xml:xml-parser-state
-                                                          :seed (make-seed)
-                                                          :new-element-hook #'kb-import-new-element-hook
-                                                          :finish-element-hook #'kb-import-finish-element-hook
-                                                          :text-hook #'kb-import-text-hook)))))
+(defun kb-import-from-protege-xml (pathname kb)
+  (check-type pathname pathname)
+  (check-type kb kb)
+  (let ((xml-file (merge-pathnames
+                   (make-pathname :type "xml")
+                   pathname))
+        (*kb* kb))
+    (if (probe-file xml-file)
+        (with-open-file (strm xml-file :direction :input)
+                        (s-xml:start-parse-xml strm
+                                               (make-instance 's-xml:xml-parser-state
+                                                              :seed (make-seed)
+                                                              :new-element-hook #'kb-import-new-element-hook
+                                                              :finish-element-hook #'kb-import-finish-element-hook
+                                                              :text-hook #'kb-import-text-hook))))))
 
 
 ;
 ; export a kb into a protege kb
 ;
 
-(defun kb-export-to-protege-xml (filename &optional (kb *kb*))
-  (let ((s-xml:*local-namespace* :protege-ns))
-    (with-open-file (strm filename :direction :output :if-exists :supersede)
-                    (format strm "~a ~a ~a~%" 
-                            "<knowledge_base xmlns=\"http://protege.stanford.edu/xml\""
-                            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-                            "xsi:schemaLocation=\"http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd\">")
-                    (dolist (el (reverse (kb-interned-elements kb)))
-                      (format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t))
-                      (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t)))
-                    (format strm "~a~%" "</knowledge_base>"))))
+(defun kb-export-to-protege-xml (pathname kb &key (supersedep t))
+  (check-type pathname pathname)
+  (check-type kb kb)
+  (let ((xml-file (merge-pathnames
+                   (make-pathname :type "xml")
+                   pathname)))
+    (if (or supersedep (not (probe-file pathname)))
+        (let ((s-xml:*local-namespace* :protege-ns))
+          (with-open-file (strm xml-file :direction :output :if-exists :supersede)
+                          (format strm "~a ~a ~a~%" 
+                                  "<knowledge_base xmlns=\"http://protege.stanford.edu/xml\""
+                                  "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+                                  "xsi:schemaLocation=\"http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd\">")
+                          (dolist (el (reverse (kb-interned-elements kb)))
+                            ;(format t "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t))
+                            (format strm "~a~%" (s-xml:print-xml-string (kb-element-export-to-lxml kb el) :pretty t)))
+                          (format strm "~a~%" "</knowledge_base>"))))))
 
 
 ;
