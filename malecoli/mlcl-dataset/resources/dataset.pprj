@@ -1,4 +1,4 @@
-; Wed Aug 27 11:59:00 CEST 2008
+; Tue Sep 02 09:27:18 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -18,7 +18,11 @@
 	(y 0))
 
 ([BROWSER_SLOT_NAMES] of  Property_List
-)
+
+	(properties
+		[dataset_ProjectKB_Instance_10183]
+		[dataset_ProjectKB_Instance_10184]
+		[dataset_ProjectKB_Instance_10185]))
 
 ([CLSES_TAB] of  Widget
 
@@ -251,6 +255,21 @@
 ([dataset_ProjectKB_Instance_10145] of  Property_List
 )
 
+([dataset_ProjectKB_Instance_10183] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([dataset_ProjectKB_Instance_10184] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([dataset_ProjectKB_Instance_10185] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
 ([dataset_ProjectKB_Instance_76] of  Widget
 
 	(is_hidden TRUE)
@@ -378,28 +397,28 @@
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_446322_Instance_72] of  Map
+([KB_037935_Instance_72] of  Map
 
 	(entries
-		[KB_446322_Instance_73]
-		[KB_446322_Instance_74]
-		[KB_446322_Instance_75]))
+		[KB_037935_Instance_73]
+		[KB_037935_Instance_74]
+		[KB_037935_Instance_75]))
 
-([KB_446322_Instance_73] of  Map_Entry
+([KB_037935_Instance_73] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([KB_446322_Instance_74] of  Map_Entry
+([KB_037935_Instance_74] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([KB_446322_Instance_75] of  Map_Entry
+([KB_037935_Instance_75] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
@@ -592,7 +611,6 @@
 	(default_facet_metaclass ":STANDARD-FACET")
 	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(default_slot_metaclass ":STANDARD-SLOT")
-	(included_projects "file:/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/kb.pprj")
 	(next_frame_number 0)
 	(options [KB_489810_Instance_3])
 	(property_map [KB_489810_Instance_1])
