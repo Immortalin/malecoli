@@ -17,19 +17,21 @@
 	        	 (:file "kb" :depends-on ())
 	        	 (:file "kb-utility" :depends-on ("kb" "frame")))
                  :depends-on ("package"))
-               (:module xml
+               (:module io
                	:components
-	        	((:file "xml" :depends-on ("pprj"))
-	        	 (:file "pprj" :depends-on ()))
+	        	((:file "io" :depends-on ())
+	        	 (:file "xml" :depends-on ("pprj" "io"))
+	        	 (:file "pprj" :depends-on ("io")))
                  :depends-on ("package" "core"))
-               (:module def
-               	:components
-		       	((:file "kb-def" :depends-on ()))
-                 :depends-on ("package" "core" "kbs"))
-               (:module kbs
-               	:components
-	        	((:file "protege-kb" :depends-on ())
-	        	 (:file "kb-kb" :depends-on ("protege-kb"))
-	        	 )
-                 :depends-on ("package" "core")))
+               ;(:module def
+               ;	:components
+		;       	((:file "kb-def" :depends-on ()))
+                ; :depends-on ("package" "core" "kbs"))
+               ;(:module kbs
+               	;:components
+	        ;	((:file "protege-kb" :depends-on ())
+	       ; 	 (:file "kb-kb" :depends-on ("protege-kb"))
+	        ;	 )
+                ; :depends-on ("package" "core")))
+               )
   :depends-on ("s-xml" "cl-ppcre"))
