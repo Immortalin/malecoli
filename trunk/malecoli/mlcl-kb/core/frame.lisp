@@ -130,24 +130,28 @@ if ERRORP is false, otherwise an error is signalled."
 
 (defun find-cls (frame-des &optional (errorp nil))
   (let ((it (find-frame frame-des errorp)))
-    (if (and it (not (typep it 'cls)))
-        (if errorp (error "Cls designated by ~S does not exist." frame-des) nil))))
+    (if (or (null it) (not (typep it 'cls)))
+        (if errorp (error "Cls designated by ~S does not exist." frame-des) nil))
+    it))
 
 (defun find-slot (frame-des &optional (errorp nil))
   (let ((it (find-frame frame-des errorp)))
-    (if (and it (not (typep it 'slot)))
-        (if errorp (error "Slot designated by ~S does not exist." frame-des) nil))))
+    (if (or (null it) (not (typep it 'slot)))
+        (if errorp (error "Slot designated by ~S does not exist." frame-des) nil))
+    it))
 
 (defun find-facet (frame-des &optional (errorp nil))
   (let ((it (find-frame frame-des errorp)))
-    (if (and it (not (typep it 'facet)))
-        (if errorp (error "Facet designated by ~S does not exist." frame-des) nil))))
-
+    (if (or (null it) (not (typep it 'facet)))
+        (if errorp (error "Facet designated by ~S does not exist." frame-des) nil))
+    it))
+  
 (defun find-simple-instance (frame-des &optional (errorp nil))
   (let ((it (find-frame frame-des errorp)))
-    (if (and it (not (typep it 'simple-instance)))
-        (if errorp (error "Simple Instance designated by ~S does not exist." frame-des) nil))))
-
+    (if (or (null it) (not (typep it 'simple-instance)))
+        (if errorp (error "Simple Instance designated by ~S does not exist." frame-des) nil))
+    it))
+  
 
 ;
 ; values converter

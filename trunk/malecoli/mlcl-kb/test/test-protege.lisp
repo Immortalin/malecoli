@@ -22,7 +22,7 @@
         (lxml nil)
         (genlxml nil))
     (if (null kb)
-        (setf kb (mlcl-kb:make-kb "ciao" :use (list 'mlcl-kbs:kb) :protege-file *output*)))
+        (setf kb (mlcl-kb:make-kb "ciao" :use (list 'mlcl-kbs::protege-kb) :protege-file *output*)))
     (mlcl-kb:kb-clear kb)
     (setf lxml (mlcl-kb::kb-import-from-protege-xml *protege-ex-01* kb))
     (setf genlxml (mlcl-kb::kb-export-to-protege-xml *output* kb))
@@ -31,7 +31,7 @@
     (mlcl-kb:kb-save kb)
     ;(format t "~%~%~A~%~A" lxml genlxml)
     kb))
-
+#|
 (mlcl-kb:def-kb "newpaper" 
                       :use '("PROTEGE-KB") 
                       :protege-file #p"/hardmnt/tharpe0/sra/serra/Work/ONEv0.1/CBR/protege_frame_ontologies/examples/xml/newpaper.xml")
@@ -47,3 +47,4 @@
   (mlcl-kb::kb-element-dump protege-kb:|:ANNOTATION-TEXT| t)
   (mlcl-kb::kb-element-dump protege-kb:|:ROLE| t))
   
+|#
