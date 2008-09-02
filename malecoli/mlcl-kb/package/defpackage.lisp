@@ -1,5 +1,22 @@
-;;;; 2008-08-05 15:59:48
+;;;
+;;; MaLeCoLi
+;;; Copyright (C) 2008 Alessandro Serra
+;;; 
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;;
 
+;;;; 2008-08-05 15:59:48
 
 (in-package :common-lisp-user)
 
@@ -18,7 +35,6 @@
     frame-kb
     frame-own-slot-values-list
     frame-name
-    frame-symbol
     frame-own-slot-values
     frame-own-slot-value
     frame-add-own-slot-value
@@ -78,10 +94,11 @@
     kb-use-list
     kb-protege-file
 
+    kb-create
+    kb-save
     kb-open
     kb-close
     kb-openedp
-    kb-save
         
     kb-import-from-protege
     kb-export-to-protege
@@ -101,14 +118,14 @@
     
     #|
     |#
-    kb-make-cls
-    kb-make-slot
-    kb-make-facet
-    kb-make-simple-instance
-    kb-get-cls
-    kb-get-slot
-    kb-get-facet
-    kb-get-simple-instance
+    make-cls
+    make-slot
+    make-facet
+    make-simple-instance
+    get-cls
+    get-slot
+    get-facet
+    get-simple-instance
 
     #|
     Defs

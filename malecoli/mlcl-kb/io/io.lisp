@@ -30,6 +30,18 @@
       (kb-export-to-protege (kb-protege-file kb) kb t t)
       (error "Protege file does not set for kb ~A." (kb-name kb))))
 
+(defun kb-createdp (&optional (kb *kb*))
+  (check-type kb kb)
+  (if (kb-protege-file kb)
+      (and 
+       (probe-file (merge-pathnames
+                    (make-pathname :type "pprj")
+                    (kb-protege-file kb)))
+       (probe-file (merge-pathnames
+                    (make-pathname :type "xml")
+                    (kb-protege-file kb))))
+      (error "Protege file does not set for kb ~A." (kb-name kb))))
+
 
 ;
 ; protege save
@@ -80,12 +92,16 @@
                               (make-pathname :type "xml")
                               pathname) kb))
 
-(defun kb-export-to-protege (pathname &optional (kb *kb*) (supersedep t) (pprj-supersedep nil))
+(defun kb-export-to-protege (pathname &optional (kb *kb*) (xml-supersedep t) (pprj-supersedep nil))
   (check-type pathname pathname)
   (check-type kb kb)
   (kb-export-to-protege-pprj (merge-pathnames
                               (make-pathname :type "pprj")
-                              pathname) kb :supersedep pprj-supersedep)
+                              pathname) 
+                             (merge-pathnames
+                              (make-pathname :type "xml")
+                              pathname)
+                             kb :supersedep pprj-supersedep)
   (kb-export-to-protege-xml (merge-pathnames
                               (make-pathname :type "xml")
-                              pathname) kb :supersedep supersedep))
+                              pathname) kb :supersedep xml-supersedep))

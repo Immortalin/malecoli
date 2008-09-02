@@ -29,9 +29,9 @@
           (kb-element-definedp element)
           (frame-own-slot-values% element))
   (format strm "  ~A ~A ~A~%" 
-          (instance-has-direct-type element protege-kb:|:STANDARD-SLOT|)
-          (instance-has-type element protege-kb:|:SLOT|)
-          (instance-has-type element protege-kb:|:META-CLASS|)
+          (instance-has-direct-type element protege-kb::|:STANDARD-SLOT|)
+          (instance-has-type element protege-kb::|:SLOT|)
+          (instance-has-type element protege-kb::|:META-CLASS|)
           ))
 
 (defmethod kb-element-dump ((element cls) strm)

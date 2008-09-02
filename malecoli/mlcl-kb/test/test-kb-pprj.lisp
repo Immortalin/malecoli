@@ -9,7 +9,10 @@
 (defun test01 ()
   (let ((kb (or 
              (mlcl-kb:find-kb "A")
-             (mlcl-kb:make-kb "A" :protege-file #p"/tmp/a.pprj" :use-list (list mlcl-kbs:kb)))))
+             (mlcl-kb:make-kb "A" 
+                              :protege-file #p"/tmp/a.pprj" 
+                              :use-list '(mlcl-kbs::protege-kb)))))
+    (if (not (mlcl-kb::kb-createdp kb)) (mlcl-kb:kb-create kb))
     (mlcl-kb:kb-open kb)
     (mlcl-kb:kb-save kb)
     (mlcl-kb:kb-close kb)
@@ -19,6 +22,7 @@
   (let ((kb (or 
              (mlcl-kb:find-kb "B")
              (mlcl-kb:make-kb "B" :use-list (list (mlcl-kb:find-kb "A")) :protege-file #p"/tmp/b.pprj"))))
+    (if (not (mlcl-kb::kb-createdp kb)) (mlcl-kb:kb-create kb))
     (mlcl-kb:kb-open kb)
     (mlcl-kb:kb-save kb)
     (mlcl-kb:kb-close kb)
