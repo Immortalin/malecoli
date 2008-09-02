@@ -27,11 +27,11 @@
                ;	:components
 		;       	((:file "kb-def" :depends-on ()))
                 ; :depends-on ("package" "core" "kbs"))
-               ;(:module kbs
-               	;:components
-	        ;	((:file "protege-kb" :depends-on ())
-	       ; 	 (:file "kb-kb" :depends-on ("protege-kb"))
-	        ;	 )
-                ; :depends-on ("package" "core")))
+               (:module kbs
+               	:components
+	        	((:file "protege-kb" :depends-on ())
+	        	 (:file "protege" :depends-on ("protege-kb"))
+	        	 )
+                 :depends-on ("package" "core"))
                )
   :depends-on ("s-xml" "cl-ppcre"))
