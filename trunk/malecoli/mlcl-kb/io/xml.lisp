@@ -125,6 +125,7 @@
 ; hooks
 
 (defun kb-import-new-element-hook (name attributes seed)
+;  (format t "=> ~A ~%" name)
   (let ((new-seed (make-seed)))
     (cond 
      ((eq name 'protege-ns:|knowledge_base|)
@@ -163,6 +164,7 @@
     new-seed))
 
 (defun kb-import-finish-element-hook (name attributes parent-seed seed)
+;  (format t "<= ~A   ~A~%" name seed)
   (cond 
    ((eq name 'protege-ns:|knowledge_base|)
     nil)
@@ -209,6 +211,7 @@
    (t
     (format t "<== ~A  || ~A  || ~A ~%" name attributes seed)
     (error 'error :message "Error!!")))
+  ;(format t "@~%")
   parent-seed)
 
 (defun kb-import-text-hook (string seed)
