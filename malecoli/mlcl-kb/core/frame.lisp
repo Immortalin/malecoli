@@ -135,6 +135,7 @@ if ERRORP is false, otherwise an error is signalled."
     it))
 
 (defun find-slot (frame-des &optional (errorp nil))
+  (format t "&&& ~A~%" frame-des)
   (let ((it (find-frame frame-des errorp)))
     (if (or (null it) (not (typep it 'slot)))
         (if errorp (error "Slot designated by ~S does not exist." frame-des) nil))
@@ -308,9 +309,9 @@ if ERRORP is false, otherwise an error is signalled."
       (some #'check (cls-direct-superclses cls)))))
   
 ; direct template slot
-(defun (setf cls-direct-template-slots) (slot-des-list slot)
-  (check-type slot slot)
-  (setf (slot-value slot 'direct-template-slots) (mapcar #'find-slot slot-des-list)))
+(defun (setf cls-direct-template-slots) (slot-des-list cls)
+  (check-type cls cls)
+  (setf (slot-value cls 'direct-template-slots) (mapcar #'find-slot slot-des-list)))
 
 (defun cls-add-direct-template-slot (cls slot-des)
   (check-type cls cls)
