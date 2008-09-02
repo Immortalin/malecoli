@@ -67,6 +67,75 @@
 		<template_slot>:ROLE</template_slot>
 		<template_slot>:DOCUMENTATION</template_slot>
 		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
 	</class>
 
 	<class>
@@ -77,6 +146,282 @@
 			<value value_type="string">Concrete</value>
 		</own_slot_value>
 		<superclass>:SLOT</superclass>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
 		<template_slot>:DOCUMENTATION</template_slot>
 		<template_slot>:SLOT-CONSTRAINTS</template_slot>
 		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
@@ -212,6 +557,57 @@
 		<template_slot>kb_version</template_slot>
 		<template_slot>kb_version</template_slot>
 		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+		<template_slot>kb_version</template_slot>
+	</class>
+
+	<class>
+		<name>duration</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>DataType</superclass>
+		<template_slot>duration_day</template_slot>
+		<template_slot>duration_hour</template_slot>
+		<template_slot>duration_minute</template_slot>
+		<template_slot>duration_month</template_slot>
+		<template_slot>duration_second</template_slot>
+		<template_slot>duration_usec</template_slot>
+		<template_slot>duration_year</template_slot>
+	</class>
+
+	<class>
+		<name>date</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>DataType</superclass>
+		<template_slot>time_day</template_slot>
+		<template_slot>time_month</template_slot>
+		<template_slot>time_year</template_slot>
+	</class>
+
+	<class>
+		<name>time</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>DataType</superclass>
+		<template_slot>time_day</template_slot>
+		<template_slot>time_hour</template_slot>
+		<template_slot>time_minute</template_slot>
+		<template_slot>time_month</template_slot>
+		<template_slot>time_sec</template_slot>
+		<template_slot>time_usec</template_slot>
+		<template_slot>time_year</template_slot>
 	</class>
 
 	<class>
@@ -584,11 +980,85 @@
 	</slot>
 
 	<simple_instance>
-		<name>dataset</name>
-		<type>KB</type>
+		<name>dataset_Instance_0</name>
+		<type>duration</type>
 		<own_slot_value>
-			<slot_reference>kb_version</slot_reference>
-			<value value_type="string">0.0.1</value>
+			<slot_reference>duration_day</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_hour</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_minute</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_month</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_second</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_usec</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>duration_year</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+	</simple_instance>
+
+	<simple_instance>
+		<name>dataset_Instance_1</name>
+		<type>date</type>
+		<own_slot_value>
+			<slot_reference>time_day</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_month</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_year</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+	</simple_instance>
+
+	<simple_instance>
+		<name>dataset_Instance_2</name>
+		<type>time</type>
+		<own_slot_value>
+			<slot_reference>time_day</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_hour</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_minute</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_month</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_sec</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_usec</slot_reference>
+			<value value_type="integer">0</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>time_year</slot_reference>
+			<value value_type="integer">0</value>
 		</own_slot_value>
 	</simple_instance>
 </knowledge_base>
