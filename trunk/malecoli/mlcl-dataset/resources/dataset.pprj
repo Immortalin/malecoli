@@ -1,4 +1,4 @@
-; Tue Sep 02 14:57:26 CEST 2008
+; Wed Sep 03 13:27:58 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -20,9 +20,9 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[dataset_ProjectKB_Instance_71]
-		[dataset_ProjectKB_Instance_72]
-		[dataset_ProjectKB_Instance_73]))
+		[dataset_ProjectKB_Instance_20085]
+		[dataset_ProjectKB_Instance_20086]
+		[dataset_ProjectKB_Instance_20087]))
 
 ([CLSES_TAB] of  Widget
 
@@ -44,6 +44,107 @@
 
 ([dataset_ProjectKB_Instance_10] of  Property_List
 )
+
+([dataset_ProjectKB_Instance_10071] of  Widget
+
+	(is_hidden FALSE)
+	(name "Dataset")
+	(property_list [dataset_ProjectKB_Instance_10072])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([dataset_ProjectKB_Instance_10072] of  Property_List
+
+	(properties
+		[dataset_ProjectKB_Instance_10073]
+		[dataset_ProjectKB_Instance_20074]
+		[dataset_ProjectKB_Instance_20078]))
+
+([dataset_ProjectKB_Instance_10073] of  Property_List
+
+	(name "layout properties"))
+
+([dataset_ProjectKB_Instance_10074] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "dataset_name")
+	(property_list [dataset_ProjectKB_Instance_10075])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([dataset_ProjectKB_Instance_10075] of  Property_List
+)
+
+([dataset_ProjectKB_Instance_10076] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "dataset_case_class")
+	(property_list [dataset_ProjectKB_Instance_10077])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsFieldWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([dataset_ProjectKB_Instance_10077] of  Property_List
+)
+
+([dataset_ProjectKB_Instance_10078] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "dataset_version")
+	(property_list [dataset_ProjectKB_Instance_10079])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 200)
+	(y 0))
+
+([dataset_ProjectKB_Instance_10079] of  Property_List
+)
+
+([dataset_ProjectKB_Instance_10080] of  Widget
+
+	(height 200)
+	(is_hidden FALSE)
+	(name "dataset_comment")
+	(property_list [dataset_ProjectKB_Instance_10081])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 400)
+	(x 0)
+	(y 130))
+
+([dataset_ProjectKB_Instance_10081] of  Property_List
+)
+
+([dataset_ProjectKB_Instance_10082] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "dataset_default_target_slot")
+	(property_list [dataset_ProjectKB_Instance_10083])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 200)
+	(x 200)
+	(y 60))
+
+([dataset_ProjectKB_Instance_10083] of  Property_List
+
+	(properties
+		[dataset_ProjectKB_Instance_10084]
+		[dataset_ProjectKB_Instance_10085]))
+
+([dataset_ProjectKB_Instance_10084] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([dataset_ProjectKB_Instance_10085] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
 
 ([dataset_ProjectKB_Instance_11] of  Widget
 
@@ -92,6 +193,75 @@
 
 ([dataset_ProjectKB_Instance_20] of  Property_List
 )
+
+([dataset_ProjectKB_Instance_20074] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "dataset_info")
+	(property_list [dataset_ProjectKB_Instance_20075])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([dataset_ProjectKB_Instance_20075] of  Property_List
+
+	(properties
+		[dataset_ProjectKB_Instance_20076]
+		[dataset_ProjectKB_Instance_20077]))
+
+([dataset_ProjectKB_Instance_20076] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([dataset_ProjectKB_Instance_20077] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([dataset_ProjectKB_Instance_20078] of  Widget
+
+	(height 420)
+	(is_hidden FALSE)
+	(name "dataset_case")
+	(property_list [dataset_ProjectKB_Instance_20079])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([dataset_ProjectKB_Instance_20079] of  Property_List
+
+	(properties
+		[dataset_ProjectKB_Instance_20080]
+		[dataset_ProjectKB_Instance_20081]))
+
+([dataset_ProjectKB_Instance_20080] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([dataset_ProjectKB_Instance_20081] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([dataset_ProjectKB_Instance_20085] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([dataset_ProjectKB_Instance_20086] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([dataset_ProjectKB_Instance_20087] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
 
 ([dataset_ProjectKB_Instance_21] of  Widget
 
@@ -342,20 +512,26 @@
 ([dataset_ProjectKB_Instance_70] of  Property_List
 )
 
-([dataset_ProjectKB_Instance_71] of  String
+([dataset_ProjectKB_Instance_71] of  Widget
 
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
+	(is_hidden FALSE)
+	(name "DatasetInfo")
+	(property_list [dataset_ProjectKB_Instance_72])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
 
-([dataset_ProjectKB_Instance_72] of  String
+([dataset_ProjectKB_Instance_72] of  Property_List
 
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
+	(properties
+		[dataset_ProjectKB_Instance_73]
+		[dataset_ProjectKB_Instance_10074]
+		[dataset_ProjectKB_Instance_10076]
+		[dataset_ProjectKB_Instance_10078]
+		[dataset_ProjectKB_Instance_10080]
+		[dataset_ProjectKB_Instance_10082]))
 
-([dataset_ProjectKB_Instance_73] of  String
+([dataset_ProjectKB_Instance_73] of  Property_List
 
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
+	(name "layout properties"))
 
 ([dataset_ProjectKB_Instance_8] of  Property_List
 )
@@ -396,6 +572,9 @@
 ([INSTANCES_TAB] of  Widget
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([KB_191517_Instance_0] of  Map
+)
 
 ([KB_489810_Instance_0] of  String
 
@@ -502,9 +681,6 @@
 	(name "source_file_name")
 	(string_value "dataset.xml"))
 
-([KB_729968_Instance_0] of  Map
-)
-
 ([LAYOUT_PROPERTIES] of  Property_List
 
 	(name "layout properties")
@@ -577,9 +753,11 @@
 
 	(browser_slot_names [BROWSER_SLOT_NAMES])
 	(customized_instance_widgets
+		[dataset_ProjectKB_Instance_71]
 		[STANDARD_SLOT_FORM_WIDGET]
 		[STANDARD_CLASS_FORM_WIDGET]
 		[STANDARD_FACET_FORM_WIDGET]
+		[dataset_ProjectKB_Instance_10071]
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
 		[PAL_FORM_WIDGET])
 	(default_cls_metaclass ":STANDARD-CLASS")

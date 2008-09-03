@@ -5,7 +5,6 @@
 (setf *arff-01* #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/arff/UCI/autos.arff")
 
 (defun test01 ()
-  (format t "begin~%~%")
   (mlcl-dataset::arff-import *arff-01*))
 
   

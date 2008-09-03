@@ -100,7 +100,9 @@
   (string->type-value (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)))
 
 (defun (setf slot-value-type) (val slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|) val))
+  (if (listp val)
+      (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|) val)
+      (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|) val)))
 
 (defun slot-minimum-cardinality (slot)
   (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-MINIMUM-CARDINALITY|))

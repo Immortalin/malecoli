@@ -169,7 +169,8 @@ if ERRORP is false, otherwise an error is signalled."
         (progn
           (setf (slot-value kb 'interned-elements) (delete el (slot-value kb 'interned-elements))))
         (progn
-          (setf it (intern (kb-element-name el) (kb-package kb)))))
+          (setf it (intern (kb-element-name el) (kb-package kb)))
+          (export it (kb-package kb))))
     (setf (symbol-value it) el)
     (push (symbol-value it) (slot-value kb 'interned-elements))
     (symbol-value it)))
@@ -180,6 +181,7 @@ if ERRORP is false, otherwise an error is signalled."
   (let* ((kb (find-kb kb-des))
          (it (element-name->symbol (kb-element-name el) kb)))
     (setf (symbol-value it) nil)
+    (unexport it (kb-package kb))
     (unintern it (kb-package kb))
     (setf (slot-value kb 'interned-elements) (delete el (slot-value kb 'interned-elements)))))
 
