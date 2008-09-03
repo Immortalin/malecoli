@@ -43,10 +43,10 @@
           (if (kb-protege-file k)
               (setf included-projects-line
                     (concatenate 'string included-projects-line
-                                 (format nil "included_projects \"~a\"" 
+                                 (format nil "\"~a\"" 
                                          (file-namestring (merge-pathnames
-                                          (make-pathname :type "pprj")
-                                          (kb-protege-file k))))))))
+                                                           (make-pathname :type "pprj")
+                                                           (kb-protege-file k))))))))
         (with-open-file (in *empty-pprj-pathname* :direction :input)
                         (with-open-file (out pathname :direction :output :if-exists :supersede)
                                         (do ((line (read-line in nil)
@@ -54,7 +54,7 @@
                                             ((null line))
                                           (if included-projects-line 
                                               (setf line (cl-ppcre:regex-replace "next_frame_number" line
-                                                                                 (format nil "~A)~%	~A" included-projects-line "(next_frame_number"))))
+                                                                                 (format nil "included_projects ~A)~%	~A" included-projects-line "(next_frame_number"))))
                                           (setf line (cl-ppcre:regex-replace "empty\.xml" line
                                                                              (format nil "~A" (file-namestring xml-file))))
                                           (write-line line out)))))))

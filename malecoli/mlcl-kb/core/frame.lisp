@@ -122,7 +122,7 @@ if ERRORP is false, otherwise an error is signalled."
               (if (and (boundp frame-des) (typep (symbol-value frame-des) 'frame))
                   (symbol-value frame-des)
                   (if errorp (error "Frame designated by ~S does not exist." frame-des) nil)))
-             (string 
+             (string              
               (let ((fr (element-name->symbol frame-des)))
                 (if (boundp fr)
                     (symbol-value fr)
@@ -135,7 +135,6 @@ if ERRORP is false, otherwise an error is signalled."
     it))
 
 (defun find-slot (frame-des &optional (errorp nil))
-  (format t "&&& ~A~%" frame-des)
   (let ((it (find-frame frame-des errorp)))
     (if (or (null it) (not (typep it 'slot)))
         (if errorp (error "Slot designated by ~S does not exist." frame-des) nil))
