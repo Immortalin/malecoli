@@ -14,7 +14,7 @@
     (if (null kb)
         (progn
           (setf kb (mlcl-kb:make-kb fn
-                                    :use-list '(mlcl-kbs::DATASET-KB)
+                                    :use-list '(mlcl-kbs::DATASET-KB mlcl-kbs::protege-kb)
                                     :protege-file (merge-pathnames
                                                    (make-pathname 
                                                     :directory '(:relative "mlcl-tmp")
@@ -25,7 +25,7 @@
     (if (null kbd)
         (progn
           (setf kbd (mlcl-kb:make-kb fnd
-                                    :use-list (list 'mlcl-kbs::DATASET-KB kb)
+                                    :use-list (list 'mlcl-kbs::DATASET-KB 'mlcl-kbs::protege-kb kb)
                                     :protege-file (merge-pathnames
                                                    (make-pathname 
                                                     :directory '(:relative "mlcl-tmp")
@@ -43,7 +43,7 @@
                       (arff-import-data relation-name attributes strm kbd)))
     (mlcl-kb:kb-save kb)
     (mlcl-kb:kb-save kbd)
-    kb))
+    (values kb kbd)))
 
 
 ;
@@ -112,6 +112,7 @@
                         (declare (ignore seed))
                         nil)
                     #'(lambda (seed attr val) 
+                        ;(format t "&&& ~A  ~A~%" (car attr) val) 
                         (if (not (string-equal val "?"))
                             (let ((valc val))
                               (cond 
@@ -147,10 +148,12 @@
                                                 ("\\s*((\\w+)|\"(.*)\")\\s*" (second line)) 
                                                 (or v1 v2))))
        ((string-equal (first line) "attribute")
-        (push (cl-ppcre:register-groups-bind (nil v1 v2 nil v3 v4) 
-                                             ("\\s*(([\\w-]+)|\"(.*)\")\\s*((\\w+)|{(.*)})" (second line)) 
-                                             (cons (or v1 v2) (arff-read-type v3 v4)))
+        (push (cl-ppcre:register-groups-bind (nil v1 v2 v3 nil v4 v5) 
+                                             ("\\s*('([^']+)'|([\\w-']+)|\"([^\"]+)\")\\s*((\\w+)|{([^}]*)})" (second line)) 
+                                             (cons (or v1 v2 v3) (arff-read-type v4 v5)))
               attributes))))      
+    ;(format t "~{#~a~%~}~% " attributes)
+    ;(format t "### ~{~a~%~}~% " comments)
     (setf comments (nreverse comments))
     (setf attributes (nreverse attributes))
     (values relation-name attributes comments)))
@@ -166,12 +169,17 @@
       (progn
         (let ((vals (cl-ppcre:split "(\\s*,\\s*)" v4)))
           (setf (car vals) (string-left-trim " " (car vals)))
+          (do ((v vals (cdr v)))
+              ((null v) nil)
+            (setf (car v) (string-trim " " (car v)))
+            (setf (car v) (string-trim "'" (car v))))
           (list 'nominal vals)))))
+
 
 (defun arff-read-header-line (strm)
   (let ((line (read-line strm nil))
         (it nil))
-    (setf it (cl-ppcre:register-groups-bind (v1) ("%(.+)$" line) v1))
+    (setf it (cl-ppcre:register-groups-bind (v1) ("((^%(.*)$)|(^\\s*$))" line) v1))
     (if it 
         (list "%" it)
         (progn
@@ -204,7 +212,14 @@
     (if (null line)
         nil
         (progn
-          (setf it (cl-ppcre:register-groups-bind (v1) ("%(.*)$" line) v1))
+          ;(format t "line= ~A~%" line)
+          (setf it (cl-ppcre:register-groups-bind (v1) ("((%.*$)|(^\\s*$))" line) v1))
           (if it 
-              (list "%" it)              
-              (cons 'values (cl-ppcre:split "[#\,\\s]" line)))))))
+              (list 'comment it)
+              (let ((vals (cl-ppcre:split #\, line)))
+                (do ((v vals (cdr v)))
+                    ((null v) nil)
+                  (setf (car v) (string-trim "'" (car v))))  
+                (cons 'values vals)))))))
+              
+              

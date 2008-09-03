@@ -99,6 +99,7 @@
     kb-open
     kb-close
     kb-openedp
+    kb-createdp
         
     kb-import-from-protege
     kb-export-to-protege
