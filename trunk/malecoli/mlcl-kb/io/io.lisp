@@ -26,9 +26,14 @@
 
 (defun kb-create (&optional (kb *kb*))
   (check-type kb kb)
-  (if (kb-protege-file kb)
-      (kb-export-to-protege (kb-protege-file kb) kb t t)
-      (error "Protege file does not set for kb ~A." (kb-name kb))))
+  (if (not (kb-openedp kb))
+      (progn
+        (dolist (ukb (kb-use-list kb))
+          (kb-open ukb))
+        (if (kb-protege-file kb) 
+            (kb-export-to-protege (kb-protege-file kb) kb t t)
+            (error "Protege file does not set for kb ~A." (kb-name kb)))
+        (setf (kb-openedp kb) t))))
 
 (defun kb-createdp (&optional (kb *kb*))
   (check-type kb kb)

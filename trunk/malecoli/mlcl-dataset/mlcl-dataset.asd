@@ -19,8 +19,9 @@
 	        	((:file "defpackage" :depends-on ())))
                (:module dataset
                	:components
-	        	((:file "dataset" :depends-on ()))
-                 :depends-on ("package"))
+	        	((:file "dataset" :depends-on ())
+	        	 (:file "dataset-case" :depends-on ()))
+                 :depends-on ("package" "kb"))
                (:module kb
                 :components
 	        	((:file "dataset-kb" :depends-on ()))

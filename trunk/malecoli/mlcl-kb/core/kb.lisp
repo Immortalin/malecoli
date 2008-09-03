@@ -125,9 +125,10 @@ if ERRORP is false, otherwise an error is signalled."
       (let ((it (element-name->symbol (kb-element-name el) kb)))
         (if it
             (progn
-              (setf (symbol-value it) nil)
-              (unintern it (slot-value kb 'package))))))
-    (setf (slot-value kb 'interned-elements) nil)))
+              ;(setf (symbol-value it) nil))))))
+              ;(unintern it (slot-value kb 'package))))))
+              ))))))
+    ;(setf (slot-value kb 'interned-elements) nil)))
 
 ; using other kbs
 (defun use-kb (kb-to-use-des &optional (kb-des *kb*))
@@ -165,7 +166,7 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type el kb-element)
   (let* ((kb (find-kb kb-des))
          (it (element-name->symbol (kb-element-name el) kb)))
-    (if it
+    (if (and it (boundp it))
         (progn
           (setf (slot-value kb 'interned-elements) (delete el (slot-value kb 'interned-elements))))
         (progn

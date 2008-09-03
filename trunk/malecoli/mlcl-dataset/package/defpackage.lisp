@@ -29,5 +29,8 @@
     dataset-name
     dataset-kb
     
+    
+    |DatasetCase|
+    |DatasetThing|
    ))
 
