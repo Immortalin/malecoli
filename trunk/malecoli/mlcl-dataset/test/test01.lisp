@@ -22,6 +22,17 @@
 
 (defun test02 ()
   (test-ds-one "zoo"))
+#|
+  (clsql:create-view-from-class 'zoo-ds::|zoo-case|))
+  (let ((v11 (make-instance '|zoo-ds|::|zoo-case| :case-id 2))
+        (v22 (make-instance '|zoo-ds|::|zoo-case| :case-id 1)))
+    (setf (|zoo-ds|::|zoo-type| v11) "ciaoo!!!")
+    (setf (|zoo-ds|::|zoo-type| v22) "ciaoo")
+    (clsql:update-records-from-instance v11)
+    (clsql:update-records-from-instance v22)
+(mapcar #'(lambda (x) (|zoo-ds|::|zoo-type| (car x))) (clsql:select '|zoo-ds|::|zoo-case| :refresh t )))
+
+  |#  
 
 (defun test-all ()
   (dolist (arff UCI-arffs)
@@ -48,5 +59,10 @@
                                               (make-pathname 
                                                :directory '(:relative "mlcl-tmp")
                                                :name arff)
-                                              UCI-dir))))))
+                                              UCI-dir))))
+    (mlcl-dataset::dataset-import-data ds (merge-pathnames
+                             (make-pathname 
+                              :directory '(:relative "mlcl-tmp")
+                              :name (format nil "~A-data" arff))
+                             UCI-dir))))
   
