@@ -2,18 +2,23 @@
 
 (in-package :clone-ml)
 
-(progn
-  (defvar *gare-instances-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*gare-instances-kb-pathname*))
-        (setq *gare-instances-kb-pathname*            
-              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.xml"))))
+(defvar *gare-instances-kb-pathname*)
 
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "GARE-INSTANCES-KB"))
+      (progn
+        (setf *gare-instances-kb-pathname*            
+              ;#-sbcl (merge-pathnames
+              ;        (make-pathname
+              ;         :directory '(:relative ".." "resources")
+              ;         :name "cbr" :type "xml" :case :local)
+              ;        *load-truename*)
+              ;#+sbcl 
+              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.xml")
+        (mlcl-kb:make-kb "GARE-INSTANCES-KB" 
+                         :use-list '(mlcl-kbs::protege-kb
+                                     mlcl-kbs::dataset-kb  
+                                     mlcl-kbs::negotiation-kb 
+                                     mlcl-kbs::gare-kb) :protege-file *gare-instances-kb-pathname*))))
 
-(mlcl-kb:def-kb "GARE-INSTANCES-KB"
-                :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::negotiation-kb mlcl-kbs::gare-kb)
-                :protege-file *gare-instances-kb-pathname*
-                :autoload nil)
-
-(mlcl-kb:in-kb "GARE-INSTANCES-KB")                 
 

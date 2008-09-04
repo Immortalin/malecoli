@@ -15,7 +15,7 @@
                	:components
 	        	((:file "negotiation-kb" :depends-on ())
 	        	 (:file "onenegotiation-kb" :depends-on ("negotiation-kb"))
-	        	 (:file "gare-kb" :depends-on ("negotiation-kb"))	
+	       		 (:file "gare-kb" :depends-on ("negotiation-kb"))	
   	        	 (:file "gare-instances-kb" :depends-on ("gare-kb" "negotiation-kb")))
                  :depends-on ("package"))
                (:module gare
@@ -28,5 +28,6 @@
 	        	 (:file "model-kb" :depends-on ("model"))
 	        	 (:file "xml" :depends-on ("model" "model-kb"))
 	        	 (:file "model2protege" :depends-on ("model" "model-kb")))
-                 :depends-on ("package" "kb")))
+                 :depends-on ("package" "kb"))
+               )
   :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-cbr"))

@@ -3,34 +3,25 @@
 
 (in-package :clone-ml)
 
-(progn
-  (defvar *gare-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL)
-    (if (null (boundp '*gare-kb-pathname*))
-        (setq *gare-kb-pathname*            
-              #-sbcl (merge-pathnames
-                      (make-pathname
-                       :directory '(:relative ".." "resources")
-                       :name "gare" :type "xml" :case :local)
-                      *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/gare.xml")))
-  (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*gare-kb-pathname*))
-        (setq *gare-kb-pathname*            
+(defvar *gare-kb-pathname*)
+
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "GARE-KB"))
+      (progn
+        (setf *gare-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
                        :directory '(:relative ".." "resources")
                        :name "gare" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/gare.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/gare.xml")
+        (mlcl-kb:make-kb "GARE-KB" 
+                         :use-list '(mlcl-kbs::protege-kb 
+                                     mlcl-kbs::dataset-kb 
+                                     mlcl-kbs::negotiation-kb) :protege-file *gare-kb-pathname*))))
 
 
-(mlcl-kb:def-kb "GARE-KB"
-                :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::negotiation-kb)
-                :protege-file *gare-kb-pathname*)
-
-(mlcl-kb:in-kb "GARE-KB")                      
-                      
+#|               
 (mlcl-kb:def-cls-ref "gare_category")
 (mlcl-kb:def-slot-ref "gare_category_code")
 (mlcl-kb:def-slot-ref "gare_category_business_area")
@@ -68,3 +59,4 @@
 (mlcl-kb:def-slot-ref "gare_protocol_laws")
 (mlcl-kb:def-slot-ref "gare_protocol_procedure")
 
+|#

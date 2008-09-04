@@ -26,7 +26,9 @@
       (if (null kb)
           (setf kb (make-model-kb (model-name model) (model-version model)))
           (mlcl-kb:kb-clear kb))
+      (format t "--> save ~%")
       (convert-one-model model kb)
+      (format t "--> save ~%")
       (kb-save kb)
       kb)))
 

@@ -2,32 +2,25 @@
 
 (in-package :clone-ml)
 
-(progn
-  (defvar *onenegotiation-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL)
-    (if (null (boundp '*onenegotiation-kb-pathname*))
-        (setq *onenegotiation-kb-pathname*            
-              #-sbcl (merge-pathnames
-                      (make-pathname
-                       :directory '(:relative ".." "resources")
-                       :name "onenegotiation" :type "xml" :case :local)
-                      *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml")))
-  (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*onenegotiation-kb-pathname*))
-        (setq *onenegotiation-kb-pathname*            
+(defvar *onenegotiation-kb-pathname*)
+
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "ONENEGOTIATION-KB"))
+      (progn
+        (setf *onenegotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
                        :directory '(:relative ".." "resources")
                        :name "onenegotiation" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml")
+        (mlcl-kb:make-kb "ONENEGOTIATION-KB" 
+                         :use-list '(mlcl-kbs::protege-kb 
+                                     mlcl-kbs::dataset-kb 
+                                     mlcl-kbs::negotiation-kb) :protege-file *onenegotiation-kb-pathname*))))
 
-(mlcl-kb:def-kb "ONENEGOTIATION-KB"
-                :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::negotiation-kb) 
-                :protege-file *onenegotiation-kb-pathname*)
 
-(mlcl-kb:in-kb "ONENEGOTIATION-KB")
+#|
 
 (mlcl-kb:def-cls-ref "one_model")
 
@@ -43,3 +36,4 @@
 (mlcl-kb:def-cls-ref "one_image")
 (mlcl-kb:def-cls-ref "one_binary_document")
 
+|#
