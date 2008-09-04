@@ -81,9 +81,17 @@
   (make-instance 'dataset :name name :pathname pathname))
 
 (defun dataset-import-data (dataset pathname)
-  (let ((kb (or (mlcl-kb:find-kb (pathname-name pathname))
-                (mlcl-kb:make-kb (pathname-name pathname) 
-                             :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb (dataset-kb dataset))
-                             :protege-file pathname))))
+  (let* ((name (pathname-name pathname))
+         (kb (or (mlcl-kb:find-kb name)
+                 (mlcl-kb:make-kb name
+                                  :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb (dataset-kb dataset))
+                                  :protege-file pathname))))
     (mlcl-kb:kb-open kb)
-    (dataset-generate-lisp-file (dataset-name dataset) pathname kb)))
+    (dataset-generate-lisp-file (dataset-name dataset) pathname kb)
+    (compile-file (merge-pathnames
+                   (make-pathname :type "lisp")
+                   pathname))
+    (load (merge-pathnames
+           (make-pathname :type nil)
+           pathname))
+    (funcall (find-symbol "INIT-DATASET" (find-package (format nil "~A-ds" (dataset-name dataset)))))))

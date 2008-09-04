@@ -1,17 +1,32 @@
 ;;;; Created on 2008-08-26 11:52:30
 
 (defvar *arff-01*)
+#|
+(defvar UCI-arffs '("anneal" 
+                    "anneal.ORIG" "audiology" "autos"
+                    "balance-scale" "breast-cancer" "breast-w"
+                    "colic" "colic.ORIG" "credit-a" "credit-g"
+                    "diabetes" "glass" "heart-c" "heart-h"
+                    "heart-statlog" "hepatitis" "hypothyroid"
+                    "ionosphere" "iris" "kr-vs-kp" "labor"
+                    "letter" "lymph" "mushroom" "primary-tumor"
+                    "segment" "sick" "sonar" "soybean" "splice"
+                    "vehicle" "vote" "vowel" "waveform-5000" 
+                    "zoo"))
+|#
 
-(defvar UCI-arffs '("anneal" "anneal.ORIG" "audiology" "autos"
-                           "balance-scale" "breast-cancer" "breast-w"
-                           "colic" "colic.ORIG" "credit-a" "credit-g"
-                           "diabetes" "glass" "heart-c" "heart-h"
-                           "heart-statlog" "hepatitis" "hypothyroid"
-                           "ionosphere" "iris" "kr-vs-kp" "labor"
-                           "letter" "lymph" "mushroom" "primary-tumor"
-                           "segment" "sick" "sonar" "soybean" "splice"
-                           "vehicle" "vote" "vowel" "waveform-5000" 
-                           "zoo"))
+(defvar UCI-arffs '(
+                    "audiology" "autos"
+                    "balance-scale" "breast-cancer" "breast-w"
+                    "colic" "colic.ORIG" "credit-a" "credit-g"
+                    "diabetes" "glass" "heart-c" "heart-h"
+                    "heart-statlog" "hepatitis" "hypothyroid"
+                    "ionosphere" "iris" "kr-vs-kp" "labor"
+                    "letter" "lymph" "mushroom" "primary-tumor"
+                    "segment" "sick" "sonar" "soybean" "splice"
+                    "vehicle" "vote" "vowel" "waveform-5000" 
+                    "zoo"))
+
 
 (defvar UCI-dir #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/arff/UCI/")
  
@@ -22,6 +37,9 @@
 
 (defun test02 ()
   (test-ds-one "zoo"))
+(defun test03 ()
+  (test-ds-one "audiology")
+  )
 #|
   (clsql:create-view-from-class 'zoo-ds::|zoo-case|))
   (let ((v11 (make-instance '|zoo-ds|::|zoo-case| :case-id 2))
@@ -41,7 +59,7 @@
 (defun test-one (arff)
   (format t "@@ ~A~%" arff)
   (multiple-value-bind 
-    (kb kbd) (mlcl-dataset::arff-import (merge-pathnames
+    (kb kbd) (mlcl-dataset::arff->dataset-kb (merge-pathnames
                                          (make-pathname 
                                           :name arff
                                           :type "arff")
@@ -65,4 +83,5 @@
                               :directory '(:relative "mlcl-tmp")
                               :name (format nil "~A-data" arff))
                              UCI-dir))))
+;    (clsql:select '|~A-ds|::|~A-case| :refresh t))
   
