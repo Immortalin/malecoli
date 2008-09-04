@@ -1,13 +1,31 @@
+;;;
+;;; MaLeCoLi
+;;; Copyright (C) 2008 Alessandro Serra
+;;; 
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;;
+
 ;;;; Created on 2008-08-26 09:57:12
 
 (in-package :mlcl-dataset)
 
 ;
-; import
+; convert an arff file into two dataset kbes
 ;
 
-(defun arff-import (pathname)
-  (let* ((fn (pathname-name pathname))
+(defun arff->dataset-kb (arff-pathname)
+  (let* ((fn (pathname-name arff-pathname))
          (fnd (format nil "~A-data" fn))
          (kb (mlcl-kb:find-kb fn))
          (kbd (mlcl-kb:find-kb fnd)))
@@ -19,9 +37,8 @@
                                                    (make-pathname 
                                                     :directory '(:relative "mlcl-tmp")
                                                     :type "xml")
-                                                   pathname)))
-          (mlcl-kb:kb-create kb))
-          (mlcl-kb:kb-clear kb))
+                                                   arff-pathname)))
+          (mlcl-kb:kb-create kb)))
     (if (null kbd)
         (progn
           (setf kbd (mlcl-kb:make-kb fnd
@@ -31,20 +48,24 @@
                                                     :directory '(:relative "mlcl-tmp")
                                                     :name fnd
                                                     :type "xml")
-                                                   pathname)))
-          (mlcl-kb:kb-create kbd))
-          (mlcl-kb:kb-clear kbd))
-        
+                                                   arff-pathname)))
+          (mlcl-kb:kb-create kbd)))
     (mlcl-kb:kb-open kb)
     (mlcl-kb:kb-open kbd)
-    (with-open-file (strm pathname)
-                    (multiple-value-bind (relation-name attributes comments) (arff-read-header strm)
-                      (arff-import-header relation-name attributes comments kb)
-                      (arff-import-data relation-name attributes strm kbd)))
+    (arff-import arff-pathname kb kbd)
     (mlcl-kb:kb-save kb)
     (mlcl-kb:kb-save kbd)
     (values kb kbd)))
 
+;
+; import
+;
+
+(defun arff-import (pathname kb kbd)
+  (with-open-file (strm pathname)
+                  (multiple-value-bind (relation-name attributes comments) (arff-read-header strm)
+                    (arff-import-header relation-name attributes comments kb)
+                    (arff-import-data relation-name attributes strm kbd))))
 
 ;
 ; import arff header
@@ -85,7 +106,9 @@
       (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_comment| (format nil "~{~a~%~}" comments))
       (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_case_class| cacl)
       (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_default_target_slot| (first slots)))))
-      
+
+
+;      
 ; import arff data
 ;
 
@@ -112,7 +135,6 @@
                         (declare (ignore seed))
                         nil)
                     #'(lambda (seed attr val) 
-                        ;(format t "&&& ~A  ~A~%" (car attr) val) 
                         (if (not (string-equal val "?"))
                             (let ((valc val))
                               (cond 
@@ -127,6 +149,7 @@
                                ((eq (cdr attr) 'date)
                                 (setf valc nil)))
                               (mlcl-kb:frame-add-own-slot-value seed (format nil "~A-~A" relation-name (car attr)) valc)))))))
+
 
 ;
 ; read arff header
@@ -152,8 +175,6 @@
                                              ("\\s*('([^']+)'|([\\w-']+)|\"([^\"]+)\")\\s*((\\w+)|{([^}]*)})" (second line)) 
                                              (cons (or v1 v2 v3) (arff-read-type v4 v5)))
               attributes))))      
-    ;(format t "~{#~a~%~}~% " attributes)
-    ;(format t "### ~{~a~%~}~% " comments)
     (setf comments (nreverse comments))
     (setf attributes (nreverse attributes))
     (values relation-name attributes comments)))
@@ -175,7 +196,6 @@
             (setf (car v) (string-trim "'" (car v))))
           (list 'nominal vals)))))
 
-
 (defun arff-read-header-line (strm)
   (let ((line (read-line strm nil))
         (it nil))
@@ -187,7 +207,6 @@
           (if it
               it
               nil)))))
-
 
 
 ;
@@ -212,7 +231,6 @@
     (if (null line)
         nil
         (progn
-          ;(format t "line= ~A~%" line)
           (setf it (cl-ppcre:register-groups-bind (v1) ("((%.*$)|(^\\s*$))" line) v1))
           (if it 
               (list 'comment it)

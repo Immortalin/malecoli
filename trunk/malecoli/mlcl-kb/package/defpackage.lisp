@@ -75,7 +75,7 @@
     
     make-slot-value%
     slot-value%-slot
-    slot-value%-values
+    slot-value%-vals
     
     make-facet-value%
     facet-value%-slot
