@@ -2,32 +2,23 @@
 
 (in-package :clone-ml)
 
-(progn
-  (defvar *negotiation-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL)
-    (if (null (boundp '*negotiation-kb-pathname*))
-        (setq *negotiation-kb-pathname*            
-              #-sbcl (merge-pathnames
-                      (make-pathname
-                       :directory '(:relative ".." "resources")
-                       :name "negotiation" :type "xml" :case :local)
-                      *compile-file-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml")))
-  (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*negotiation-kb-pathname*))
-        (setq *negotiation-kb-pathname*            
+
+(defvar *negotiation-kb-pathname*)
+
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "NEGOTIATION-KB"))
+      (progn
+        (setf *negotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
                        :directory '(:relative ".." "resources")
                        :name "negotiation" :type "xml" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml"))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml")
+        (mlcl-kb:make-kb "NEGOTIATION-KB" 
+                         :use-list '(mlcl-kbs::protege-kb mlcl-kbs::dataset-kb) :protege-file *negotiation-kb-pathname*))))
 
-(mlcl-kb:def-kb "NEGOTIATION-KB"
-                :use (list mlcl-kbs::PROTEGE-KB mlcl-kbs::dataset-kb) 
-                :protege-file *negotiation-kb-pathname*)
-
-(mlcl-kb:in-kb "NEGOTIATION-KB")
+#|
 
 (mlcl-kb:def-cls-ref "neg_case")
 (mlcl-kb:def-cls-ref "neg_date")
@@ -49,3 +40,4 @@
 (mlcl-kb:def-slot-ref "neg_model_id")
 (mlcl-kb:def-slot-ref "neg_model_version")
 
+|#
