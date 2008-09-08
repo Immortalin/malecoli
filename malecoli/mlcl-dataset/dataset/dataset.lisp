@@ -93,12 +93,12 @@
                                   :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb (dataset-kb dataset))
                                   :protege-file pathname))))
     (mlcl-kb:kb-open kb)
-    (dataset-generate-lisp-file dataset pathname kb)
-    (compile-file (merge-pathnames
-                   (make-pathname :type "lisp")
-                   pathname))
-    (load (merge-pathnames
-           (make-pathname :type nil)
-           pathname))
-    (funcall (find-symbol "INIT-DATASET" (find-package (format nil "~A-ds" (dataset-name dataset)))))
+;    (dataset-generate-lisp-file dataset pathname kb)
+;    (compile-file (merge-pathnames
+;                   (make-pathname :type "lisp")
+;                   pathname))
+;    (load (merge-pathnames
+;           (make-pathname :type nil)
+;           pathname))
+;    (funcall (find-symbol "INIT-DATASET" (find-package (format nil "~A-ds" (dataset-name dataset)))))
     (dataset-generate-simple-instances dataset kb)))

@@ -22,7 +22,9 @@
                     "diabetes" "glass" "heart-c" "heart-h"
                     "heart-statlog" "hepatitis" "hypothyroid"
                     "ionosphere" "iris" "kr-vs-kp" "labor"
-                    "letter" "lymph" "mushroom" "primary-tumor"
+                    "letter" "lymph" 
+                    "mushroom" 
+                    "primary-tumor"
                     "segment" "sick" "sonar" "soybean" "splice"
                     "vehicle" "vote" "vowel" "waveform-5000" 
                     "zoo"))
