@@ -25,6 +25,10 @@
     :READER dataset-name
     :INITARG :name
     :TYPE string)
+   (package
+    :READER dataset-package
+    :INITARG :package
+    :TYPE package)
    (pathname 
     :READER dataset-pathname
     :INITARG :pathname
@@ -39,6 +43,8 @@
 
 (defmethod initialize-instance :after ((dataset dataset) &rest initargs)
   (declare (ignore initargs))
+  (setf (slot-value dataset 'package) (or (find-package (format nil "~A-ds" (dataset-name dataset))) 
+                                          (make-package (format nil "~A-ds" (dataset-name dataset)) :use '(:cl :mlcl-kb :mlcl-dataset :clsql))))
   (setf (slot-value dataset 'kb) (or (mlcl-kb:find-kb (dataset-name dataset))
                                      (mlcl-kb:make-kb 
                                       (dataset-name dataset)
@@ -56,7 +62,7 @@
                    (dataset-pathname dataset))))
     (if (not (probe-file lispfile))
         (progn
-          (dataset-generate-lisp-file (dataset-name dataset) (dataset-pathname dataset) (dataset-kb dataset))
+          (dataset-generate-lisp-file dataset (dataset-pathname dataset) (dataset-kb dataset))
           (compile-file lispfile)
           (load (merge-pathnames
                  (make-pathname :type nil)
@@ -87,11 +93,12 @@
                                   :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb (dataset-kb dataset))
                                   :protege-file pathname))))
     (mlcl-kb:kb-open kb)
-    (dataset-generate-lisp-file (dataset-name dataset) pathname kb)
+    (dataset-generate-lisp-file dataset pathname kb)
     (compile-file (merge-pathnames
                    (make-pathname :type "lisp")
                    pathname))
     (load (merge-pathnames
            (make-pathname :type nil)
            pathname))
-    (funcall (find-symbol "INIT-DATASET" (find-package (format nil "~A-ds" (dataset-name dataset)))))))
+    (funcall (find-symbol "INIT-DATASET" (find-package (format nil "~A-ds" (dataset-name dataset)))))
+    (dataset-generate-simple-instances dataset kb)))

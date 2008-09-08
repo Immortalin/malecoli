@@ -20,25 +20,12 @@
 
 (in-package :mlcl-dataset)
 
-(defun dataset-generate-lisp-file (name pathname kb)
+(defun dataset-generate-lisp-file (dataset pathname kb)
   (let ((lispfile (merge-pathnames
                    (make-pathname :type "lisp")
                    pathname)))
     (with-open-file (strm lispfile :direction :output :if-exists :supersede)
-                    (compile-header name strm)
-                    (mlcl-kb:kb-open kb)
-                    (let ((cls-list)
-                          (si-list))
-                      (dolist (el (mlcl-kb:kb-interned-elements kb))
-                        (if (and (typep el 'mlcl-kb:cls) 
-                                 (mlcl-kb:cls-has-supercls el 'dataset-kb::|DatasetThing|))
-                            (push el cls-list))
-                        (if (and (typep el 'mlcl-kb:simple-instance) 
-                                 (mlcl-kb:instance-has-type el 'dataset-kb::|DatasetThing|))
-                            (push el si-list)))
-                      (compile-clses cls-list strm)
-                      (compile-simple-instances si-list strm))
-                    (mlcl-kb:kb-close kb)
-                    (compile-trailer strm))))
+                    (kb-compile dataset kb strm))))
 
-                               
+(defun dataset-generate-simple-instances (dataset kb)
+  (kb-load dataset kb))
