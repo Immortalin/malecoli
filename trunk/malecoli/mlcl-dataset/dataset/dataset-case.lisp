@@ -33,6 +33,22 @@
                       ()
                       (:base-table |DatasetCase|))
 
+
+(clsql:def-view-class enumeration ()
+                      ((id
+                        :db-kind :key
+                        :db-constraints :not-null
+                        :reader enumeration-id
+                        :initarg :name-id
+                        :type integer)
+                       (name
+                        :reader enumeration-name
+                        :initarg :name
+                        :type string))
+                      (:base-table enumeration))
+
+
+#|
 (defun find-dataset-case (case-cls name-id)
   (clsql:locally-enable-sql-reader-syntax)
   (clsql:select case-cls :refresh t :where [= [slot-value '|DatasetThing| 'name-id] name-id))
@@ -40,3 +56,4 @@
 (defun find-dataset-thing (name-id)
   (clsql:locally-enable-sql-reader-syntax)
   (clsql:select '|DatasetThing| :refresh t :where [= [slot-value '|DatasetThing| 'name-id] name-id))
+|#

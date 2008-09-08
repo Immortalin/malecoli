@@ -32,5 +32,6 @@
     
     |DatasetCase|
     |DatasetThing|
+    enumeration
    ))
 
