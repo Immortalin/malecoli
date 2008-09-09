@@ -27,32 +27,6 @@
 (defvar *protege-kb* nil 
   "protege kb")      
 
-(defpackage "PROTEGE-KB")
-
-
-;
-; protege constants
-;
-
-(in-package "PROTEGE-KB")
-
-(cl:eval-when (:compile-toplevel :load-toplevel)
-  (cl:when (cl:not (cl:boundp 'concrete-value))
-           (cl:defconstant concrete-value "Concrete")
-           (cl:defconstant abstract-value "Abstract")
-           (cl:defconstant any-type-value "Any")
-           (cl:defconstant boolean-type-value "Boolean")
-           (cl:defconstant float-type-value "Float")                       
-           (cl:defconstant integer-type-value "Integer")
-           (cl:defconstant string-type-value "String")
-           (cl:defconstant symbol-type-value "Symbol")
-           (cl:defconstant instance-type-value "Instance")
-           (cl:defconstant cls-type-value "Class")
-           (cl:export '(concrete-value abstract-value any-type-value boolean-type-value float-type-value 
-                                       integer-type-value string-type-value 
-                                       symbol-type-value instance-type-value cls-type-value))))
-
-(cl:in-package :mlcl-kb)
 
 ;
 ; protege initialization
@@ -121,13 +95,12 @@
     (get-facet ":NUMERIC-MINIMUM")
     (get-facet ":VALUE-TYPE")
     (get-facet ":VALUES")))
-  
-    
+      
 (defun make-protege-kb ()
   (let ((kb (make-instance 'kb :name "PROTEGE-KB" :protege-file nil)))
     (initialize-protege-kb kb)
     kb))
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (find-kb "PROTEGE-KB"))
+  (if (null (find-kb "PROTEGE-KB" nil))
       (setf *protege-kb* (make-protege-kb))))
