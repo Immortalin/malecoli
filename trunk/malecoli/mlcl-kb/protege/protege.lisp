@@ -20,6 +20,20 @@
 
 (in-package :mlcl-kb)
 
+(cl:eval-when (:compile-toplevel :load-toplevel)
+              (cl:when (cl:not (cl:boundp 'concrete-value))
+                       (cl:defconstant concrete-value "Concrete")
+                       (cl:defconstant abstract-value "Abstract")
+                       (cl:defconstant any-type-value "Any")
+                       (cl:defconstant boolean-type-value "Boolean")
+                       (cl:defconstant float-type-value "Float")                       
+                       (cl:defconstant integer-type-value "Integer")
+                       (cl:defconstant string-type-value "String")
+                       (cl:defconstant symbol-type-value "Symbol")
+                       (cl:defconstant instance-type-value "Instance")
+                       (cl:defconstant cls-type-value "Class")))
+
+                       
 ;
 ; conversion functions
 ;
@@ -27,28 +41,28 @@
 (defun string->type-value (str)
           (cond
            ((string-equal str "Any")
-            'protege-kb:any-type-value)
+            'any-type-value)
            ((string-equal str "Boolean")
-            'protege-kb:boolean-type-value)
+            'boolean-type-value)
            ((string-equal str "Float")
-            'protege-kb:float-type-value)
+            'float-type-value)
            ((string-equal str "Integer")
-            'protege-kb:integer-type-value)
+            'integer-type-value)
            ((string-equal str "String")
-            'protege-kb:string-type-value)
+            'string-type-value)
            ((string-equal str "Symbol")
-            'protege-kb:symbol-type-value)
+            'symbol-type-value)
            ((string-equal str "Instance")
-            'protege-kb:instance-type-value)
+            'instance-type-value)
            ((string-equal str "Class")
-            'protege-kb:cls-type-value)))
+            'cls-type-value)))
 
 (defun string->role (str)
           (cond
            ((string-equal str "Abstract")
-            'protege-kb:abstract-value)
+            'abstract-value)
            ((string-equal str "Concrete")
-            'protege-kb:concrete-value)))
+            'concrete-value)))
 
 
 ;
@@ -68,16 +82,16 @@
   (setf (frame-own-slot-value cls 'PROTEGE-KB::|:ROLE|) v))
 
 (defun cls-abstractp (cls)
-  (eq (cls-role cls) 'protege-kb:abstract-value))
+  (eq (cls-role cls) 'abstract-value))
 
 (defun (setf cls-abstractp) (v cls)
-  (setf (cls-role cls) (if v protege-kb:abstract-value protege-kb:concrete-value)))
+  (setf (cls-role cls) (if v abstract-value concrete-value)))
 
 (defun cls-concretep (cls)
-  (eq (cls-role cls) 'protege-kb:concrete-value))
+  (eq (cls-role cls) 'concrete-value))
 
 (defun (setf cls-concretep) (v cls)
-  (setf (cls-role cls) (if v protege-kb:concrete-value protege-kb:abstract-value)))
+  (setf (cls-role cls) (if v concrete-value abstract-value)))
 
 (defun cls-constraints (cls)
   (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|))
@@ -147,28 +161,28 @@
   (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-INVERSE|) v))
 
 (defun slot-allowed-clses (slot)
-  (and (eq (slot-value-type slot) 'protege-kb:instance-type-value)
+  (and (eq (slot-value-type slot) 'instance-type-value)
        (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-clses) (vs slot)
   (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
-        (cons protege-kb:instance-type-value vs)))
+        (cons instance-type-value vs)))
 
 (defun slot-allowed-parents (slot)
-  (and (eq (slot-value-type slot) 'protege-kb:cls-type-value)
+  (and (eq (slot-value-type slot) 'cls-type-value)
        (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-parents) (vs slot)
   (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
-        (cons protege-kb:cls-type-value vs)))
+        (cons cls-type-value vs)))
 
 (defun slot-allowed-values (slot)
-  (and (eq (slot-value-type slot) 'protege-kb:symbol-type-value)
+  (and (eq (slot-value-type slot) 'symbol-type-value)
        (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-values) (vs slot)
   (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
-        (cons protege-kb:symbol-type-value vs)))
+        (cons symbol-type-value vs)))
 
 (defun slot-constraints (cls)
   (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|))

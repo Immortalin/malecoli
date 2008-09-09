@@ -50,32 +50,24 @@
 ;
 
 (defun get-cls (name &key (kb *kb*))
-  (check-type name string)
-  (check-type kb kb)
   (let ((it (element-name->element name kb)))
     (if (null it)
         (values (make-cls name :kb kb :definedp nil) t)
         (values it nil))))
 
 (defun get-slot (name &key (kb *kb*))
-  (check-type name string)
-  (check-type kb kb)
   (let ((it (element-name->element name kb)))
     (if (null it)
         (values (make-slot name :kb kb :definedp nil) t)
         (values it nil))))
 
 (defun get-facet (name &key (kb *kb*))
-  (check-type name string)
-  (check-type kb kb)
   (let ((it (element-name->element name kb)))
     (if (null it)
         (values (make-facet name :kb kb :definedp nil) t)
         (values it nil))))
 
 (defun get-simple-instance (name &key (kb *kb*))
-  (check-type name string)
-  (check-type kb kb)
   (let ((it (element-name->element name kb)))
     (if (null it)
         (values (make-simple-instance name :kb kb :definedp nil) t)

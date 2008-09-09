@@ -25,11 +25,8 @@
   (:use :cl)
   (:export
     #|
-    KB's Elements
+    KB's frames
     |#
-    kb-element
-    kb-element-name
-    kb-element-definedp
     
     frame
     frame-kb
@@ -37,7 +34,6 @@
     frame-name
     frame-own-slot-values
     frame-own-slot-value
-    frame-add-own-slot-value
     
     instance
     instance-direct-types
@@ -59,7 +55,6 @@
     cls-add-direct-template-slot
     cls-direct-template-facet-values
     cls-direct-template-facet-value
-    cls-add-direct-template-facet-value  
     
     slot
     slot-direct-superslots
@@ -73,16 +68,33 @@
     
     simple-instance
     
-    make-slot-value%
-    slot-value%-slot
-    slot-value%-vals
+    make-slot-values%
+    slot-values%-slot
+    slot-values%-vals
     
-    make-facet-value%
-    facet-value%-slot
-    facet-value%-facet
-    facet-value%-values
+    make-facet-values%
+    facet-values%-slot
+    facet-values%-facet
+    facet-values%-values
         
     find-frame 
+    find-cls
+    find-slot
+    find-facet
+    find-simple-instance
+    
+    #|
+    |#
+    make-cls
+    make-slot
+    make-facet
+    make-simple-instance
+    get-cls
+    get-slot
+    get-facet
+    get-simple-instance
+
+        
     #|
     KB
     |#
@@ -108,25 +120,12 @@
     delete-kb
     kb-clear
     
-    list-all-kbs
     find-kb
     use-kb
     unuse-kb
 
-    kb-find-element    
     kb-intern
     kb-unintern
-    
-    #|
-    |#
-    make-cls
-    make-slot
-    make-facet
-    make-simple-instance
-    get-cls
-    get-slot
-    get-facet
-    get-simple-instance
 
     #|
     Defs
@@ -146,6 +145,17 @@
     #|
     Protege
     |# 
+    concrete-value 
+    abstract-value 
+    any-type-value 
+    boolean-type-value 
+    float-type-value 
+    integer-type-value 
+    string-type-value 
+    symbol-type-value 
+    instance-type-value 
+    cls-type-value
+    
     cls-documentation
     cls-role
     cls-abstractp
