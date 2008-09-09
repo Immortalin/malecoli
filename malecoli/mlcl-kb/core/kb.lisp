@@ -116,7 +116,7 @@ if ERRORP is false, otherwise an error is signalled."
 (defun make-kb (name &key (use-list nil) (protege-file nil))
   "make a new kb"
   (check-type name (or nil string))
-  (if (and name (find-kb name))
+  (if (and name (find-kb name nil))
       (error "Kb named ~s already exists." name))
   (make-instance 'kb :name name :protege-file protege-file :use-list use-list))
 
