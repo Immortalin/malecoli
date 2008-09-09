@@ -41,10 +41,6 @@
 	        	 (:file "xml" :depends-on ("pprj" "io"))
 	        	 (:file "pprj" :depends-on ("io")))
                  :depends-on ("package" "core"))
-               ;(:module def
-               ;	:components
-		;       	((:file "kb-def" :depends-on ()))
-                ; :depends-on ("package" "core" "kbs"))
                (:module protege
                	:components
 	        	((:file "protege-kb" :depends-on ())
