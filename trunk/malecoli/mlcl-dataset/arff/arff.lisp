@@ -27,8 +27,8 @@
 (defun arff->dataset-kb (arff-pathname)
   (let* ((fn (pathname-name arff-pathname))
          (fnd (format nil "~A-data" fn))
-         (kb (mlcl-kb:find-kb fn))
-         (kbd (mlcl-kb:find-kb fnd)))
+         (kb (mlcl-kb:find-kb fn nil))
+         (kbd (mlcl-kb:find-kb fnd nil)))
     (if (null kb)
         (progn
           (setf kb (mlcl-kb:make-kb fn
@@ -38,7 +38,10 @@
                                                     :directory '(:relative "mlcl-tmp")
                                                     :type "xml")
                                                    arff-pathname)))
-          (mlcl-kb:kb-create kb)))
+          (mlcl-kb:kb-create kb))
+        (progn 
+          (kb-open kb)
+          (kb-clear kb)))
     (if (null kbd)
         (progn
           (setf kbd (mlcl-kb:make-kb fnd
@@ -49,13 +52,17 @@
                                                     :name fnd
                                                     :type "xml")
                                                    arff-pathname)))
-          (mlcl-kb:kb-create kbd)))
-    (mlcl-kb:kb-open kb)
-    (mlcl-kb:kb-open kbd)
+          (mlcl-kb:kb-create kbd))
+        (progn
+          (kb-open kbd)
+          (kb-clear kbd)))
     (arff-import arff-pathname kb kbd)
     (mlcl-kb:kb-save kb)
+    (mlcl-kb:kb-close kb)
     (mlcl-kb:kb-save kbd)
+    (mlcl-kb:kb-close kbd)
     (values kb kbd)))
+
 
 ;
 ; import
@@ -66,6 +73,7 @@
                   (multiple-value-bind (relation-name attributes comments) (arff-read-header strm)
                     (arff-import-header relation-name attributes comments kb)
                     (arff-import-data relation-name attributes strm kbd))))
+
 
 ;
 ; import arff header
@@ -86,26 +94,26 @@
           (mlcl-kb:cls-add-direct-template-slot cacl slot)
           (cond 
            ((eq (cdr attr) 'real)
-            (setf (mlcl-kb:slot-value-type slot) protege-kb:float-type-value))
+            (setf (mlcl-kb:slot-value-type slot) mlcl-kb::float-type-value))
            ((eq (cdr attr) 'numeric)
-            (setf (mlcl-kb:slot-value-type slot) protege-kb:float-type-value))
+            (setf (mlcl-kb:slot-value-type slot) mlcl-kb:float-type-value))
            ((eq (cdr attr) 'integer)
-            (setf (mlcl-kb:slot-value-type slot) protege-kb:integer-type-value))
+            (setf (mlcl-kb:slot-value-type slot) mlcl-kb:integer-type-value))
            ((eq (cdr attr) 'string)
-            (setf (mlcl-kb:slot-value-type slot) protege-kb:string-type-value))
+            (setf (mlcl-kb:slot-value-type slot) mlcl-kb:string-type-value))
            ((eq (cdr attr) 'date)
-            (setf (mlcl-kb:slot-value-type slot) (list protege-kb:instance-type-value 
+            (setf (mlcl-kb:slot-value-type slot) (list mlcl-kb:instance-type-value 
                                                        'dataset-kb::|time|)))
            ((and (listp (cdr attr)) (eq (second attr) 'nominal))
-            (setf (mlcl-kb:slot-value-type slot) (cons protege-kb:symbol-type-value
+            (setf (mlcl-kb:slot-value-type slot) (cons mlcl-kb:symbol-type-value
                                                 (caddr attr)))))
           (setf (mlcl-kb:slot-maximum-cardinality slot) 1)
           (push slot slots)))
-      (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_name| relation-name)
-      (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_version| "0.0.1")
-      (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_comment| (format nil "~{~a~%~}" comments))
-      (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_case_class| cacl)
-      (mlcl-kb:frame-add-own-slot-value insi 'dataset-kb::|dataset_default_target_slot| (first slots)))))
+      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_name|) relation-name)
+      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_version|) "0.0.1")
+      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_comment|) (format nil "~{~a~%~}" comments))
+      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_case_class|) cacl)
+      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_default_target_slot|) (first slots)))))
 
 
 ;      
@@ -119,7 +127,7 @@
         (dssi nil))
     (setf dssi (mlcl-kb:make-simple-instance (format nil "~A" relation-name)))
     (mlcl-kb:instance-add-direct-type dssi 'dataset-kb::|Dataset|)
-    (mlcl-kb:frame-add-own-slot-value dssi 'dataset-kb::|dataset_info| 
+    (setf (mlcl-kb:frame-own-slot-value dssi 'dataset-kb::|dataset_info|)
                                       (mlcl-kb:find-frame (format nil "~A-info" relation-name)))
     (arff-read-data attributes strm 
                     seed
@@ -148,7 +156,7 @@
                                 (setf valc (parse-integer val)))
                                ((eq (cdr attr) 'date)
                                 (setf valc nil)))
-                              (mlcl-kb:frame-add-own-slot-value seed (format nil "~A-~A" relation-name (car attr)) valc)))))))
+                              (setf (mlcl-kb:frame-own-slot-value seed (format nil "~A-~A" relation-name (car attr))) valc)))))))
 
 
 ;

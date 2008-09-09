@@ -16,6 +16,8 @@
 |#
 
 (defvar UCI-arffs '(
+                    "anneal" 
+                    "anneal.ORIG"
                     "audiology" "autos"
                     "balance-scale" "breast-cancer" "breast-w"
                     "colic" "colic.ORIG" "credit-a" "credit-g"
