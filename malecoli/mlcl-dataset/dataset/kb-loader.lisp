@@ -25,15 +25,15 @@
   (dolist (si si-list)
     (let ((el (kb-load-simple-instance-header dataset si)))
       (kb-load-simple-instance dataset el si)
-      (kb-load-simple-instance-trailer el))))
+      (kb-load-simple-instance-trailer dataset el))))
 
 (defun kb-load-simple-instance-header (dataset si)
   (make-instance (find-symbol (frame->sql-name (mlcl-kb:instance-direct-type si)) 
                               (dataset-package dataset))
                  :name-id (frame->sql-name si)))
 
-(defun kb-load-simple-instance-trailer (el)
-  (clsql:update-records-from-instance el))
+(defun kb-load-simple-instance-trailer (dataset el)
+  (push el (dataset-cases dataset)))
 
 (defun kb-load-simple-instance (dataset el si)
    (dolist (osv (mlcl-kb:frame-own-slot-values-list si))
@@ -41,8 +41,8 @@
 
 (defun kb-load-own-slot-value (dataset el si osv)
   (declare (ignore si))
-  (let ((slot (slot-value%-slot osv))
-        (vals (slot-value%-vals osv)))
+  (let ((slot (slot-values%-slot osv))
+        (vals (slot-values%-vals osv)))
     (if vals
         (progn
           (eval (list 'setf 

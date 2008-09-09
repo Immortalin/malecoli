@@ -5,12 +5,6 @@
 
 (in-package :mlcl-dataset-asd)
 
-(defmethod asdf:perform :after ((o asdf:load-op)
-	(c (eql (asdf:find-system 'clsql))))
-	(funcall (find-symbol (symbol-name '#:push-library-path)
-	(find-package 'clsql))
-	#p"/hardmnt/tharpe0/sra/software/opt/sqlite/lib/"))
-
 (defsystem mlcl-dataset
   :name "mlcl-dataset"
   :version "0.1"
@@ -34,4 +28,4 @@
 	        	((:file "arff" :depends-on ()))
                  :depends-on ("kb"))
                )
-  :depends-on ("mlcl-kb" "cl-ppcre" "clsql-sqlite3"))
+  :depends-on ("mlcl-kb" "cl-ppcre" "cl-store"))
