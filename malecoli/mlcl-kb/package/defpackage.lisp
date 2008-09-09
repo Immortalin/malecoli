@@ -126,21 +126,6 @@
 
     kb-intern
     kb-unintern
-
-    #|
-    Defs
-    |#    
-    def-kb
-    in-kb
-    def-cls
-    def-slot
-    def-facet
-    def-simple-instance
-    
-    def-cls-ref
-    def-slot-ref
-    def-facet-ref
-    def-simple-instance-ref
     
     #|
     Protege
