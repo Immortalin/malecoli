@@ -28,9 +28,9 @@
       (kb-load-simple-instance-trailer dataset el))))
 
 (defun kb-load-simple-instance-header (dataset si)
-  (make-instance (find-symbol (frame->sql-name (mlcl-kb:instance-direct-type si)) 
-                              (dataset-package dataset))
-                 :name-id (frame->sql-name si)))
+  (make-instance (find-symbol (frame->lisp-name (mlcl-kb:instance-direct-type si)) 
+                              (dataset-schema-package (dataset-schema dataset)))
+                 :name-id (frame->lisp-name si)))
 
 (defun kb-load-simple-instance-trailer (dataset el)
   (push el (dataset-cases dataset)))
@@ -47,8 +47,8 @@
         (progn
           (eval (list 'setf 
                    (list (find-symbol 
-                           (frame->sql-name slot)
-                           (dataset-package dataset))
+                           (frame->lisp-name slot)
+                           (dataset-schema-package (dataset-schema dataset)))
                          el)
                    (list 'quote (kb-load-slot-value slot vals))))))))
 
@@ -57,17 +57,17 @@
   (let ((typ (mlcl-kb:slot-value-type slot)))
     (let ((converter-values
            (cond 
-            ((eq typ 'protege-kb::integer-type-value)
+            ((eq typ 'mlcl-kb:integer-type-value)
              vals)
-            ((eq typ 'protege-kb::float-type-value)
+            ((eq typ 'mlcl-kb:float-type-value)
              vals)
-            ((eq typ 'protege-kb::string-type-value)
+            ((eq typ 'mlcl-kb:string-type-value)
              vals)
-            ((eq typ 'protege-kb::boolean-type-value)
+            ((eq typ 'mlcl-kb:boolean-type-value)
              vals)
-            ((eq typ 'protege-kb::symbol-type-value)
+            ((eq typ 'mlcl-kb:symbol-type-value)
              vals)
-            ((eq typ 'protege-kb::instance-type-value)
+            ((eq typ 'mlcl-kb:instance-type-value)
              (mapcar #'frame-name vals)))))
       (if (eq (mlcl-kb:slot-maximum-cardinality slot) 1)
           (progn 

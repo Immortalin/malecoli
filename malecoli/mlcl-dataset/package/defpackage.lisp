@@ -30,8 +30,7 @@
     dataset-kb
     
     
-    |DatasetCase|
-    |DatasetThing|
-    enumeration
+    dataset-case
+    dataset-thing
    ))
 

@@ -244,7 +244,8 @@ if ERRORP is false, otherwise an error is signalled."
 
 (defun instance-has-type (inst cls-des)
   (let ((target-type (find-cls cls-des)))
-    (some #'(lambda(x) (cls-has-supercls x target-type)) (instance-direct-types inst))))
+    (or (some #'(lambda(x) (eq x target-type)) (instance-direct-types inst))
+        (some #'(lambda(x) (cls-has-supercls x target-type)) (instance-direct-types inst)))))
 
 
 ;
