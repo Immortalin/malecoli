@@ -20,11 +20,11 @@
 
 (in-package :mlcl-dataset)
 
-(defclass |DatasetThing| ()
+(defclass dataset-thing ()
   ((name-id
-    :reader |DatasetThing-NAME-ID|
+    :reader dataset-thing-name-id
     :initarg :name-id
     :type string)))
                  
-(defclass |DatasetCase| (|DatasetThing|)
+(defclass dataset-case (dataset-thing)
   ())

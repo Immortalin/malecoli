@@ -13,11 +13,12 @@
 	        	((:file "defpackage" :depends-on ())))
                (:module dataset
                	:components
-	        	((:file "dataset" :depends-on ("generate-dataset"))
-	        	 (:file "generate-dataset" :depends-on ("kb-compiler" "kb-loader"))	
+	        	((:file "dataset" :depends-on ("dataset-schema"))
+	        	 (:file "dataset-schema" :depends-on ())
+	        ;	 (:file "generate-dataset" :depends-on ("dataset-schema" "kb-loader"))	
 	        	 (:file "dataset-case" :depends-on ())
-	        	 (:file "kb-compiler" :depends-on ("dataset-case"))
-	        	 (:file "kb-loader" :depends-on ("dataset-case" "kb-compiler")))
+	        	 (:file "kb-loader" :depends-on ("dataset-case" "dataset-schema"))
+	        	 )
                  :depends-on ("package" "kb"))
                (:module kb
                 :components

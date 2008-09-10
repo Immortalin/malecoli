@@ -81,15 +81,15 @@
 
 (defun arff-import-header (relation-name attributes comments kb)
   (let ((mlcl-kb:*kb* kb))
-    (let ((insi (mlcl-kb:make-simple-instance (format nil "~A-info" relation-name)))
-          (cacl (mlcl-kb:make-cls (format nil "~A-case" relation-name)))
-          (slots nil)) 
-      (mlcl-kb:instance-add-direct-type insi 'dataset-kb::|DatasetInfo|)
+    (let ((insi (mlcl-kb:make-simple-instance (format nil "this")))
+          (cacl (mlcl-kb:make-cls (format nil "~ACase" relation-name)))
+          (slots nil))
+      (mlcl-kb:instance-add-direct-type insi 'dataset-kb::|DatasetDescription|)
       (mlcl-kb:instance-add-direct-type cacl 'protege-kb::|:STANDARD-CLASS|)
       (mlcl-kb:cls-add-direct-supercls cacl 'dataset-kb::|DatasetCase|)
       (setf (mlcl-kb:cls-concretep cacl) t)
       (dolist (attr attributes)
-        (let ((slot (mlcl-kb:make-slot (format nil "~A-~A" relation-name (car attr)))))
+        (let ((slot (mlcl-kb:make-slot (format nil "~A_~A" relation-name (car attr)))))
           (mlcl-kb:instance-add-direct-type slot 'protege-kb::|:STANDARD-SLOT|)
           (mlcl-kb:cls-add-direct-template-slot cacl slot)
           (cond 
@@ -112,7 +112,6 @@
       (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_name|) relation-name)
       (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_version|) "0.0.1")
       (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_comment|) (format nil "~{~a~%~}" comments))
-      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_case_class|) cacl)
       (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_default_target_slot|) (first slots)))))
 
 
@@ -125,17 +124,15 @@
         (seed nil)
         (num 0)
         (dssi nil))
-    (setf dssi (mlcl-kb:make-simple-instance (format nil "~A" relation-name)))
+    (setf dssi (mlcl-kb:make-simple-instance (format nil "~A-ds" relation-name)))
     (mlcl-kb:instance-add-direct-type dssi 'dataset-kb::|Dataset|)
-    (setf (mlcl-kb:frame-own-slot-value dssi 'dataset-kb::|dataset_info|)
-                                      (mlcl-kb:find-frame (format nil "~A-info" relation-name)))
     (arff-read-data attributes strm 
                     seed
                     #'(lambda (seed) 
                         (declare (ignore seed))
                         (let ((si (mlcl-kb:make-simple-instance (format nil "case-~9,'0d" num))))
                           (setf num (+ 1 num))
-                          (mlcl-kb:instance-add-direct-type si (format nil "~A-case" relation-name))
+                          (mlcl-kb:instance-add-direct-type si (format nil "~ACase" relation-name))
                           (push si (mlcl-kb:frame-own-slot-values 
                                     dssi 'dataset-kb::|dataset_case|))
                           si))
@@ -156,7 +153,7 @@
                                 (setf valc (parse-integer val)))
                                ((eq (cdr attr) 'date)
                                 (setf valc nil)))
-                              (setf (mlcl-kb:frame-own-slot-value seed (format nil "~A-~A" relation-name (car attr))) valc)))))))
+                              (setf (mlcl-kb:frame-own-slot-value seed (format nil "~A_~A" relation-name (car attr))) valc)))))))
 
 
 ;
