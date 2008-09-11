@@ -14,9 +14,6 @@
                        :name "onenegotiation" :type "xml" :case :local)
                       *load-truename*)
               #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml")
-        (format t "GGGGGGGGGGGGGGGGGGGGGGGGGGGG~%")
-        (format t "GGGGGGGGGGGGGGGGGGGGGGGGGGGG~%")
-        (format t "GGGGGGGGGGGGGGGGGGGGGGGGGGGG~%")
         (mlcl-kb:make-kb "ONENEGOTIATION-KB" 
                          :use-list '(mlcl-kbs::negotiation-kb
                                      mlcl-kbs::protege-kb 

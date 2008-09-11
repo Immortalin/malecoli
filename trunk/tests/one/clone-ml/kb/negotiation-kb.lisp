@@ -15,9 +15,6 @@
                        :name "negotiation" :type "xml" :case :local)
                       *load-truename*)
               #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/negotiation.xml")
-        (format t "FFFFFFFFFFFFFFFFFFFFFFFFFFF~%")
-        (format t "FFFFFFFFFFFFFFFFFFFFFFFFFFF~%")
-        (format t "FFFFFFFFFFFFFFFFFFFFFFFFFFF~%")
         (mlcl-kb:make-kb "NEGOTIATION-KB" 
                          :use-list '(mlcl-kbs::protege-kb mlcl-kbs::dataset-kb) :protege-file *negotiation-kb-pathname*))))
 

@@ -27,6 +27,19 @@
 (defun test02 ()
   (test-one *gare-model*))                   
 
+(defun test03 ()
+  (let ((kb (mlcl-kb:find-kb 'mlcl-kbs::gare-kb)))
+    (format t "!!! ~A~%" (mlcl-kb:kb-name kb))
+    (let ((workspace (make-instance 'mlcl-dataset::workspace
+                                    :pathname (mlcl-kb:kb-protege-file kb)
+                                    :schema (make-instance 'mlcl-dataset:schema :pathname (mlcl-kb:kb-protege-file kb) :kb kb))))
+      (mlcl-dataset:workspace-save workspace)
+      (format t "! ~A~%" workspace)
+      (mlcl-dataset:workspace-cases-import workspace (mlcl-kb:find-kb 'mlcl-kbs::gare-instances-kb))
+      (format t "!!! ~A~%" workspace)
+      workspace
+      )))
+
 
 (defun test-one (modelfile)
   (let ((kb (clone-ml::onemodel-import modelfile)))
