@@ -14,7 +14,7 @@
   (format nil "~A~A" name version))
 
 (defun find-model-kb (name version)
-  (mlcl-kb:find-kb (model-fullname name version)))
+  (mlcl-kb:find-kb (model-fullname name version) nil))
 
 (defun make-model-kb (name version &key (pathname (merge-pathnames
                                                    (make-pathname
@@ -31,8 +31,8 @@
     (kb-create kb)
     (let ((this (make-simple-instance (format nil "model @ ~A" (model-fullname name version)) :kb kb)))
       (instance-add-direct-type this 'onenegotiation-kb::|one_model|)
-      (frame-add-own-slot-value this 'negotiation-kb::|neg_model_id| name)
-      (frame-add-own-slot-value this 'negotiation-kb::|neg_model_version| version))   
+      (setf (frame-own-slot-value this 'negotiation-kb::|neg_model_id|) name)
+      (setf (frame-own-slot-value this 'negotiation-kb::|neg_model_version|) version))   
     kb))
   
 

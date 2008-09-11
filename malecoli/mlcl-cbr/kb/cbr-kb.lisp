@@ -5,7 +5,7 @@
 (defvar *cbr-kb-pathname*)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (mlcl-kb:find-kb "CBR-KB"))
+  (if (null (mlcl-kb:find-kb "CBR-KB" nil))
       (progn
         (setf *cbr-kb-pathname*            
               #-sbcl (merge-pathnames
