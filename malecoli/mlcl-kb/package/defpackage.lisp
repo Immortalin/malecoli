@@ -32,6 +32,7 @@
     frame-kb
     frame-own-slot-values-list
     frame-name
+    frame-equal
     frame-own-slot-values
     frame-own-slot-value
     

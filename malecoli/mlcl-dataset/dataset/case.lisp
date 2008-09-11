@@ -27,4 +27,7 @@
     :type string)))
                  
 (defclass dataset-case (dataset-thing)
-  ())
+  ((id
+    :reader dataset-case-id
+    :type fixnum
+    :initarg :id)))

@@ -26,40 +26,20 @@
     :INITARG :name
     :INITFORM nil
     :TYPE string)
-   (pathname 
-    :READER dataset-pathname
-    :INITARG :pathname
-    :TYPE pathname)
    (schema
     :READER dataset-schema
-    :TYPE dataset-schema
+    :TYPE schema
     :INITARG :schema)
+   (storage 
+    :READER dataset-storage
+    :TYPE storage
+    :INITARG :storage)
    (cases 
     :TYPE list
     :INITFORM nil
-    :ACCESSOR dataset-cases)))
+    :READER dataset-cases)))
 
-(defmethod initialize-instance :after ((ds dataset) &rest initargs)
-  (declare (ignore initargs))
-  (if (null (dataset-name ds))
-      (setf (slot-value ds 'name) (pathname-name (dataset-pathname ds)))) 
-  (dataset-load ds))
-
-(defun dataset-store-file (dataset)
-  (merge-pathnames
-   (make-pathname :type "store")
-   (dataset-pathname dataset)))
-
-(defun dataset-load (dataset)
-  (let ((storefile (dataset-store-file dataset)))
-    (if (probe-file storefile)
-        (setf (dataset-cases dataset) (cl-store:restore storefile)))))
-
-(defun dataset-save (dataset)
-  (let ((storefile (dataset-store-file dataset)))
-    (cl-store:store (dataset-cases dataset) storefile)))
-
-(defun dataset-import (dataset kb)
-  (kb-load dataset kb)
-  (dataset-save dataset))
-
+(defun dataset-add-case (dataset cas)
+  (if (null (dataset-case-id cas))
+      (storage-add-case (dataset-storage dataset) cas))
+  (push cas (slot-value dataset 'cases)))

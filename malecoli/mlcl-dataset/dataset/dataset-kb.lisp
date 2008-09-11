@@ -16,80 +16,9 @@
 ;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;;
 
-;;;; Created on 2008-09-10 11:08:30
+;;;; Created on 2008-09-10 15:00:09
 
 (in-package :mlcl-dataset)
-
-(defclass dataset-schema ()
-  ((name 
-    :READER dataset-schema-name
-    :INITARG :name
-    :INITFORM nil
-    :TYPE string)
-   (pathname 
-    :READER dataset-schema-pathname
-    :INITARG :pathname
-    :TYPE pathname)
-   (package
-    :READER dataset-schema-package
-    :INITARG :package
-    :TYPE package)
-   (kb
-    :TYPE kb
-    :READER dataset-schema-kb)))
-
-(defmethod initialize-instance :after ((schema dataset-schema) &rest initargs)
-  (declare (ignore initargs))
-  (if (null (dataset-schema-name schema))
-      (setf (slot-value schema 'name) (pathname-name (dataset-schema-pathname schema)))) 
-  (setf (slot-value schema 'package) (or 
-                                      (find-package (format nil "~A-ds" (dataset-schema-name schema))) 
-                                      (make-package (format nil "~A-ds" (dataset-schema-name schema)) 
-                                                    :use '(:cl :mlcl-kb :mlcl-dataset))))
-  (setf (slot-value schema 'kb) (or (mlcl-kb:find-kb (dataset-schema-name schema) nil)
-                                     (mlcl-kb:make-kb 
-                                      (dataset-schema-name schema)
-                                      :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb)
-                                      :protege-file (merge-pathnames
-                                                     (make-pathname :type "pprj")
-                                                     (dataset-schema-pathname schema)))))
-  (dataset-schema-load schema))
-
-(defun dataset-schema-source-list-file (schema)
-  (merge-pathnames
-   (make-pathname :type "lisp")
-   (dataset-schema-pathname schema)))
-
-(defun dataset-schema-compiled-list-file (schema)
-  (merge-pathnames
-   (make-pathname :type nil)
-   (dataset-schema-pathname schema)))
-
-(defun dataset-schema-xml-kb-file (schema)
-  (merge-pathnames
-   (make-pathname :type "xml")
-   (dataset-schema-pathname schema)))
-
-(defun dataset-schema-load (schema)
-  (let ((lispfile (dataset-schema-source-list-file schema)))
-    (if (or (not (probe-file lispfile)) (< (file-write-date lispfile) (file-write-date (dataset-schema-xml-kb-file schema))))
-        (progn
-          (dataset-schema-generate-lisp-file schema)
-          (compile-file lispfile)
-          (load (dataset-schema-compiled-list-file schema))
-          (funcall (find-symbol "INIT-DATASET" (dataset-schema-package schema))))
-        (progn
-          (load (dataset-schema-compiled-list-file schema))))))
-
-(defun dataset-schema-reload (schema)
-  (dataset-schema-load schema))
-
-(defun dataset-schema-generate-lisp-file (schema)
-  (mlcl-kb:kb-open (dataset-schema-kb schema))
-  (with-open-file (strm (dataset-schema-source-list-file schema) :direction :output :if-exists :supersede)
-                  (dataset-kb-compile (dataset-schema-package schema) (dataset-schema-kb schema) strm))
-  (mlcl-kb:kb-close (dataset-schema-kb schema)))
-
 
 ;
 ; dataset kb compile
@@ -158,7 +87,7 @@
           (format nil "|~A|" (frame->lisp-name slot))))
 
 (defun dataset-kb-compile-slot-type (slot strm compinfo)
-  (if (eq (slot-maximum-cardinality slot) 1)
+  (if (eq (mlcl-kb:slot-maximum-cardinality slot) 1)
       (let ((typ (mlcl-kb:slot-value-type slot)))
         (cond 
          ((eq typ 'mlcl-kb:integer-type-value)
@@ -184,7 +113,7 @@
 
 (defun dataset-kb-compile-enum (slot strm)
   (format strm ";;;; Generation of enum ~A~%~%" (mlcl-kb:frame-name slot))
-  (format strm "~%~%"))
+  (format strm "~%"))
 
   
 ;
@@ -196,12 +125,115 @@
     (if (eq (mlcl-kb:frame-kb fr) (symbol-value 'mlcl-kbs::dataset-kb))
         (progn
           (cond
-           ((eq fr (symbol-value 'dataset-kb::|DatasetCase|))
-              (setf name "DATASET-CASE"))
-           ((eq fr (symbol-value 'dataset-kb::|DatasetThing|))
-              (setf name "DATASET-THING"))))
+           ((mlcl-kb:frame-equal fr 'dataset-kb::|DatasetCase|)
+            (setf name "DATASET-CASE"))
+           ((mlcl-kb:frame-equal fr 'dataset-kb::|DatasetThing|)
+            (setf name "DATASET-THING"))))
         (progn
           (setf name (cl-ppcre:regex-replace-all " " name "_"))
           (setf name (cl-ppcre:regex-replace-all "\\?" name "p"))
           (setf name (cl-ppcre:regex-replace-all "\\." name "_"))))
     name))
+
+
+;
+; load
+;
+
+(defun dataset-kb-import (schema kb)
+  (mlcl-kb:kb-open kb)
+  (let ((importinfo (make-import-info)))
+    (let ((si-list nil)
+          (ds-list nil))
+      (dolist (el (mlcl-kb:kb-interned-elements kb))
+        (if (and (typep el 'mlcl-kb:simple-instance) 
+                 (mlcl-kb:instance-has-type el 'dataset-kb::|DatasetCase|))
+            (push el si-list))
+        (if (and (typep el 'mlcl-kb:simple-instance) 
+                 (mlcl-kb:instance-has-type el 'dataset-kb::|Dataset|))
+            (push el ds-list)))
+      (dataset-kb-import-cases schema si-list importinfo)
+      (dataset-kb-import-datasets schema ds-list importinfo))
+    (mlcl-kb:kb-close kb)
+    (values (import-info-cases importinfo)
+            (import-info-datasets importinfo))))
+
+(defstruct import-info
+  (cases nil)
+  (datasets nil)
+  (objects (MAKE-HASH-TABLE :test #'equal)))
+
+;
+; import instance
+;
+
+(defun dataset-kb-import-cases (schema si-list importinfo)
+  (dolist (si si-list)
+    (let ((el (dataset-kb-import-simple-instance schema si importinfo)))
+      (push el (import-info-cases importinfo)))))
+
+(defun dataset-kb-import-simple-instance (schema si importinfo)
+  (let ((el (make-instance (find-symbol (frame->lisp-name (mlcl-kb:instance-direct-type si)) 
+                                        (schema-package schema))
+                           :name-id (frame->lisp-name si))))
+    (setf (gethash (dataset-thing-name-id el) (import-info-objects importinfo)) el)
+    (dolist (osv (mlcl-kb:frame-own-slot-values-list si))
+      (dataset-kb-import-own-slot-value schema el si osv importinfo))
+    el))
+
+(defun dataset-kb-get-simple-instance (schema si importinfo)
+  (let ((el (gethash (frame->lisp-name si) (import-info-objects importinfo))))
+    (if (null el)
+        (dataset-kb-import-simple-instance schema si importinfo)
+        el)))
+        
+(defun dataset-kb-import-own-slot-value (schema el si osv importinfo)
+  (declare (ignore si))
+  (let ((slot (mlcl-kb:slot-values%-slot osv))
+        (vals (mlcl-kb:slot-values%-vals osv)))
+    (if vals
+        (progn
+          (eval (list 'setf 
+                   (list (find-symbol 
+                           (frame->lisp-name slot)
+                           (schema-package schema))
+                         el)
+                   (list 'quote (dataset-kb-import-slot-value schema slot vals importinfo))))))))
+
+
+(defun dataset-kb-import-slot-value (schema slot vals importinfo)
+  (let ((typ (mlcl-kb:slot-value-type slot)))
+    (let ((converter-values
+           (cond 
+            ((eq typ 'mlcl-kb:integer-type-value)
+             vals)
+            ((eq typ 'mlcl-kb:float-type-value)
+             vals)
+            ((eq typ 'mlcl-kb:string-type-value)
+             vals)
+            ((eq typ 'mlcl-kb:boolean-type-value)
+             vals)
+            ((eq typ 'mlcl-kb:symbol-type-value)
+             vals)
+            ((eq typ 'mlcl-kb:instance-type-value)
+             (mapcar #'(lambda(x) (dataset-kb-get-simple-instance schema x importinfo)) vals)))))
+      (if (eq (mlcl-kb:slot-maximum-cardinality slot) 1)
+          (progn 
+            (car converter-values))
+          (progn
+            converter-values)))))
+
+
+;
+;
+;
+
+
+(defun dataset-kb-import-datasets (schema ds-list importinfo)
+  (declare (ignore schema))
+  (dolist (ds ds-list)
+    (let ((dsname (mlcl-kb:frame-name ds))
+          (poses (mapcar #'(lambda (si) (gethash (frame-name si) (import-info-objects importinfo)))
+                         (mlcl-kb:frame-own-slot-values ds 'dataset-kb::|dataset_case|))))
+      (push (cons dsname poses) (import-info-datasets importinfo)))))
+
