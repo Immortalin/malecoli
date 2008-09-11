@@ -49,6 +49,8 @@
                                          :protege-file (merge-pathnames
                                                         (make-pathname :type "pprj")
                                                         (schema-pathname schema))))))
+  ;(format t "## ~A ~A ~%~A~%" (mlcl-kb:kb-name (schema-kb schema)) (mapcar #'mlcl-kb:kb-name (mlcl-kb:kb-use-list (schema-kb schema)))
+  ;        (schema-pathname schema))   
   (dolist (ukb (mlcl-kb:kb-use-list (schema-kb schema)))
     (if (not (member ukb (list (mlcl-kb:find-kb 'mlcl-kbs::dataset-kb) (mlcl-kb:find-kb 'mlcl-kbs::protege-kb))))
         (make-instance 'schema :pathname (mlcl-kb:kb-protege-file ukb) :kb ukb)))
@@ -82,8 +84,9 @@
           (mlcl-kb:kb-close (schema-kb schema))
           (compile-file lispfile)
           (load (schema-compiled-list-file schema))
-          (funcall (find-symbol "INIT-DATASET" (schema-package schema)))
+          (funcall (find-symbol "INIT-DATASET" (schema-package schema))))
         (progn
-          (load (schema-compiled-list-file schema)))))))
+          (format t "##load## ~A~%" (schema-compiled-list-file schema))
+          (load (schema-compiled-list-file schema))))))
 
 

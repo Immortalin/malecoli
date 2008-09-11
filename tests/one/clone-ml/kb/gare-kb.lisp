@@ -2,7 +2,7 @@
 
 
 (in-package :clone-ml)
-
+kb
 (defvar *gare-kb-pathname*)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
