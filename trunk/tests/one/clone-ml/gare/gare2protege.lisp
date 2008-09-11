@@ -1,4 +1,4 @@
-;;;; Created on 2008-04-30 15:58:29
+s;;;; Created on 2008-04-30 15:58:29
 
 (in-package :clone-ml)
 
@@ -50,15 +50,9 @@
 (defun add-category-instance (code area descr)
   (let ((ci (make-simple-instance code)))
     (instance-add-direct-type ci 'gare-kb::|gare_category|)
-    (frame-add-own-slot-value 
-     ci
-     'gare-kb::|gare_category_code| code)
-    (frame-add-own-slot-value
-     ci
-     'gare-kb::|gare_category_business_area| area)
-    (frame-add-own-slot-value 
-     ci
-     'gare-kb::|gare_category_description| descr)))
+    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_code|) code)
+    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_business_area|) area)
+    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_description|) descr)))
 
 (defun add-agree (case-code price)
   (let* ((agree-id (format nil "agreement-gare-~A" case-code))
@@ -67,15 +61,9 @@
     (let* ((price-id (format nil "issue-price-gare-~A" case-code))
            (pric (make-simple-instance price-id)))
       (instance-add-direct-type pric 'gare-kb::|gare_issue_price|)
-      (frame-add-own-slot-value
-       pric
-       'gare-kb::|gare_price-amount| (float (read-from-string price)))
-      (frame-add-own-slot-value
-       pric 
-       'gare-kb::|gare_price-currency| "euro")
-      (frame-add-own-slot-value
-       agree 
-       'gare-kb::|proposal-gare_issue_price| pric))
+      (setf (frame-own-slot-value pric 'gare-kb::|gare_price-amount|) (float (read-from-string price)))
+      (setf (frame-own-slot-value pric 'gare-kb::|gare_price-currency|) "euro")
+      (setf (frame-own-slot-value agree 'gare-kb::|proposal-gare_issue_price|) pric))
     agree))
 
 
@@ -102,9 +90,7 @@
     (if new
         (progn 
           (instance-add-direct-type ci 'gare-kb::|gare_category|)
-          (frame-add-own-slot-value 
-           ci
-           'gare-kb::|gare_category_code| code)))
+          (setf (frame-own-slot-value ci 'gare-kb::|gare_category_code|) code)))
     ci))
 
 (defun get-location-instance (comune provincia)
@@ -113,12 +99,8 @@
       (if new
           (progn
             (instance-add-direct-type li 'gare-kb::|gare_location|)
-            (frame-add-own-slot-value 
-             li 
-             'gare-kb::|gare_location_comune| comune)
-            (frame-add-own-slot-value
-             li 
-             'gare-kb::|gare_location_provincia| provincia)))
+            (setf (frame-own-slot-value li 'gare-kb::|gare_location_comune|) comune)
+            (setf (frame-own-slot-value li 'gare-kb::|gare_location_provincia|) provincia)))
       li)))
 
 (defun get-public-party-instance (comune provincia)
@@ -127,10 +109,8 @@
       (if new
           (progn
             (instance-add-direct-type li 'gare-kb::|gare_public_party|)
-            (frame-add-own-slot-value
-             li 
-             'gare-kb::|gare_party_location|
-             (get-location-instance comune provincia))))
+            (setf (frame-own-slot-value li 'gare-kb::|gare_party_location|)
+                  (get-location-instance comune provincia))))
       li)))
 
 (defun get-gare-party-instance (uuid)
@@ -139,9 +119,7 @@
       (if new
           (progn
             (instance-add-direct-type li 'gare-kb::|gare_party|)
-            (frame-add-own-slot-value
-             li
-             'gare-kb::|gare_party_uuid| uuid)))
+            (setf (frame-own-slot-value li 'gare-kb::|gare_party_uuid|) uuid)))
       li)))
 
 (defun get-date-instance (datestr)
@@ -151,12 +129,9 @@
           (progn
             (instance-add-direct-type di 'dataset-kb::|date|)
             (destructuring-bind (y m d)  (parse-date datestr)
-              (frame-add-own-slot-value 
-               di 'dataset-kb::|time_year| (parse-integer y))
-              (frame-add-own-slot-value 
-               di 'dataset-kb::|time_month| (parse-integer m))
-              (frame-add-own-slot-value 
-               di 'dataset-kb::|time_day| (parse-integer d)))))
+              (setf (frame-own-slot-value di 'dataset-kb::|time_year|) (parse-integer y))
+              (setf (frame-own-slot-value di 'dataset-kb::|time_month|) (parse-integer m))
+              (setf (frame-own-slot-value di 'dataset-kb::|time_day|) (parse-integer d)))))
       di)))
 
 
@@ -177,49 +152,30 @@
       (instance-add-direct-type ci 'gare-kb::|gare_context|)
       (instance-add-direct-type ii 'gare-kb::|gare_item|)
       
-      (frame-add-own-slot-value 
-       si
-       'negotiation-kb::|neg_case_context| ci)
-      (frame-add-own-slot-value 
-       ci
-       'negotiation-kb::|neg_case_item| ii)
-      (frame-add-own-slot-value 
-       ii
-       'gare-kb::|gare_long_description| (nth 0 data))
-      (frame-add-own-slot-value
-       ii 
-       'gare-kb::|gare_description| (nth 1 data))
+      (setf (frame-own-slot-value si 'negotiation-kb::|neg_case_context|) ci)
+      (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_item|) ii)
+      (setf (frame-own-slot-value ii 'gare-kb::|gare_long_description|) (nth 0 data))
+      (setf (frame-own-slot-value ii 'gare-kb::|gare_description|) (nth 1 data))
       
       (if (nth 2 data)
           (let ((di (get-date-instance (nth 2 data))))
-            (frame-add-own-slot-value
-             ii 
-             'gare-kb::|gare_service_starting_date| di)))
+            (setf (frame-own-slot-value ii 'gare-kb::|gare_service_starting_date|) di)))
                                                           
       (if (nth 3 data)
           (let ((di (get-date-instance (nth 2 data))))
-            (frame-add-own-slot-value 
-             ii 
-             'gare-kb::|gare_service_ending_date| di)))
+            (setf (frame-own-slot-value ii 'gare-kb::|gare_service_ending_date|) di)))
           
        (if (and (nth 4 data) (nth 5 data))
            (let ((li (get-location-instance (nth 4 data) (nth 5 data)))
                  (pai (get-public-party-instance (nth 4 data) (nth 5 data))))
-             (frame-add-own-slot-value 
-              ii 
-              'gare-kb::|gare_service_location| li)
-             (frame-add-own-slot-value 
-              ci 
-              'negotiation-kb::|neg_case_owner| pai)))
+             (setf (frame-own-slot-value ii 'gare-kb::|gare_service_location|) li)
+             (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_owner|) pai)))
       
       (if (nth 6 data)
           (let ((vals nil))
             (dolist (cat (nth 6 data))
               (push (get-category-instance cat) vals))
-            (frame-add-own-slot-value 
-             ii
-             'gare-kb::|gare_service_categories|
-                                       vals)))
+            (setf (frame-own-slot-values ii 'gare-kb::|gare_service_categories|) vals)))
       
       )))
 
@@ -230,32 +186,20 @@
           (casei (get-simple-instance case-id)))
       (instance-add-direct-type ci 'gare-kb::|gare_protocol|)
       (if casei
-          (frame-add-own-slot-value
-           casei
-           'negotiation-kb::|neg_case_protocol| ci))
+          (setf (frame-own-slot-value casei 'negotiation-kb::|neg_case_protocol|) ci))
       (if (nth 0 data)
           (let ((di (get-date-instance (nth 0 data))))
-            (frame-add-own-slot-value
-             ci 
-             'negotiation-kb::|neg_case_ending_date| di)))
+            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_ending_date|) di)))
       (if (and (nth 1 data) (not (string= (nth 1 data) "NS")))  
-          (frame-add-own-slot-value 
-           ci 
-           'gare-kb::|gare_protocol_laws| (nth 1 data)))
+          (setf (frame-own-slot-value ci 'gare-kb::|gare_protocol_laws|) (nth 1 data)))
       (if (and (nth 2 data) (not (string= (nth 2 data) "NS")))
-          (frame-add-own-slot-value
-           ci 
-           'gare-kb::|gare_protocol_procedure| (nth 2 data)))
+          (setf (frame-own-slot-value ci 'gare-kb::|gare_protocol_procedure|) (nth 2 data)))
       
       (if (nth 4 data)
-          (frame-add-own-slot-value
-           ci 
-           'negotiation-kb::|neg_case_starting_price| (float (read-from-string (nth 4 data)))))
+          (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_starting_price|) (float (read-from-string (nth 4 data)))))
      
     
-      (frame-add-own-slot-value 
-       ci 
-       'negotiation-kb::|neg_case_model| (get-simple-instance "cbr-neg-gare_Instance_1"))
+      (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_model|) (get-simple-instance "neg-gare-model"))
      )))
 
 
@@ -267,28 +211,19 @@
       (instance-add-direct-type ci 'gare-kb::|gare_conclusion|)      
       
       (if casei
-          (frame-add-own-slot-value
-           casei
-           'negotiation-kb::|neg_case_conclusion| ci))
+          (setf (frame-own-slot-value casei 'negotiation-kb::|neg_case_conclusion|) ci))
       
       (if (nth 0 data)
           (let ((agree (add-agree code (nth 0 data))))
-            (frame-add-own-slot-value
-             ci
-             'negotiation-kb::|neg_case_agreement| agree)))
+            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_agreement|) agree)))
       
       (if (nth 1 data)
           (let ((di (get-date-instance (nth 1 data))))
-            (frame-add-own-slot-value
-             ci 
-             'negotiation-kb::|neg_case_conclusion_date| di)))
+            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_conclusion_date|) di)))
       
       (if (nth 2 data)
           (let* ((party (get-gare-party-instance (nth 2 data))))
-            (frame-add-own-slot-value 
-             ci
-             'negotiation-kb::|neg_case_winner| party)))
-
+            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_winner|) party)))
             )))
 
 

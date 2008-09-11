@@ -22,13 +22,18 @@
   
 
 (defun test01 ()
-  (let ((kb (clone-ml::onemodel-import *english-auction-model*)))
-;    (cl-protege-kb:kb-export-to-xml-file *english-auction-output* :kb kb)
-    kb))
-
+  (test-one *english-auction-model*))
   
 (defun test02 ()
-  (let ((kb (clone-ml::onemodel-import *gare-model*)))
-;    (cl-protege-kb:kb-export-to-xml-file *gare-output* :kb kb)
-    kb))                   
-                   
+  (test-one *gare-model*))                   
+
+
+(defun test-one (modelfile)
+  (let ((kb (clone-ml::onemodel-import modelfile)))
+    (format t "!!! ~A~%" kb)
+    (let ((workspace (make-instance 'mlcl-dataset::workspace
+                                    :pathname (mlcl-kb:kb-protege-file kb))))
+      (mlcl-dataset:workspace-save workspace)
+      (format t "!!! ~A~%" workspace)
+      workspace
+      )))
