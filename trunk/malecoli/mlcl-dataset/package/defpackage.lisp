@@ -24,13 +24,66 @@
   (:nicknames :mlcl-dataset :ml-dataset)
   (:use :cl :mlcl-kb)
   (:export  
-    ;; dataset
+    #|
+    case
+    |#
+    dataset-thing
+    dataset-thing-name-id
+    dataset-case
+    dataset-case-id
+
+    #|
+    dataset
+    |#
     dataset
     dataset-name
-    dataset-kb
+    dataset-schema
+    dataset-storage
+    dataset-cases  
+    dataset-add-case
+    
+    #|
+    schema
+    |#
+    schema
+    schema-pathname
+    schema-package
+    schema-kb
+    
+    schema-name
+    schema-load
+    
+    #|
+    storage
+    |#
+    storage
+    storage-pathname
+    storage-cases
+    storage-load
+    storage-save
+    storage-add-case
+    storage-add-cases
+    
+    #|
+    workspace
+    |#
+    workspace
+    workspace-pathname
+    workspace-storage
+    workspace-schema
+    workspace-datasets
+    
+    workspace-load
+    workspace-save
+    
+    workspace-make-dataset
+    workspace-cases-import
     
     
-    dataset-case
-    dataset-thing
+    #|
+    arff
+    |#
+    
+    arff->dataset-kb
    ))
 

@@ -193,6 +193,10 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type frame frame)
   (kb-element-name frame))
 
+(defun frame-equal (frame frame-des)
+  (check-type frame frame)
+  (eq frame (find-frame frame-des)))
+
 ; own slot values
 (defun frame-ref-own-slot-values (frame slot-des)
   (check-type frame frame)
@@ -225,6 +229,7 @@ if ERRORP is false, otherwise an error is signalled."
 ; direct type
 (defun instance-direct-type (inst)
   (car (instance-direct-types inst)))
+
 
 (defun (setf instance-direct-types) (cls-des-list inst)
   (setf (slot-value inst 'direct-types) (mapcar #'find-cls cls-des-list)))
