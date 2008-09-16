@@ -55,11 +55,12 @@
 (defun test-ds-one (arff)
   (format t "@@ ~A~%" arff)
   (let* ((workspace (make-instance 'mlcl-dataset::workspace
-                                  :pathname (merge-pathnames
-                                             (make-pathname 
-                                              :directory '(:relative "mlcl-tmp")
-                                              :name arff)
-                                             UCI-dir)))
+                                  :file (merge-pathnames
+                                         (make-pathname 
+                                          :directory '(:relative "mlcl-tmp")
+                                          :name arff
+                                          :type "workspace")
+                                         UCI-dir)))
          (storage (mlcl-dataset::workspace-storage workspace))
          (schema (mlcl-dataset::workspace-schema workspace)))
     (if (eq (length (mlcl-dataset::storage-cases storage)) 0)
@@ -67,44 +68,15 @@
                                               (or
                                                (mlcl-kb::find-kb (format nil "~A-data" arff) nil)
                                                (make-instance 'mlcl-kb:kb 
-                                                              :protege-file (merge-pathnames
+                                                              :protege-pprj-file (merge-pathnames
                                                                              (make-pathname 
                                                                               :directory '(:relative "mlcl-tmp")
-                                                                              :name (format nil "~A-data" arff))
+                                                                              :name (format nil "~A-data" arff)
+                                                                              :type "pprj")
                                                                              UCI-dir)
-                                                              :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb 
+                                                              :use (list 'mlcl-kbs::|dataset| 
                                                                               (mlcl-dataset::schema-kb schema))))))
     (format t "#cases=~A~%" (length (mlcl-dataset::storage-cases storage)))
     (format t "#datasets=~A~%" (length (mlcl-dataset::workspace-datasets workspace)))
     (mlcl-dataset::workspace-datasets workspace)
     ))
-;   
-;    (let ((ds (make-instance 'mlcl-dataset::dataset
-;                             :pathname (merge-pathnames
-;                                        (make-pathname 
-;                                         :directory '(:relative "mlcl-tmp")
-;                                         :name arff)
-;                                        UCI-dir)
-;                             :schema schema)))
-;      (mlcl-dataset::dataset-import ds (or
-;                                        (mlcl-kb::find-kb (format nil "~A-data" arff) nil)
-;                                        (make-instance 'mlcl-kb:kb 
-;                                                       :protege-file (merge-pathnames
-;                                                                      (make-pathname 
-;                                                                       :directory '(:relative "mlcl-tmp")
- ;                                                                      :name (format nil "~A-data" arff))
- ;                                                                     UCI-dir)
-;                                                       :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb))))
-;      ds)))
-      
-
-  #|
-  (let ((ds (mlcl-dataset::make-dataset arff ))
-    (mlcl-dataset::dataset-import-data ds (merge-pathnames
-                             (make-pathname 
-                              :directory '(:relative "mlcl-tmp")
-                              :name (format nil "~A-data" arff))
-                             UCI-dir))))
-;    (clsql:select '|~A-ds|::|~A-case| :refresh t))
-|#
-  

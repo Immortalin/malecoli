@@ -9,13 +9,9 @@
 (defvar *gare-instances-kb-pathname*)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (mlcl-kb:find-kb "GARE-INSTANCES-KB" nil))
+  (if (null (mlcl-kb:find-kb "gare-instances" nil))
       (progn
         (setf *gare-instances-kb-pathname*            
-              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.xml")
-        (mlcl-kb:make-kb "GARE-INSTANCES-KB" 
-                         :use-list '(mlcl-kbs::protege-kb
-                                     mlcl-kbs::dataset-kb  
-                                     mlcl-kbs::negotiation-kb 
-                                     mlcl-kbs::gare-kb)
-                         :protege-file *gare-instances-kb-pathname*))))
+              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.pprj")
+        (mlcl-kb:make-kb *gare-instances-kb-pathname* 
+                         :use '(mlcl-kbs::|gare|)))))

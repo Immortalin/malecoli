@@ -20,6 +20,27 @@
 
 (in-package :mlcl-kb)
 
+
+;
+; kb
+;
+
+; initialize
+(defmethod initialize-instance :after ((kb kb) &rest initargs)
+  (declare (ignore initargs))
+  (if (find-kb (kb-protege-pprj-file kb) nil)
+      (error "Kb ~s already exists." (kb-protege-pprj-file kb)))
+  (if (find-package (kb-name kb))
+      (error "Package named ~s already exists." (kb-name kb)))
+  (setf (slot-value kb 'package) (make-package (kb-name kb) :use nil))
+  (let ((ul (kb-use-list kb)))
+    (setf (slot-value kb 'use-list) nil)
+    (dolist (u ul) (use-kb u kb)))
+  (let ((kbsym (intern (kb-name kb) (find-package :mlcl-kbs))))
+    (setf (symbol-value kbsym) kb))
+  (kb-import-from-protege-pprj (kb-protege-pprj-file kb) kb)
+  (push kb *all-kbs*))
+
 ;
 ; protege create
 ;

@@ -11,10 +11,14 @@
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
+               (:module resources
+               	:components
+	        	((:file "resource" :depends-on ()))
+                :depends-on ("package"))	
                (:module kb
                	:components
 	        	((:file "cbr-kb" :depends-on ()))
-                 :depends-on ("package"))
+                 :depends-on ("package" "resources"))
                (:module cbr
                	:components
 	        	((:file "cbr" :depends-on ()))

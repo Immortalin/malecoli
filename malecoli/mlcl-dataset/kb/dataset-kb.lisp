@@ -24,18 +24,6 @@
 ; dataset knowledge base
 ;
 
-(defvar *dataset-kb-pathname*)
-
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (mlcl-kb:find-kb "DATASET-KB" nil))
-      (progn
-        (setf *dataset-kb-pathname*            
-              #-sbcl (merge-pathnames
-                      (make-pathname
-                       :directory '(:relative ".." "resources")
-                       :name "dataset" :type "xml" :case :local)
-                      *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-dataset/resources/dataset.xml")
-        (mlcl-kb:make-kb "DATASET-KB" 
-                         :use-list '(mlcl-kbs::protege-kb) 
-                         :protege-file *dataset-kb-pathname*))))
+  (if (null (mlcl-kb:find-kb "dataset" nil))
+        (mlcl-kb:make-kb (get-resource-pathname "dataset" "pprj"))))

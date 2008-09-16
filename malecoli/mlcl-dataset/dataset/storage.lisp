@@ -21,9 +21,9 @@
 (in-package :mlcl-dataset)
 
 (defclass storage ()
-  ((pathname 
-    :READER storage-pathname
-    :INITARG :pathname
+  ((file 
+    :READER storage-file
+    :INITARG :file
     :TYPE pathname)
    (cases 
     :TYPE list
@@ -33,11 +33,6 @@
 (defmethod initialize-instance :after ((storage storage) &rest initargs)
   (declare (ignore initargs))
   (storage-load storage))
-
-(defun storage-file (storage)
-  (merge-pathnames
-   (make-pathname :type "stor")
-   (storage-pathname storage)))
 
 (defun storage-load (storage)
   (let ((storefile (storage-file storage)))
@@ -56,3 +51,10 @@
   (dolist (c cases)
     (storage-add-case storage c)))
 
+(defun storage-remove (storage c)
+  (let ((cas (vector-pop (slot-value storage 'cases))))
+    (if (< (dataset-case-id c) (length (storage-cases storage)))
+        (progn
+          (setf (aref (dataset-case-id c) (slot-value storage 'cases)) cas)
+          (setf (slot-value cas 'id) (dataset-case-id c))))
+    (setf (slot-value c 'id) nil)))

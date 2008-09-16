@@ -21,18 +21,13 @@
                                                     :name (model-fullname name version)
                                                     :type "xml" :case :local)
                                                    *default-one-model-kb-pathname*)))
-  (let ((kb (make-kb (model-fullname name version) 
-                     :use-list (list 
-                           'mlcl-kbs::PROTEGE-KB
-                           'mlcl-kbs::dataset-kb
-                           'mlcl-kbs::negotiation-kb
-                           'mlcl-kbs::onenegotiation-kb)
-                     :protege-file pathname)))
+  (let ((kb (make-kb pathname 
+                     :use '(mlcl-kbs::|onenegotiation|))))
     (kb-create kb)
     (let ((this (make-simple-instance (format nil "model @ ~A" (model-fullname name version)) :kb kb)))
-      (instance-add-direct-type this 'onenegotiation-kb::|one_model|)
-      (setf (frame-own-slot-value this 'negotiation-kb::|neg_model_id|) name)
-      (setf (frame-own-slot-value this 'negotiation-kb::|neg_model_version|) version))   
+      (instance-add-direct-type this '|onenegotiation|::|one_model|)
+      (setf (frame-own-slot-value this '|negotiation|::|neg_model_id|) name)
+      (setf (frame-own-slot-value this '|negotiation|::|neg_model_version|) version))   
     kb))
   
 

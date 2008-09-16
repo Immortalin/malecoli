@@ -31,6 +31,10 @@
     dataset-thing-name-id
     dataset-case
     dataset-case-id
+    dataset-date
+    |time_year| 
+    |time_month|
+    |time_day| 
 
     #|
     dataset

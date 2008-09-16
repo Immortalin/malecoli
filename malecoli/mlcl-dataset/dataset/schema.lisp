@@ -21,9 +21,9 @@
 (in-package :mlcl-dataset)
 
 (defclass schema ()
-  ((pathname 
-    :READER schema-pathname
-    :INITARG :pathname
+  ((file 
+    :READER schema-pprj-file
+    :INITARG :file
     :TYPE pathname)
    (package
     :READER schema-package
@@ -37,32 +37,28 @@
 
 (defmethod initialize-instance :after ((schema schema) &rest initargs)
   (declare (ignore initargs))
-  (setf (slot-value schema 'package) (or 
-                                      (find-package (format nil "~A-ds" (schema-name schema))) 
-                                      (make-package (format nil "~A-ds" (schema-name schema)) 
-                                                    :use '(:cl :mlcl-kb :mlcl-dataset))))
+  (setf (slot-value schema 'package) 
+        (or (find-package (format nil "~A-ds" (schema-name schema))) 
+            (make-package (format nil "~A-ds" (schema-name schema)) 
+                          :use '(:cl :mlcl-kb :mlcl-dataset))))
   (if (null (schema-kb schema))
-      (setf (slot-value schema 'kb) (or (mlcl-kb:find-kb (schema-name schema) nil)
-                                        (mlcl-kb:make-kb 
-                                         (schema-name schema)
-                                         :use-list (list 'mlcl-kbs::dataset-kb 'mlcl-kbs::protege-kb)
-                                         :protege-file (merge-pathnames
-                                                        (make-pathname :type "pprj")
-                                                        (schema-pathname schema))))))
-  ;(format t "## ~A ~A ~%~A~%" (mlcl-kb:kb-name (schema-kb schema)) (mapcar #'mlcl-kb:kb-name (mlcl-kb:kb-use-list (schema-kb schema)))
-  ;        (schema-pathname schema))   
+      (setf (slot-value schema 'kb) 
+            (or (mlcl-kb:find-kb (schema-name schema) nil)
+                (mlcl-kb:make-kb (schema-pprj-file schema)
+                                 :use '(mlcl-kbs::|dataset|)))))
   (dolist (ukb (mlcl-kb:kb-use-list (schema-kb schema)))
-    (if (not (member ukb (list (mlcl-kb:find-kb 'mlcl-kbs::dataset-kb) (mlcl-kb:find-kb 'mlcl-kbs::protege-kb))))
-        (make-instance 'schema :pathname (mlcl-kb:kb-protege-file ukb) :kb ukb)))
+    (if (not (member ukb (list (mlcl-kb:find-kb 'mlcl-kbs::|dataset|) (mlcl-kb:find-kb 'mlcl-kbs::|protege|))))
+        (let ((ns (make-instance 'schema :file (mlcl-kb:kb-protege-pprj-file ukb) :kb ukb)))
+          (use-package (schema-package ns) (schema-package schema))))) 
   (schema-load schema))
 
 (defun schema-name (schema)
-  (pathname-name (schema-pathname schema)))
+  (pathname-name (schema-pprj-file schema)))
 
 (defun schema-source-list-file (schema)
   (merge-pathnames
    (make-pathname :type "lisp")
-   (schema-pathname schema)))
+   (schema-pprj-file schema)))
 
 (defun schema-compiled-list-file (schema)
   (merge-pathnames
@@ -72,7 +68,7 @@
 (defun schema-xml-kb-file (schema)
   (merge-pathnames
    (make-pathname :type "xml")
-   (schema-pathname schema)))
+   (schema-pprj-file schema)))
 
 (defun schema-load (schema)
   (let ((lispfile (schema-source-list-file schema)))
@@ -80,13 +76,12 @@
         (progn
           (mlcl-kb:kb-open (schema-kb schema))
           (with-open-file (strm (schema-source-list-file schema) :direction :output :if-exists :supersede)
-                          (dataset-kb-compile (schema-package schema) (schema-kb schema) strm))
+                          (schema-compile (schema-package schema) (schema-kb schema) strm))
           (mlcl-kb:kb-close (schema-kb schema))
           (compile-file lispfile)
           (load (schema-compiled-list-file schema))
           (funcall (find-symbol "INIT-DATASET" (schema-package schema))))
         (progn
-          (format t "##load## ~A~%" (schema-compiled-list-file schema))
           (load (schema-compiled-list-file schema))))))
 
 

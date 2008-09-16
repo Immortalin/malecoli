@@ -31,3 +31,18 @@
     :reader dataset-case-id
     :type fixnum
     :initarg :id)))
+
+(defclass dataset-date (dataset-thing)
+  ((|time_year|
+    :ACCESSOR |time_year|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_month|
+    :ACCESSOR |time_month|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_day| 
+    :ACCESSOR |time_day|
+    :INITFORM 0 
+    :type fixnum)))
+
