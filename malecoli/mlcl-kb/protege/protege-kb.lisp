@@ -97,10 +97,10 @@
     (get-facet ":VALUES")))
       
 (defun make-protege-kb ()
-  (let ((kb (make-instance 'kb :name "PROTEGE-KB" :protege-file nil)))
+  (let ((kb (make-instance 'kb :protege-pprj-file (get-resource-pathname "protege" "pprj"))))
     (initialize-protege-kb kb)
     kb))
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (find-kb "PROTEGE-KB" nil))
+  (if (null (find-kb "protege" nil))
       (setf *protege-kb* (make-protege-kb))))

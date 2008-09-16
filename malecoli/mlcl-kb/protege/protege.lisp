@@ -70,16 +70,16 @@
 ;
   
 (defun cls-documentation (cls)
-  (frame-own-slot-value cls 'PROTEGE-KB::|:DOCUMENTATION|))
+  (frame-own-slot-value cls '|protege|::|:DOCUMENTATION|))
 
 (defun (setf cls-documentation) (v cls)
-  (setf (frame-own-slot-value cls 'PROTEGE-KB::|:DOCUMENTATION|) v))
+  (setf (frame-own-slot-value cls '|protege|::|:DOCUMENTATION|) v))
 
 (defun cls-role (cls)
-  (string->role (frame-own-slot-value cls 'PROTEGE-KB::|:ROLE|)))
+  (string->role (frame-own-slot-value cls '|protege|::|:ROLE|)))
 
 (defun (setf cls-role) (v cls)
-  (setf (frame-own-slot-value cls 'PROTEGE-KB::|:ROLE|) v))
+  (setf (frame-own-slot-value cls '|protege|::|:ROLE|) v))
 
 (defun cls-abstractp (cls)
   (eq (cls-role cls) 'abstract-value))
@@ -94,10 +94,10 @@
   (setf (cls-role cls) (if v concrete-value abstract-value)))
 
 (defun cls-constraints (cls)
-  (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|))
+  (frame-own-slot-values cls '|protege|::|:SLOT-CONSTRAINTS|))
 
 (defun (setf cls-constraints) (vs cls)
-  (setf (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|) vs))
+  (setf (frame-own-slot-values cls '|protege|::|:SLOT-CONSTRAINTS|) vs))
 
 
 ;
@@ -105,96 +105,96 @@
 ;
 
 (defun slot-documentation (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:DOCUMENTATION|))
+  (frame-own-slot-value slot '|protege|::|:DOCUMENTATION|))
 
 (defun (setf slot-documentation) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:DOCUMENTATION|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:DOCUMENTATION|) v))
 
 (defun slot-value-type (slot)
-  (string->type-value (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)))
+  (string->type-value (frame-own-slot-value slot '|protege|::|:SLOT-VALUE-TYPE|)))
 
 (defun (setf slot-value-type) (val slot)
   (if (listp val)
-      (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|) val)
-      (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|) val)))
+      (setf (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|) val)
+      (setf (frame-own-slot-value slot '|protege|::|:SLOT-VALUE-TYPE|) val)))
 
 (defun slot-minimum-cardinality (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-MINIMUM-CARDINALITY|))
+  (frame-own-slot-value slot '|protege|::|:SLOT-MINIMUM-CARDINALITY|))
 
 (defun (setf slot-minimum-cardinality) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-MINIMUM-CARDINALITY|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:SLOT-MINIMUM-CARDINALITY|) v))
 
 (defun slot-maximum-cardinality (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-MAXIMUM-CARDINALITY|))
+  (frame-own-slot-value slot '|protege|::|:SLOT-MAXIMUM-CARDINALITY|))
 
 (defun (setf slot-maximum-cardinality) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-MAXIMUM-CARDINALITY|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:SLOT-MAXIMUM-CARDINALITY|) v))
 
 (defun slot-minimum-value (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-NUMERIC-MINIMUM|))
+  (frame-own-slot-value slot '|protege|::|:SLOT-NUMERIC-MINIMUM|))
 
 (defun (setf slot-minimum-value) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-NUMERIC-MINIMUM|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:SLOT-NUMERIC-MINIMUM|) v))
 
 (defun slot-maximum-value (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-NUMERIC-MAXIMUM|))
+  (frame-own-slot-value slot '|protege|::|:SLOT-NUMERIC-MAXIMUM|))
 
 (defun (setf slot-maximum-value) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-NUMERIC-MAXIMUM|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:SLOT-NUMERIC-MAXIMUM|) v))
 
 (defun slot-defaults (slot)
-  (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-DEFAULTS|))
+  (frame-own-slot-values slot '|protege|::|:SLOT-DEFAULTS|))
 
 (defun (setf slot-defaults) (vs slot)
-  (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-DEFAULTS|) vs))
+  (setf (frame-own-slot-values slot '|protege|::|:SLOT-DEFAULTS|) vs))
 
 (defun slot-values (slot)
-  (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUES|))
+  (frame-own-slot-values slot '|protege|::|:SLOT-VALUES|))
 
 (defun (setf slot-values) (vs slot)
-  (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUES|) vs))
+  (setf (frame-own-slot-values slot '|protege|::|:SLOT-VALUES|) vs))
 
 (defun slot-inverse-slot (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-INVERSE|))
+  (frame-own-slot-value slot '|protege|::|:SLOT-INVERSE|))
 
 (defun (setf slot-inverse-slot) (v slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:SLOT-INVERSE|) v))
+  (setf (frame-own-slot-value slot '|protege|::|:SLOT-INVERSE|) v))
 
 (defun slot-allowed-clses (slot)
   (and (eq (slot-value-type slot) 'instance-type-value)
-       (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
+       (cdr (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-clses) (vs slot)
-  (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
+  (setf (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|)
         (cons instance-type-value vs)))
 
 (defun slot-allowed-parents (slot)
   (and (eq (slot-value-type slot) 'cls-type-value)
-       (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
+       (cdr (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-parents) (vs slot)
-  (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
+  (setf (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|)
         (cons cls-type-value vs)))
 
 (defun slot-allowed-values (slot)
   (and (eq (slot-value-type slot) 'symbol-type-value)
-       (cdr (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|))))
+       (cdr (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|))))
 
 (defun (setf slot-allowed-values) (vs slot)
-  (setf (frame-own-slot-values slot 'PROTEGE-KB::|:SLOT-VALUE-TYPE|)
+  (setf (frame-own-slot-values slot '|protege|::|:SLOT-VALUE-TYPE|)
         (cons symbol-type-value vs)))
 
 (defun slot-constraints (cls)
-  (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|))
+  (frame-own-slot-values cls '|protege|::|:SLOT-CONSTRAINTS|))
 
 (defun (setf slot-constraints) (vs cls)
-  (setf (frame-own-slot-values cls 'PROTEGE-KB::|:SLOT-CONSTRAINTS|) vs))
+  (setf (frame-own-slot-values cls '|protege|::|:SLOT-CONSTRAINTS|) vs))
 
 (defun slot-associated-facet (slot)
-  (frame-own-slot-value slot 'PROTEGE-KB::|:ASSOCIATED-FACET|))
+  (frame-own-slot-value slot '|protege|::|:ASSOCIATED-FACET|))
 
 (defun (setf slot-associated-facet) (vs slot)
-  (setf (frame-own-slot-value slot 'PROTEGE-KB::|:ASSOCIATED-FACET|) vs))
+  (setf (frame-own-slot-value slot '|protege|::|:ASSOCIATED-FACET|) vs))
 
 
 ;
@@ -202,16 +202,16 @@
 ;
 
 (defun facet-documentation (facet)
-  (frame-own-slot-value facet 'PROTEGE-KB::|:DOCUMENTATION|))
+  (frame-own-slot-value facet '|protege|::|:DOCUMENTATION|))
 
 (defun (setf facet-documentation) (v facet)
-  (setf (frame-own-slot-value facet 'PROTEGE-KB::|:DOCUMENTATION|) v))
+  (setf (frame-own-slot-value facet '|protege|::|:DOCUMENTATION|) v))
 
 (defun facet-associated-slot (facet)
-  (frame-own-slot-value facet 'PROTEGE-KB::|:ASSOCIATED-SLOT|))
+  (frame-own-slot-value facet '|protege|::|:ASSOCIATED-SLOT|))
 
 (defun (setf facet-associated-slot) (v facet)
-  (setf (frame-own-slot-value facet 'PROTEGE-KB::|:ASSOCIATED-SLOT|) v))
+  (setf (frame-own-slot-value facet '|protege|::|:ASSOCIATED-SLOT|) v))
 
 
 ;

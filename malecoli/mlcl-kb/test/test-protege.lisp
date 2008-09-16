@@ -13,38 +13,22 @@
 (setf *protege-ex-02* #p"/hardmnt/tharpe0/sra/serra/Work/ONEv0.1/CBR/protege_frame_ontologies/examples/xml/newpaper.xml")
 (setf *protege-ex-03* #p"/hardmnt/tharpe0/sra/serra/Work/ONEv0.1/CBR/protege_frame_ontologies/examples/xml/wines.xml")
 (setf *protege-ex-04* #p"/hardmnt/tharpe0/sra/serra/Work/ONEv0.1/CBR/protege_frame_ontologies/examples/xml/test-values.xml")
-(setf *output* #p"/tmp/output.xml")
-(setf *output-txt* #p"/tmp/output.txt")
+(setf *output* #p"/tmp/ciao.pprj")
+(setf *output-txt* #p"/tmp/ciao.txt")
 
 
 (defun test03 ()
-  (let ((kb (mlcl-kb:find-kb "ciao"))
-        (lxml nil)
-        (genlxml nil))
+  (let ((kb (mlcl-kb:find-kb "ciao" nil)))
     (if (null kb)
-        (setf kb (mlcl-kb:make-kb "ciao" :use (list 'mlcl-kbs::protege-kb) :protege-file *output*)))
+        (progn
+          (setf kb (mlcl-kb:make-kb *output* :use '(mlcl-kbs::|protege|)))
+          (mlcl-kb:kb-create kb)))
     (mlcl-kb:kb-clear kb)
-    (setf lxml (mlcl-kb::kb-import-from-protege-xml *protege-ex-01* kb))
-    (setf genlxml (mlcl-kb::kb-export-to-protege-xml *output* kb))
+    (mlcl-kb::kb-import-from-protege-xml *protege-ex-01* kb)
+    (mlcl-kb:kb-save kb)
     (with-open-file (strm *output-txt* :direction :output :if-exists :supersede)
                     (mlcl-kb::kb-dump strm kb))
-    (mlcl-kb:kb-save kb)
-    ;(format t "~%~%~A~%~A" lxml genlxml)
     kb))
-#|
-(mlcl-kb:def-kb "newpaper" 
-                      :use '("PROTEGE-KB") 
-                      :protege-file #p"/hardmnt/tharpe0/sra/serra/Work/ONEv0.1/CBR/protege_frame_ontologies/examples/xml/newpaper.xml")
-
-(mlcl-kb:in-kb "newpaper")
-(mlcl-kb:def-cls "Salesperson")
-(cl:in-package :common-lisp-user)
 
 
-(defun test04 ()
-  (mlcl-kb::kb-element-dump |newpaper|:|Salesperson| t)
-  (mlcl-kb::kb-element-dump protege-kb:|:META-CLASS| t)
-  (mlcl-kb::kb-element-dump protege-kb:|:ANNOTATION-TEXT| t)
-  (mlcl-kb::kb-element-dump protege-kb:|:ROLE| t))
-  
-|#
+

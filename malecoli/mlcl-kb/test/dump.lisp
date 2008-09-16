@@ -26,12 +26,12 @@
           element
           (frame-name element)
           (instance-direct-types element)
-          (kb-element-definedp element)
-          (frame-own-slot-values% element))
+          (frame-definedp element)
+          (frame-own-slot-values-list element))
   (format strm "  ~A ~A ~A~%" 
-          (instance-has-direct-type element protege-kb::|:STANDARD-SLOT|)
-          (instance-has-type element protege-kb::|:SLOT|)
-          (instance-has-type element protege-kb::|:META-CLASS|)
+          (instance-has-direct-type element |protege|::|:STANDARD-SLOT|)
+          (instance-has-type element |protege|::|:SLOT|)
+          (instance-has-type element |protege|::|:META-CLASS|)
           ))
 
 (defmethod kb-element-dump ((element cls) strm)
@@ -40,7 +40,7 @@
   (format strm "  super-classes: ~A~%  template-slots: ~A~%  template-facet-values: ~A~%" 
           (cls-direct-superclses element)
           (cls-direct-template-slots element)
-          (cls-direct-template-facet-values% element))
+          (cls-direct-template-facet-values-list element))
   (format strm "  ~A ~A ~A ~A ~A ~%" 
           (cls-role element)
           (cls-abstractp element)

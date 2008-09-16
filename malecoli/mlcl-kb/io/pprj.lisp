@@ -30,7 +30,11 @@
   (check-type pathname pathname)
   (check-type kb kb)
   (if (probe-file pathname)
-      nil
+      (multiple-value-bind (xml-pathname includes_projects) (extract-info-from-protege-pprj pathname)
+        (setf (kb-protege-xml-file kb) xml-pathname)
+        (dolist (p includes_projects)
+          (let ((ukb (find-kb p t t)))
+            (use-kb ukb kb))))             
       (error "PPRJ protege file ~S does not exist." pathname)))
 
 (defun kb-export-to-protege-pprj (pathname xml-file kb &key (supersedep t))
@@ -40,13 +44,13 @@
   (if (or supersedep (not (probe-file pathname)))
       (let ((included-projects-line nil))
         (dolist (k (kb-use-list kb))
-          (if (kb-protege-file k)
+          (if (kb-protege-pprj-file k)
               (setf included-projects-line
                     (concatenate 'string included-projects-line
-                                 (format nil "\"~a\"" 
+                                 (format nil " \"~a\"" 
                                          (file-namestring (merge-pathnames
                                                            (make-pathname :type "pprj")
-                                                           (kb-protege-file k))))))))
+                                                           (kb-protege-pprj-file k))))))))
         (with-open-file (in *empty-pprj-pathname* :direction :input)
                         (with-open-file (out pathname :direction :output :if-exists :supersede)
                                         (do ((line (read-line in nil)
@@ -61,15 +65,45 @@
 
 
 ;
+; extract info
+;
+
+(defun extract-info-from-protege-pprj (pathname)
+  (check-type pathname pathname)
+  (let ((xml-pathname nil)
+        (includes_projects nil))
+    (with-open-file (pprj pathname :direction :input)
+                    (let ((cont  (stream->seq pprj)))
+                      (setf xml-pathname 
+                            (cl-ppcre:register-groups-bind (nil v1)
+                                                           ("(name\\s*\"source_file_name\"\\s*.\\s*.\\s*string_value\\s*\"(.*)\")" cont) v1))
+                      (setf includes_projects
+                           (cl-ppcre:register-groups-bind (v1) 
+                                                           ("included_projects\\s*((\"([^\"]*)\"\\s*)*)" cont) v1))))
+    (if includes_projects
+        (progn
+          (setf includes_projects (cl-ppcre:regex-replace-all 
+                                   "file:" 
+                                   includes_projects         
+                                   ""))
+          (setf includes_projects (cl-ppcre:split "\\s+" includes_projects))))
+    (if (equal (char xml-pathname 0) #\/ )
+        (setf xml-pathname (pathname xml-pathname))
+        (setf xml-pathname (merge-pathnames (pathname xml-pathname) (make-pathname :directory (pathname-directory pathname) :name xml-pathname))))
+    (let ((ips nil))
+      (dolist (ip includes_projects)
+        (setf ip (string-trim "\" 	" ip))
+        (if (equal (char ip 0) #\/ )
+            (setf ip (pathname ip))
+            (setf ip (merge-pathnames (merge-pathnames (pathname ip) (make-pathname :directory (pathname-directory pathname))))))
+        (push ip ips))
+      (setf includes_projects ips))
+    (values xml-pathname includes_projects)))
+
+        
+;
 ; init variables
 ;
 
-(eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (boundp '*empty-pprj-pathname*))
-      (setq *empty-pprj-pathname*            
-            #-sbcl (merge-pathnames
-                    (make-pathname
-                     :directory '(:relative ".." "resources")
-                     :name "empty" :type "pprj" :case :local)
-                    *load-truename*)
-            #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-kb/resources/empty.pprj")))
+(init-variable *empty-pprj-pathname* (get-resource-pathname "empty" "pprj"))
+

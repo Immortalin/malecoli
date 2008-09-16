@@ -29,6 +29,10 @@
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
+               (:module resources
+               	:components
+	        	((:file "resource" :depends-on ()))
+                :depends-on ("package"))		
                (:module core
                	:components
 	        	((:file "frame" :depends-on ("kb"))
@@ -40,12 +44,12 @@
 	        	((:file "io" :depends-on ())
 	        	 (:file "xml" :depends-on ("pprj" "io"))
 	        	 (:file "pprj" :depends-on ("io")))
-                 :depends-on ("package" "core"))
+                 :depends-on ("package" "core" "resources"))
                (:module protege
                	:components
 	        	((:file "protege-kb" :depends-on ())
 	        	 (:file "protege" :depends-on ("protege-kb"))
 	        	 )
-                 :depends-on ("package" "core"))
+                :depends-on ("package" "core"))
                )
   :depends-on ("s-xml" "cl-ppcre"))
