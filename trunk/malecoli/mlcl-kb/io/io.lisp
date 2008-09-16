@@ -30,23 +30,16 @@
       (progn
         (dolist (ukb (kb-use-list kb))
           (kb-open ukb))
-        (if (kb-protege-file kb) 
-            (kb-export-to-protege (kb-protege-file kb) kb t t)
-            (error "Protege file does not set for kb ~A." (kb-name kb)))
+        (if (null (kb-protege-xml-file kb))
+            (setf (kb-protege-xml-file kb) (merge-pathnames 
+                                            (make-pathname :type "xml")
+                                            (kb-protege-pprj-file kb))))
+        (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t t)
         (setf (kb-openedp kb) t))))
 
 (defun kb-createdp (&optional (kb *kb*))
   (check-type kb kb)
-  (if (kb-protege-file kb)
-      (and 
-       (probe-file (merge-pathnames
-                    (make-pathname :type "pprj")
-                    (kb-protege-file kb)))
-       (probe-file (merge-pathnames
-                    (make-pathname :type "xml")
-                    (kb-protege-file kb))))
-      (error "Protege file does not set for kb ~A." (kb-name kb))))
-
+  (probe-file (kb-protege-pprj-file kb)))
 
 ;
 ; protege save
@@ -54,9 +47,7 @@
 
 (defun kb-save (&optional (kb *kb*))
   (check-type kb kb)
-  (if (kb-protege-file kb)
-      (kb-export-to-protege (kb-protege-file kb) kb t nil)
-      (error "Protege file does not set for kb ~A." (kb-name kb))))
+  (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t nil))
 
 
 ;
@@ -69,16 +60,14 @@
       (progn
         (dolist (ukb (kb-use-list kb))
           (kb-open ukb))
-        (if (kb-protege-file kb) 
-            (kb-import-from-protege (kb-protege-file kb) kb))
+        (kb-import-from-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb)
         (setf (kb-openedp kb) t))))
 
 (defun kb-close (&optional (kb *kb*))
   (check-type kb kb)
   (if (kb-openedp kb)
       (progn
-        (if (kb-protege-file kb) 
-            (kb-export-to-protege (kb-protege-file kb) kb nil nil))
+        (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb nil nil)
         (kb-clear kb)
         (setf (kb-openedp kb) nil))))
 
@@ -87,26 +76,25 @@
 ; import/export functions
 ;
                         
-(defun kb-import-from-protege (pathname &optional (kb *kb*))
-  (check-type pathname pathname)
+(defun kb-import-from-protege-file (pprj-file xml-file &optional (kb *kb*))
+;  (check-type pprj-file (or nil pathname))
+;  (check-type xml-file (or nil pathname))
   (check-type kb kb)
-  (kb-import-from-protege-pprj (merge-pathnames
-                              (make-pathname :type "pprj")
-                              pathname) kb)
-  (kb-import-from-protege-xml (merge-pathnames
-                              (make-pathname :type "xml")
-                              pathname) kb))
+  (if pprj-file
+      (progn
+        (kb-import-from-protege-pprj pprj-file kb)
+        (if (and (kb-protege-xml-file kb) (not (equal (kb-protege-xml-file kb) xml-file)))
+            (kb-import-from-protege-xml (kb-protege-xml-file kb) kb))))
+  (if xml-file
+      (kb-import-from-protege-xml xml-file kb)))
 
-(defun kb-export-to-protege (pathname &optional (kb *kb*) (xml-supersedep t) (pprj-supersedep nil))
-  (check-type pathname pathname)
+(defun kb-export-to-protege-file (pprj-file xml-file &optional (kb *kb*) (xml-supersedep t) (pprj-supersedep nil))
+  (check-type pprj-file pathname)
+  (check-type xml-file pathname)
   (check-type kb kb)
-  (kb-export-to-protege-pprj (merge-pathnames
-                              (make-pathname :type "pprj")
-                              pathname) 
-                             (merge-pathnames
-                              (make-pathname :type "xml")
-                              pathname)
+  (kb-export-to-protege-pprj pprj-file
+                             xml-file
                              kb :supersedep pprj-supersedep)
-  (kb-export-to-protege-xml (merge-pathnames
-                              (make-pathname :type "xml")
-                              pathname) kb :supersedep xml-supersedep))
+  (kb-export-to-protege-xml xml-file 
+                            kb :supersedep xml-supersedep))
+

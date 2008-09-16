@@ -105,8 +105,9 @@
     kb-package
     kb-interned-elements
     kb-use-list
-    kb-protege-file
-
+    kb-protege-pprj-file
+    kb-protege-xml-file
+    
     kb-create
     kb-save
     kb-open

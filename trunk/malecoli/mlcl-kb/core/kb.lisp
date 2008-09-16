@@ -49,11 +49,16 @@
 ;
 
 (defclass kb ()
-  ((name
-    :READER kb-name
-    :INITARG :name
+  ((protege-pprj-file
+    :TYPE (or nil pathname)
+    :INITARG :protege-pprj-file
     :INITFORM nil
-    :TYPE string)
+    :ACCESSOR kb-protege-pprj-file)
+   (protege-xml-file
+    :TYPE (or nil pathname)
+    :INITARG :protege-xml-file
+    :INITFORM nil
+    :ACCESSOR kb-protege-xml-file)
    (package
     :READER kb-package
     :INITARG :package
@@ -64,23 +69,22 @@
     :TYPE list)
    (use-list
     :READER kb-use-list
-    :INITARG :use-list
+    :INITARG :use
     :INITFORM nil)
-   (protege-file
-    :TYPE (or nil pathname)
-    :INITARG :protege-file
-    :INITFORM nil
-    :ACCESSOR kb-protege-file)
    (openedp
     :INITFORM nil
     :ACCESSOR kb-openedp))
   (:documentation "A kb"))
 
+(defun kb-name (kb)
+  (check-type kb kb)
+  (pathname-name (kb-protege-pprj-file kb)))
+
 ; kb designator
 (deftype kb-designator ()
-  `(or kb string symbol))
+  `(or kb string symbol pathname))
 
-(defun find-kb (kb-des &optional (errorp t))
+(defun find-kb (kb-des &optional (errorp t) (importp nil))
   (check-type kb-des kb-designator)
   "Return kb designed by NAME. If there is no such kb NIL is returned
 if ERRORP is false, otherwise an error is signalled."
@@ -92,16 +96,23 @@ if ERRORP is false, otherwise an error is signalled."
                   (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))
              (string 
               (or (find-if #'(lambda (x) (string= (kb-name x) kb-des)) *all-kbs*)
+                  (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))
+             (pathname
+              (if (probe-file kb-des)
+                  (let ((kb (find-kb (pathname-name kb-des) nil)))
+                    (if (and (null kb) importp)
+                        (setf kb (make-instance 'kb :protege-pprj-file kb-des)))
+                    (if kb 
+                        kb
+                        (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)) )
                   (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))))
 
 
 ; initialize
 (defmethod initialize-instance :after ((kb kb) &rest initargs)
   (declare (ignore initargs))
-  (if (and (null (kb-name kb)) (kb-protege-file kb))
-      (setf (slot-value kb 'name) (pathname-name (kb-protege-file kb))))
-  (if (find-kb (kb-name kb) nil)
-      (error "Kb named ~s already exists." (kb-name kb)))
+  (if (find-kb (kb-protege-pprj-file kb) nil)
+      (error "Kb ~s already exists." (kb-protege-pprj-file kb)))
   (if (find-package (kb-name kb))
       (error "Package named ~s already exists." (kb-name kb)))
   (setf (slot-value kb 'package) (make-package (kb-name kb) :use nil))
@@ -113,12 +124,12 @@ if ERRORP is false, otherwise an error is signalled."
   (push kb *all-kbs*))
 
 ; make, delete, and clear
-(defun make-kb (name &key (use-list nil) (protege-file nil))
+(defun make-kb (protege-pprj-file &key (use nil))
   "make a new kb"
-  (check-type name (or nil string))
-  (if (and name (find-kb name nil))
-      (error "Kb named ~s already exists." name))
-  (make-instance 'kb :name name :protege-file protege-file :use-list use-list))
+  (check-type protege-pprj-file pathname)
+  (if (find-kb protege-pprj-file nil)
+      (error "Kb  ~s already exists." protege-pprj-file))
+  (make-instance 'kb :protege-pprj-file protege-pprj-file :use use))
 
 (defun delete-kb (kb-des)
   (check-type kb-des kb-designator)
