@@ -107,22 +107,6 @@ if ERRORP is false, otherwise an error is signalled."
                         (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)) )
                   (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))))
 
-
-; initialize
-(defmethod initialize-instance :after ((kb kb) &rest initargs)
-  (declare (ignore initargs))
-  (if (find-kb (kb-protege-pprj-file kb) nil)
-      (error "Kb ~s already exists." (kb-protege-pprj-file kb)))
-  (if (find-package (kb-name kb))
-      (error "Package named ~s already exists." (kb-name kb)))
-  (setf (slot-value kb 'package) (make-package (kb-name kb) :use nil))
-  (let ((ul (kb-use-list kb)))
-    (setf (slot-value kb 'use-list) nil)
-    (dolist (u ul) (use-kb u kb)))
-  (let ((kbsym (intern (kb-name kb) (find-package :mlcl-kbs))))
-    (setf (symbol-value kbsym) kb))
-  (push kb *all-kbs*))
-
 ; make, delete, and clear
 (defun make-kb (protege-pprj-file &key (use nil))
   "make a new kb"
@@ -158,10 +142,10 @@ if ERRORP is false, otherwise an error is signalled."
         (kb-to-use (find-kb kb-to-use-des)))
     (if (not (member kb-to-use (kb-use-list kb)))
         (progn 
-          (push kb-to-use (slot-value kb 'use-list))
-          (use-package (kb-package kb-to-use) (kb-package kb))
           (dolist (u (kb-use-list kb-to-use))
-            (use-kb u kb))))))
+            (use-kb u kb))
+          (push kb-to-use (slot-value kb 'use-list))
+          (use-package (kb-package kb-to-use) (kb-package kb))))))
 
 (defun unuse-kb (kb-to-use-des &optional (kb-des *kb*))
   (check-type kb-des kb-designator)

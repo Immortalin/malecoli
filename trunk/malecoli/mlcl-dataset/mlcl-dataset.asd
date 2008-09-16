@@ -11,19 +11,26 @@
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
+               (:module resources
+               	:components
+	        	((:file "resource" :depends-on ()))
+                :depends-on ("package"))
                (:module dataset
                	:components
-	        	((:file "workspace" :depends-on ("schema" "dataset" "storage"))
+                 	(
+	        	 (:file "workspace" :depends-on ("schema" "dataset" "storage"))
 	        	 (:file "dataset" :depends-on ("schema" "storage"))
-	        	 (:file "storage" :depends-on ("case"))
-	        	 (:file "schema" :depends-on ("dataset-kb"))
-	        	 (:file "dataset-kb" :depends-on ())		
-	        	 (:file "case" :depends-on ()))
+	   	    	 (:file "storage" :depends-on ("case"))
+	        	 (:file "schema" :depends-on ("schema-compiler"))
+	        	 (:file "schema-compiler" :depends-on ())
+	 		 (:file "case-importer" :depends-on ("schema-compiler"))		
+	        	 (:file "case" :depends-on ())
+                 	 )
                  :depends-on ("package" "kb"))
                (:module kb
                 :components
 	        	((:file "dataset-kb" :depends-on ()))
-                 :depends-on ("package"))
+                 :depends-on ("package" "resources"))
                (:module arff
                	:components
 	        	((:file "arff" :depends-on ()))

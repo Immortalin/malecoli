@@ -21,9 +21,9 @@
 (in-package :mlcl-dataset)
 
 (defclass workspace ()
-  ((pathname 
-    :READER workspace-pathname
-    :INITARG :pathname
+  ((file 
+    :READER workspace-file
+    :INITARG :file
     :TYPE pathname)
    (storage
     :type storage
@@ -43,15 +43,15 @@
 (defmethod initialize-instance :after ((workspace workspace) &rest initargs)
   (declare (ignore initargs))
   (if (null (workspace-schema workspace))
-      (setf (slot-value workspace 'schema) (make-instance 'schema :pathname (workspace-pathname workspace))))
+      (setf (slot-value workspace 'schema) (make-instance 'schema :file (merge-pathnames
+                                                                         (make-pathname :type "pprj")
+                                                                         (workspace-file workspace)))))
   (if (null (workspace-storage workspace))
-      (setf (slot-value workspace 'storage) (make-instance 'storage :pathname (workspace-pathname workspace))))
+      (setf (slot-value workspace 'storage) (make-instance 'storage :file 
+                                                             (merge-pathnames
+                                                              (make-pathname :type "stor")
+                                                              (workspace-file workspace)))))
   (workspace-load workspace))
-
-(defun workspace-file (workspace)
-  (merge-pathnames
-   (make-pathname :type "workspace")
-   (workspace-pathname workspace)))
 
 (defun workspace-load (workspace)
   (let ((storefile (workspace-file workspace)))
@@ -67,9 +67,10 @@
   (let ((storefile (workspace-file workspace))
         (datasetes-list nil))
     (dolist (ds (workspace-datasets workspace))
-      (push (cons (dataset-name ds)
-                  (mapcar #'dataset-case-id (dataset-cases ds)))
-            datasetes-list))
+      (if (not (dataset-temporaryp ds))
+          (push (cons (dataset-name ds)
+                      (mapcan #'(lambda (x) (if x (list x))) (mapcar #'dataset-case-id (dataset-cases ds))))
+                datasetes-list)))
     (cl-store:store datasetes-list storefile)))
 
 (defun workspace-make-dataset (workspace name)
@@ -79,6 +80,19 @@
                                 :storage (workspace-storage workspace))))
     (push dataset (slot-value workspace 'datasets))
     dataset))
+
+(defun workspace-make-temporary-dataset (workspace name)
+  (let ((dataset (make-instance 'dataset 
+                                :name name 
+                                :schema (workspace-schema workspace))))
+    (push dataset (slot-value workspace 'datasets))
+    dataset))
+
+
+(defun workspace-case-import (workspace cas)
+  (declare (ignore workspace)
+           (ignore cas))
+  nil)
 
 (defun workspace-cases-import (workspace kb)
   (multiple-value-bind (cases datasets-list)

@@ -39,30 +39,30 @@
 ;
   
 (defun string->type-value (str)
-          (cond
-           ((string-equal str "Any")
-            'any-type-value)
-           ((string-equal str "Boolean")
-            'boolean-type-value)
-           ((string-equal str "Float")
-            'float-type-value)
-           ((string-equal str "Integer")
-            'integer-type-value)
-           ((string-equal str "String")
-            'string-type-value)
-           ((string-equal str "Symbol")
-            'symbol-type-value)
-           ((string-equal str "Instance")
-            'instance-type-value)
-           ((string-equal str "Class")
-            'cls-type-value)))
+  (cond
+   ((string-equal str "Any")
+    'any-type-value)
+   ((string-equal str "Boolean")
+    'boolean-type-value)
+   ((string-equal str "Float")
+    'float-type-value)
+   ((string-equal str "Integer")
+    'integer-type-value)
+   ((string-equal str "String")
+    'string-type-value)
+   ((string-equal str "Symbol")
+    'symbol-type-value)
+   ((string-equal str "Instance")
+    'instance-type-value)
+   ((string-equal str "Class")
+    'cls-type-value)))
 
 (defun string->role (str)
-          (cond
-           ((string-equal str "Abstract")
-            'abstract-value)
-           ((string-equal str "Concrete")
-            'concrete-value)))
+  (cond
+   ((string-equal str "Abstract")
+    'abstract-value)
+   ((string-equal str "Concrete")
+    'concrete-value)))
 
 
 ;

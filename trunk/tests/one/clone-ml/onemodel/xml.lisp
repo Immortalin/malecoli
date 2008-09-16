@@ -22,10 +22,14 @@
                                                           :new-element-hook #'model-import-new-element-hook
                                                           :finish-element-hook #'model-import-finish-element-hook
                                                           :text-hook #'model-import-text-hook)))
+    (format t "--> import ~A ~A~%" (model-name model) (model-version model))
     (let ((kb (find-model-kb (model-name model) (model-version model))))
+      (format t "--> import ~A ~%" kb)
       (if (null kb)
           (setf kb (make-model-kb (model-name model) (model-version model)))
           (mlcl-kb:kb-clear kb))
+      (format t "--> sa ~%")
+      (mlcl-kb:kb-open kb)
       (format t "--> save ~%")
       (convert-one-model model kb)
       (format t "--> save ~%")

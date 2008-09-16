@@ -11,9 +11,9 @@ s;;;; Created on 2008-04-30 15:58:29
    #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/"))
 
 (defun generate-gare-instances ()
-  (mlcl-kb:kb-open (mlcl-kb:find-kb 'mlcl-kbs::gare-instances-kb))
-  (mlcl-kb:kb-clear (mlcl-kb:find-kb 'mlcl-kbs::gare-instances-kb))
-  (let ((mlcl-kb:*kb* (find-kb 'mlcl-kbs::gare-instances-kb)))
+  (mlcl-kb:kb-open (mlcl-kb:find-kb 'mlcl-kbs::|gare-instances|))
+  (mlcl-kb:kb-clear (mlcl-kb:find-kb 'mlcl-kbs::|gare-instances|))
+  (let ((mlcl-kb:*kb* (find-kb 'mlcl-kbs::|gare-instances|)))
     (format t "--> category~%")
     (load (gare-data-pathanme "service-category"))
     (format t "--> items~%")
@@ -23,7 +23,7 @@ s;;;; Created on 2008-04-30 15:58:29
     (format t "--> concs~%")
     (load (gare-data-pathanme "concs")))
   (format t "--> save all <-- ~%")
-  (mlcl-kb:kb-save (mlcl-kb:find-kb 'mlcl-kbs::gare-instances-kb))
+  (mlcl-kb:kb-save (mlcl-kb:find-kb 'mlcl-kbs::|gare-instances|))
   nil)
 
 ;
@@ -49,10 +49,10 @@ s;;;; Created on 2008-04-30 15:58:29
     
 (defun add-category-instance (code area descr)
   (let ((ci (make-simple-instance code)))
-    (instance-add-direct-type ci 'gare-kb::|gare_category|)
-    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_code|) code)
-    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_business_area|) area)
-    (setf (frame-own-slot-value ci 'gare-kb::|gare_category_description|) descr)))
+    (instance-add-direct-type ci '|gare|::|gare_category|)
+    (setf (frame-own-slot-value ci '|gare|::|gare_category_code|) code)
+    (setf (frame-own-slot-value ci '|gare|::|gare_category_business_area|) area)
+    (setf (frame-own-slot-value ci '|gare|::|gare_category_description|) descr)))
 
 (defun add-agree (case-code price)
   (let* ((agree-id (format nil "agreement-gare-~A" case-code))
@@ -60,10 +60,10 @@ s;;;; Created on 2008-04-30 15:58:29
     (instance-add-direct-type agree (get-cls "gare_proposal"))
     (let* ((price-id (format nil "issue-price-gare-~A" case-code))
            (pric (make-simple-instance price-id)))
-      (instance-add-direct-type pric 'gare-kb::|gare_issue_price|)
-      (setf (frame-own-slot-value pric 'gare-kb::|gare_price-amount|) (float (read-from-string price)))
-      (setf (frame-own-slot-value pric 'gare-kb::|gare_price-currency|) "euro")
-      (setf (frame-own-slot-value agree 'gare-kb::|proposal-gare_issue_price|) pric))
+      (instance-add-direct-type pric '|gare|::|gare_issue_price|)
+      (setf (frame-own-slot-value pric '|gare|::|gare_price-amount|) (float (read-from-string price)))
+      (setf (frame-own-slot-value pric '|gare|::|gare_price-currency|) "euro")
+      (setf (frame-own-slot-value agree '|gare|::|proposal-gare_issue_price|) pric))
     agree))
 
 
@@ -89,8 +89,8 @@ s;;;; Created on 2008-04-30 15:58:29
   (multiple-value-bind (ci new) (get-simple-instance code)
     (if new
         (progn 
-          (instance-add-direct-type ci 'gare-kb::|gare_category|)
-          (setf (frame-own-slot-value ci 'gare-kb::|gare_category_code|) code)))
+          (instance-add-direct-type ci '|gare|::|gare_category|)
+          (setf (frame-own-slot-value ci '|gare|::|gare_category_code|) code)))
     ci))
 
 (defun get-location-instance (comune provincia)
@@ -98,9 +98,9 @@ s;;;; Created on 2008-04-30 15:58:29
     (multiple-value-bind (li new) (get-simple-instance location-id) 
       (if new
           (progn
-            (instance-add-direct-type li 'gare-kb::|gare_location|)
-            (setf (frame-own-slot-value li 'gare-kb::|gare_location_comune|) comune)
-            (setf (frame-own-slot-value li 'gare-kb::|gare_location_provincia|) provincia)))
+            (instance-add-direct-type li '|gare|::|gare_location|)
+            (setf (frame-own-slot-value li '|gare|::|gare_location_comune|) comune)
+            (setf (frame-own-slot-value li '|gare|::|gare_location_provincia|) provincia)))
       li)))
 
 (defun get-public-party-instance (comune provincia)
@@ -108,8 +108,8 @@ s;;;; Created on 2008-04-30 15:58:29
     (multiple-value-bind (li new) (get-simple-instance location-id)
       (if new
           (progn
-            (instance-add-direct-type li 'gare-kb::|gare_public_party|)
-            (setf (frame-own-slot-value li 'gare-kb::|gare_party_location|)
+            (instance-add-direct-type li '|gare|::|gare_public_party|)
+            (setf (frame-own-slot-value li '|gare|::|gare_party_location|)
                   (get-location-instance comune provincia))))
       li)))
 
@@ -118,8 +118,8 @@ s;;;; Created on 2008-04-30 15:58:29
     (multiple-value-bind (li new) (get-simple-instance party-id)
       (if new
           (progn
-            (instance-add-direct-type li 'gare-kb::|gare_party|)
-            (setf (frame-own-slot-value li 'gare-kb::|gare_party_uuid|) uuid)))
+            (instance-add-direct-type li '|gare|::|gare_party|)
+            (setf (frame-own-slot-value li '|gare|::|gare_party_uuid|) uuid)))
       li)))
 
 (defun get-date-instance (datestr)
@@ -127,11 +127,11 @@ s;;;; Created on 2008-04-30 15:58:29
     (multiple-value-bind (di new) (get-simple-instance date-id)
       (if new 
           (progn
-            (instance-add-direct-type di 'dataset-kb::|date|)
+            (instance-add-direct-type di '|dataset|::|date|)
             (destructuring-bind (y m d)  (parse-date datestr)
-              (setf (frame-own-slot-value di 'dataset-kb::|time_year|) (parse-integer y))
-              (setf (frame-own-slot-value di 'dataset-kb::|time_month|) (parse-integer m))
-              (setf (frame-own-slot-value di 'dataset-kb::|time_day|) (parse-integer d)))))
+              (setf (frame-own-slot-value di '|dataset|::|time_year|) (parse-integer y))
+              (setf (frame-own-slot-value di '|dataset|::|time_month|) (parse-integer m))
+              (setf (frame-own-slot-value di '|dataset|::|time_day|) (parse-integer d)))))
       di)))
 
 
@@ -148,34 +148,34 @@ s;;;; Created on 2008-04-30 15:58:29
     (let ((si (make-simple-instance case-id))
           (ci (make-simple-instance context-id))
           (ii (make-simple-instance item-id)))
-      (instance-add-direct-type si 'gare-kb::|gare_case|)
-      (instance-add-direct-type ci 'gare-kb::|gare_context|)
-      (instance-add-direct-type ii 'gare-kb::|gare_item|)
+      (instance-add-direct-type si '|gare|::|gare_case|)
+      (instance-add-direct-type ci '|gare|::|gare_context|)
+      (instance-add-direct-type ii '|gare|::|gare_item|)
       
-      (setf (frame-own-slot-value si 'negotiation-kb::|neg_case_context|) ci)
-      (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_item|) ii)
-      (setf (frame-own-slot-value ii 'gare-kb::|gare_long_description|) (nth 0 data))
-      (setf (frame-own-slot-value ii 'gare-kb::|gare_description|) (nth 1 data))
+      (setf (frame-own-slot-value si '|negotiation|::|neg_case_context|) ci)
+      (setf (frame-own-slot-value ci '|negotiation|::|neg_case_item|) ii)
+      (setf (frame-own-slot-value ii '|gare|::|gare_long_description|) (nth 0 data))
+      (setf (frame-own-slot-value ii '|gare|::|gare_description|) (nth 1 data))
       
       (if (nth 2 data)
           (let ((di (get-date-instance (nth 2 data))))
-            (setf (frame-own-slot-value ii 'gare-kb::|gare_service_starting_date|) di)))
+            (setf (frame-own-slot-value ii '|gare|::|gare_service_starting_date|) di)))
                                                           
       (if (nth 3 data)
           (let ((di (get-date-instance (nth 2 data))))
-            (setf (frame-own-slot-value ii 'gare-kb::|gare_service_ending_date|) di)))
+            (setf (frame-own-slot-value ii '|gare|::|gare_service_ending_date|) di)))
           
        (if (and (nth 4 data) (nth 5 data))
            (let ((li (get-location-instance (nth 4 data) (nth 5 data)))
                  (pai (get-public-party-instance (nth 4 data) (nth 5 data))))
-             (setf (frame-own-slot-value ii 'gare-kb::|gare_service_location|) li)
-             (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_owner|) pai)))
+             (setf (frame-own-slot-value ii '|gare|::|gare_service_location|) li)
+             (setf (frame-own-slot-value ci '|negotiation|::|neg_case_owner|) pai)))
       
       (if (nth 6 data)
           (let ((vals nil))
             (dolist (cat (nth 6 data))
               (push (get-category-instance cat) vals))
-            (setf (frame-own-slot-values ii 'gare-kb::|gare_service_categories|) vals)))
+            (setf (frame-own-slot-values ii '|gare|::|gare_service_categories|) vals)))
       
       )))
 
@@ -184,22 +184,22 @@ s;;;; Created on 2008-04-30 15:58:29
         (proto-id (format nil "gare-proto-~A" code)))
     (let ((ci (make-simple-instance proto-id))
           (casei (get-simple-instance case-id)))
-      (instance-add-direct-type ci 'gare-kb::|gare_protocol|)
+      (instance-add-direct-type ci '|gare|::|gare_protocol|)
       (if casei
-          (setf (frame-own-slot-value casei 'negotiation-kb::|neg_case_protocol|) ci))
+          (setf (frame-own-slot-value casei '|negotiation|::|neg_case_protocol|) ci))
       (if (nth 0 data)
           (let ((di (get-date-instance (nth 0 data))))
-            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_ending_date|) di)))
+            (setf (frame-own-slot-value ci '|negotiation|::|neg_case_ending_date|) di)))
       (if (and (nth 1 data) (not (string= (nth 1 data) "NS")))  
-          (setf (frame-own-slot-value ci 'gare-kb::|gare_protocol_laws|) (nth 1 data)))
+          (setf (frame-own-slot-value ci '|gare|::|gare_protocol_laws|) (nth 1 data)))
       (if (and (nth 2 data) (not (string= (nth 2 data) "NS")))
-          (setf (frame-own-slot-value ci 'gare-kb::|gare_protocol_procedure|) (nth 2 data)))
+          (setf (frame-own-slot-value ci '|gare|::|gare_protocol_procedure|) (nth 2 data)))
       
       (if (nth 4 data)
-          (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_starting_price|) (float (read-from-string (nth 4 data)))))
+          (setf (frame-own-slot-value ci '|negotiation|::|neg_case_starting_price|) (float (read-from-string (nth 4 data)))))
      
     
-      (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_model|) (get-simple-instance "neg-gare-model"))
+      (setf (frame-own-slot-value ci '|negotiation|::|neg_case_model|) (get-simple-instance "neg-gare-model"))
      )))
 
 
@@ -208,22 +208,22 @@ s;;;; Created on 2008-04-30 15:58:29
         (conc-id (format nil "gare-conclusion-~A" code)))
     (let ((ci (make-simple-instance conc-id))
           (casei (get-cls case-id)))
-      (instance-add-direct-type ci 'gare-kb::|gare_conclusion|)      
+      (instance-add-direct-type ci '|gare|::|gare_conclusion|)      
       
       (if casei
-          (setf (frame-own-slot-value casei 'negotiation-kb::|neg_case_conclusion|) ci))
+          (setf (frame-own-slot-value casei '|negotiation|::|neg_case_conclusion|) ci))
       
       (if (nth 0 data)
           (let ((agree (add-agree code (nth 0 data))))
-            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_agreement|) agree)))
+            (setf (frame-own-slot-value ci '|negotiation|::|neg_case_agreement|) agree)))
       
       (if (nth 1 data)
           (let ((di (get-date-instance (nth 1 data))))
-            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_conclusion_date|) di)))
+            (setf (frame-own-slot-value ci '|negotiation|::|neg_case_conclusion_date|) di)))
       
       (if (nth 2 data)
           (let* ((party (get-gare-party-instance (nth 2 data))))
-            (setf (frame-own-slot-value ci 'negotiation-kb::|neg_case_winner|) party)))
+            (setf (frame-own-slot-value ci '|negotiation|::|neg_case_winner|) party)))
             )))
 
 

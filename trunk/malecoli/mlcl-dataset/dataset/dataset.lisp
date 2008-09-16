@@ -33,13 +33,21 @@
    (storage 
     :READER dataset-storage
     :TYPE storage
+    :INITFORM nil
     :INITARG :storage)
    (cases 
     :TYPE list
     :INITFORM nil
     :READER dataset-cases)))
 
+(defun dataset-temporaryp (dataset)
+  (null (dataset-storage dataset)))
+
 (defun dataset-add-case (dataset cas)
-  (if (null (dataset-case-id cas))
+  (if (and (null (dataset-case-id cas)) (not (dataset-temporaryp dataset)))
       (storage-add-case (dataset-storage dataset) cas))
   (push cas (slot-value dataset 'cases)))
+
+(defun dataset-import-case-from-kb (dataset si-cas)
+  (let ((c (dataset-kb-import-simple-instance (dataset-schema dataset) si-cas)))
+    (dataset-add-case dataset c)))

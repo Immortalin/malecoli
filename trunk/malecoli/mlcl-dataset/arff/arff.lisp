@@ -31,27 +31,25 @@
          (kbd (mlcl-kb:find-kb fnd nil)))
     (if (null kb)
         (progn
-          (setf kb (mlcl-kb:make-kb fn
-                                    :use-list '(mlcl-kbs::DATASET-KB mlcl-kbs::protege-kb)
-                                    :protege-file (merge-pathnames
-                                                   (make-pathname 
-                                                    :directory '(:relative "mlcl-tmp")
-                                                    :type "xml")
-                                                   arff-pathname)))
+          (setf kb (mlcl-kb:make-kb (merge-pathnames
+                                     (make-pathname 
+                                      :directory '(:relative "mlcl-tmp")
+                                      :type "pprj")
+                                     arff-pathname)
+                                    :use '(mlcl-kbs::|dataset|)))
           (mlcl-kb:kb-create kb))
         (progn 
           (kb-open kb)
           (kb-clear kb)))
     (if (null kbd)
         (progn
-          (setf kbd (mlcl-kb:make-kb fnd
-                                    :use-list (list 'mlcl-kbs::DATASET-KB 'mlcl-kbs::protege-kb kb)
-                                    :protege-file (merge-pathnames
+          (setf kbd (mlcl-kb:make-kb (merge-pathnames
                                                    (make-pathname 
                                                     :directory '(:relative "mlcl-tmp")
                                                     :name fnd
-                                                    :type "xml")
-                                                   arff-pathname)))
+                                                    :type "pprj")
+                                                   arff-pathname)
+                                    :use (list kb)))
           (mlcl-kb:kb-create kbd))
         (progn
           (kb-open kbd)
@@ -84,13 +82,13 @@
     (let ((insi (mlcl-kb:make-simple-instance (format nil "this")))
           (cacl (mlcl-kb:make-cls (format nil "~ACase" relation-name)))
           (slots nil))
-      (mlcl-kb:instance-add-direct-type insi 'dataset-kb::|DatasetDescription|)
-      (mlcl-kb:instance-add-direct-type cacl 'protege-kb::|:STANDARD-CLASS|)
-      (mlcl-kb:cls-add-direct-supercls cacl 'dataset-kb::|DatasetCase|)
+      (mlcl-kb:instance-add-direct-type insi '|dataset|::|DatasetDescription|)
+      (mlcl-kb:instance-add-direct-type cacl '|protege|::|:STANDARD-CLASS|)
+      (mlcl-kb:cls-add-direct-supercls cacl '|dataset|::|DatasetCase|)
       (setf (mlcl-kb:cls-concretep cacl) t)
       (dolist (attr attributes)
         (let ((slot (mlcl-kb:make-slot (format nil "~A_~A" relation-name (car attr)))))
-          (mlcl-kb:instance-add-direct-type slot 'protege-kb::|:STANDARD-SLOT|)
+          (mlcl-kb:instance-add-direct-type slot '|protege|::|:STANDARD-SLOT|)
           (mlcl-kb:cls-add-direct-template-slot cacl slot)
           (cond 
            ((eq (cdr attr) 'real)
@@ -103,16 +101,16 @@
             (setf (mlcl-kb:slot-value-type slot) mlcl-kb:string-type-value))
            ((eq (cdr attr) 'date)
             (setf (mlcl-kb:slot-value-type slot) (list mlcl-kb:instance-type-value 
-                                                       'dataset-kb::|time|)))
+                                                       '|dataset|::|time|)))
            ((and (listp (cdr attr)) (eq (second attr) 'nominal))
             (setf (mlcl-kb:slot-value-type slot) (cons mlcl-kb:symbol-type-value
                                                 (caddr attr)))))
           (setf (mlcl-kb:slot-maximum-cardinality slot) 1)
           (push slot slots)))
-      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_name|) relation-name)
-      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_version|) "0.0.1")
-      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_comment|) (format nil "~{~a~%~}" comments))
-      (setf (mlcl-kb:frame-own-slot-value insi 'dataset-kb::|dataset_default_target_slot|) (first slots)))))
+      (setf (mlcl-kb:frame-own-slot-value insi '|dataset|::|dataset_name|) relation-name)
+      (setf (mlcl-kb:frame-own-slot-value insi '|dataset|::|dataset_version|) "0.0.1")
+      (setf (mlcl-kb:frame-own-slot-value insi '|dataset|::|dataset_comment|) (format nil "~{~a~%~}" comments))
+      (setf (mlcl-kb:frame-own-slot-value insi '|dataset|::|dataset_default_target_slot|) (first slots)))))
 
 
 ;      
@@ -125,7 +123,7 @@
         (num 0)
         (dssi nil))
     (setf dssi (mlcl-kb:make-simple-instance (format nil "~A-ds" relation-name)))
-    (mlcl-kb:instance-add-direct-type dssi 'dataset-kb::|Dataset|)
+    (mlcl-kb:instance-add-direct-type dssi '|dataset|::|Dataset|)
     (arff-read-data attributes strm 
                     seed
                     #'(lambda (seed) 
@@ -134,7 +132,7 @@
                           (setf num (+ 1 num))
                           (mlcl-kb:instance-add-direct-type si (format nil "~ACase" relation-name))
                           (push si (mlcl-kb:frame-own-slot-values 
-                                    dssi 'dataset-kb::|dataset_case|))
+                                    dssi '|dataset|::|dataset_case|))
                           si))
                     #'(lambda (seed) 
                         (declare (ignore seed))

@@ -5,17 +5,14 @@
 (defvar *onenegotiation-kb-pathname*)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (mlcl-kb:find-kb "ONENEGOTIATION-KB" nil))
+  (if (null (mlcl-kb:find-kb "onenegotiation" nil))
       (progn
         (setf *onenegotiation-kb-pathname*            
               #-sbcl (merge-pathnames
                       (make-pathname
                        :directory '(:relative ".." "resources")
-                       :name "onenegotiation" :type "xml" :case :local)
+                       :name "onenegotiation" :type "pprj" :case :local)
                       *load-truename*)
-              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.xml")
-        (mlcl-kb:make-kb "ONENEGOTIATION-KB" 
-                         :use-list '(mlcl-kbs::negotiation-kb
-                                     mlcl-kbs::protege-kb 
-                                     mlcl-kbs::dataset-kb) 
-                         :protege-file *onenegotiation-kb-pathname*))))
+              #+sbcl #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/onenegotiation.pprj")
+        (mlcl-kb:make-kb *onenegotiation-kb-pathname* 
+                         :use '(mlcl-kbs::|negotiation|)))))
