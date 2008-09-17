@@ -1,6 +1,6 @@
 ;;;; 2008-08-21 09:30:59
 
-(defpackage #:mlcl-dataset-asd
+(defpackage #:mlcl-algorithm-asd
   (:use :cl :asdf))
 
 (in-package :mlcl-algorithm-asd)
