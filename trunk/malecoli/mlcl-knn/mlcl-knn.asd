@@ -1,12 +1,12 @@
 ;;;; 2008-08-21 11:50:25
 
-(defpackage #:mlcl-cbr-asd
+(defpackage #:mlcl-knn-asd
   (:use :cl :asdf))
 
-(in-package :mlcl-cbr-asd)
+(in-package :mlcl-knn-asd)
 
-(defsystem mlcl-cbr
-  :name "mlcl-cbr"
+(defsystem mlcl-knn
+  :name "mlcl-knn"
   :version "0.1"
   :components ((:module package
                	:components
@@ -17,10 +17,10 @@
                 :depends-on ("package"))	
                (:module kb
                	:components
-	        	((:file "cbr-kb" :depends-on ()))
+	        	((:file "knn-kb" :depends-on ()))
                  :depends-on ("package" "resources"))
                (:module cbr
                	:components
-	        	((:file "cbr" :depends-on ()))
-                 :depends-on ("package" "kb")))
+	        	((:file "knn" :depends-on ()))
+                 :depends-on ("package" "knn")))
   :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-algorithm"))
