@@ -32,7 +32,7 @@
                (:module resources
                	:components
 	        	((:file "resource" :depends-on ()))
-                :depends-on ("package"))		
+                :depends-on ("package" "core"))		
                (:module core
                	:components
 	        	((:file "frame" :depends-on ("kb"))

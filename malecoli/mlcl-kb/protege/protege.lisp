@@ -218,3 +218,42 @@
 ; simple instance
 ;
 
+
+;
+; mk's functions
+;
+                        
+(defun mk-cls (name &key 
+                    (kb *kb*) 
+                    (type '|protege|::|:STANDARD-CLASS|) 
+                    (supercls '|protege|::|:THING|)
+                    (concretep t))
+  (check-type name string)
+  (check-type kb kb)
+  (let ((cls (make-cls name :kb kb)))
+    (instance-add-direct-type cls type)
+    (cls-add-direct-supercls cls supercls)
+    (setf (cls-concretep cls) concretep)
+    cls))
+  
+(defun mk-slot (name &key (kb *kb*) (type '|protege|::|:STANDARD-SLOT|))
+  (check-type name string)
+  (check-type kb kb)  
+  (let ((slot (make-slot name :kb kb)))
+    (instance-add-direct-type slot type)
+    slot))
+
+(defun mk-facet (name &key (kb *kb*) (type '|protege|::|:STANDARD-FACET|))
+  (check-type name string)
+  (check-type kb kb)
+  (let ((facet (make-facet name :kb kb)))
+    (instance-add-direct-type facet type)
+    facet))
+
+(defun mk-simple-instance (name cls &key (kb *kb*))
+  (check-type name string)
+  (check-type kb kb)
+  (let ((si (make-simple-instance name :kb kb)))
+    (instance-add-direct-type si cls)
+    si))
+

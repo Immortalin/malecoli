@@ -35,7 +35,8 @@
     frame-equal
     frame-own-slot-values
     frame-own-slot-value
-    
+    frame-do-own-slot-values-list
+        
     instance
     instance-direct-types
     instance-add-direct-type
@@ -129,6 +130,9 @@
     kb-intern
     kb-unintern
     
+    find-kb-file
+    *kb-paths*
+    *kb-default-path*
     #|
     Protege
     |# 
@@ -167,6 +171,13 @@
     
     string->type-value
     string->role
+    
+    mk-cls
+    mk-slot
+    mk-facet
+    mk-simple-instance
+    
+
    ))
 
 (defpackage :mlcl-kbs)

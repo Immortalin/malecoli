@@ -27,12 +27,7 @@
           (frame-name element)
           (instance-direct-types element)
           (frame-definedp element)
-          (frame-own-slot-values-list element))
-  (format strm "  ~A ~A ~A~%" 
-          (instance-has-direct-type element |protege|::|:STANDARD-SLOT|)
-          (instance-has-type element |protege|::|:SLOT|)
-          (instance-has-type element |protege|::|:META-CLASS|)
-          ))
+          (frame-own-slot-values-list element)))
 
 (defmethod kb-element-dump ((element cls) strm)
   (format strm "## class~%")

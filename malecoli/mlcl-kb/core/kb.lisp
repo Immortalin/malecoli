@@ -80,6 +80,38 @@
   (check-type kb kb)
   (pathname-name (kb-protege-pprj-file kb)))
 
+; kb file
+
+(defvar *kb-paths* nil)
+(defvar *kb-default-path* nil)
+
+(deftype kb-file-designator ()
+  `(or string pathname))
+
+(defun find-kb-file (file-des &optional (errorp t))
+  (check-type file-des kb-file-designator)
+  (etypecase file-des
+             (string 
+              (let ((path (make-pathname :name file-des :type "pprj")))
+                (if (probe-file path) 
+                    path
+                    (progn 
+                      (setf path (do ((paths *kb-paths* (cdr paths))
+                                      (p nil))
+                                     ((or (null paths) (and p (probe-file p))) (and (probe-file p) p))
+                                   (setf p (merge-pathnames 
+                                            (make-pathname :name file-des :type "pprj")
+                                            (car paths)))))
+                      (if path
+                          path
+                          (if errorp (error "File designed by ~S does not exist." file-des) nil))))))
+             (pathname
+              (if (probe-file file-des) 
+                  file-des
+                  (if errorp (error "File designed by ~S does not exist." file-des) nil)))))
+  
+  
+
 ; kb designator
 (deftype kb-designator ()
   `(or kb string symbol pathname))
@@ -98,21 +130,46 @@ if ERRORP is false, otherwise an error is signalled."
               (or (find-if #'(lambda (x) (string= (kb-name x) kb-des)) *all-kbs*)
                   (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))
              (pathname
-              (if (probe-file kb-des)
-                  (let ((kb (find-kb (pathname-name kb-des) nil)))
-                    (if (and (null kb) importp)
-                        (setf kb (make-instance 'kb :protege-pprj-file kb-des)))
-                    (if kb 
-                        kb
-                        (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)) )
-                  (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)))))
+              (let ((path (find-kb-file kb-des nil)))
+                (if path
+                    (let ((kb (find-kb (pathname-name path) nil)))
+                      (if (and (null kb) importp)
+                          (setf kb (make-instance 'kb :protege-pprj-file path)))
+                      (if kb 
+                          kb
+                          (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)) )
+                    (if errorp (error "Kb designed by ~S does not exist." kb-des) nil))))))
+
+; initialize
+(defmethod initialize-instance :after ((kb kb) &rest initargs)
+  (declare (ignore initargs))
+  (if (find-kb (kb-protege-pprj-file kb) nil)
+      (error "Kb ~s already exists." (kb-protege-pprj-file kb)))
+  (if (find-package (kb-name kb))
+      (error "Package named ~s already exists." (kb-name kb)))
+  (setf (slot-value kb 'package) (make-package (kb-name kb) :use nil))
+  (let ((ul (kb-use-list kb)))
+    (setf (slot-value kb 'use-list) nil)
+    (dolist (u ul) (use-kb u kb)))
+  (if (not (string-equal (kb-name kb) "protege")) (use-kb (find-kb "protege") kb))
+  (let ((kbsym (intern (kb-name kb) (find-package :mlcl-kbs))))
+    (setf (symbol-value kbsym) kb))
+  (kb-import-from-protege-pprj% kb)
+  (push kb *all-kbs*))
+
+(defgeneric kb-import-from-protege-pprj% (kb))
 
 ; make, delete, and clear
 (defun make-kb (protege-pprj-file &key (use nil))
   "make a new kb"
-  (check-type protege-pprj-file pathname)
+  (check-type protege-pprj-file kb-file-designator)
   (if (find-kb protege-pprj-file nil)
       (error "Kb  ~s already exists." protege-pprj-file))
+  (if (typep protege-pprj-file 'string)
+      (setf protege-pprj-file 
+            (merge-pathnames 
+             (pathname protege-pprj-file)
+             *kb-default-path*)))
   (make-instance 'kb :protege-pprj-file protege-pprj-file :use use))
 
 (defun delete-kb (kb-des)
