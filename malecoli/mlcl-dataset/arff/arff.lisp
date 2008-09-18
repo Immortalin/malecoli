@@ -79,16 +79,11 @@
 
 (defun arff-import-header (relation-name attributes comments kb)
   (let ((mlcl-kb:*kb* kb))
-    (let ((insi (mlcl-kb:make-simple-instance (format nil "this")))
-          (cacl (mlcl-kb:make-cls (format nil "~ACase" relation-name)))
+    (let ((insi (mlcl-kb:mk-simple-instance (format nil "this") '|dataset|::|DatasetDescription|))
+          (cacl (mlcl-kb:mk-cls (format nil "~ACase" relation-name) :supercls '|dataset|::|DatasetCase|))
           (slots nil))
-      (mlcl-kb:instance-add-direct-type insi '|dataset|::|DatasetDescription|)
-      (mlcl-kb:instance-add-direct-type cacl '|protege|::|:STANDARD-CLASS|)
-      (mlcl-kb:cls-add-direct-supercls cacl '|dataset|::|DatasetCase|)
-      (setf (mlcl-kb:cls-concretep cacl) t)
       (dolist (attr attributes)
-        (let ((slot (mlcl-kb:make-slot (format nil "~A_~A" relation-name (car attr)))))
-          (mlcl-kb:instance-add-direct-type slot '|protege|::|:STANDARD-SLOT|)
+        (let ((slot (mlcl-kb:mk-slot (format nil "~A_~A" relation-name (car attr)))))
           (mlcl-kb:cls-add-direct-template-slot cacl slot)
           (cond 
            ((eq (cdr attr) 'real)
@@ -122,15 +117,13 @@
         (seed nil)
         (num 0)
         (dssi nil))
-    (setf dssi (mlcl-kb:make-simple-instance (format nil "~A-ds" relation-name)))
-    (mlcl-kb:instance-add-direct-type dssi '|dataset|::|Dataset|)
+    (setf dssi (mlcl-kb:mk-simple-instance (format nil "~A-ds" relation-name) '|dataset|::|Dataset|))
     (arff-read-data attributes strm 
                     seed
                     #'(lambda (seed) 
                         (declare (ignore seed))
-                        (let ((si (mlcl-kb:make-simple-instance (format nil "case-~9,'0d" num))))
+                        (let ((si (mlcl-kb:mk-simple-instance (format nil "case-~9,'0d" num) (format nil "~ACase" relation-name))))
                           (setf num (+ 1 num))
-                          (mlcl-kb:instance-add-direct-type si (format nil "~ACase" relation-name))
                           (push si (mlcl-kb:frame-own-slot-values 
                                     dssi '|dataset|::|dataset_case|))
                           si))

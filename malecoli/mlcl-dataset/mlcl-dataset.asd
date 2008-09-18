@@ -15,18 +15,22 @@
                	:components
 	        	((:file "resource" :depends-on ()))
                 :depends-on ("package"))
+               (:module core
+               	:components
+                 	(
+	        	 (:file "schema" :depends-on ("schema-compiler" "case"))
+                 	 (:file "case" :depends-on ())
+                 	 (:file "schema-compiler" :depends-on ())
+                 	 )
+                 :depends-on ("package" "kb"))
                (:module dataset
                	:components
                  	(
-	        	 (:file "workspace" :depends-on ("schema" "dataset" "storage"))
-	        	 (:file "dataset" :depends-on ("schema" "storage"))
-	   	    	 (:file "storage" :depends-on ("case"))
-	        	 (:file "schema" :depends-on ("schema-compiler"))
-	        	 (:file "schema-compiler" :depends-on ())
-	 		 (:file "case-importer" :depends-on ("schema-compiler"))		
-	        	 (:file "case" :depends-on ())
+	        	 (:file "workspace" :depends-on ("dataset" "storage"))
+	        	 (:file "dataset" :depends-on ("storage"))
+	   	    	 (:file "storage" :depends-on ())
                  	 )
-                 :depends-on ("package" "kb"))
+                 :depends-on ("package" "kb" "core"))
                (:module kb
                 :components
 	        	((:file "dataset-kb" :depends-on ()))

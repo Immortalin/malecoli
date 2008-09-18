@@ -90,13 +90,11 @@
 
 
 (defun workspace-case-import (workspace cas)
-  (declare (ignore workspace)
-           (ignore cas))
-  nil)
+  (dataset-kb-case-import (schema-package (workspace-schema workspace)) cas))
 
 (defun workspace-cases-import (workspace kb)
   (multiple-value-bind (cases datasets-list)
-    (dataset-kb-import (workspace-schema workspace) kb)
+    (dataset-kb-import (schema-package (workspace-schema workspace)) kb)
     (storage-add-cases (workspace-storage workspace) cases)
     (dolist (cases-list datasets-list)
       (let ((dataset (workspace-make-dataset workspace (car cases-list))))

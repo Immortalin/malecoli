@@ -26,4 +26,4 @@
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (mlcl-kb:find-kb "dataset" nil))
-        (mlcl-kb:make-kb (get-resource-pathname "dataset" "pprj"))))
+        (mlcl-kb:make-kb (find-kb-file "dataset"))))
