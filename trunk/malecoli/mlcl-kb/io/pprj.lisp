@@ -37,31 +37,45 @@
             (use-kb ukb kb))))             
       (error "PPRJ protege file ~S does not exist." pathname)))
 
-(defun kb-export-to-protege-pprj (pathname xml-file kb &key (supersedep t))
-  (check-type pathname pathname)
+(defun kb-export-to-protege-pprj (pprj-file xml-file kb &key (supersedep t))
+  (check-type pprj-file pathname)
   (check-type xml-file (or pathname string))
   (check-type kb kb)
-  (if (or supersedep (not (probe-file pathname)))
-      (let ((included-projects-line nil))
+  (if (or supersedep (not (probe-file pprj-file)))
+      (let ((pprj-old nil)
+            (pprj-new nil)
+            (included-pprj-file-list nil))
+        (if (probe-file pprj-file)
+            (setf pprj-old (file->seq pprj-file))
+            (setf pprj-old (file->seq *empty-pprj-pathname*)))
         (dolist (k (kb-use-list kb))
-          (if (kb-protege-pprj-file k)
-              (setf included-projects-line
-                    (concatenate 'string included-projects-line
-                                 (format nil " \"~a\"" 
-                                         (file-namestring (merge-pathnames
-                                                           (make-pathname :type "pprj")
-                                                           (kb-protege-pprj-file k))))))))
-        (with-open-file (in *empty-pprj-pathname* :direction :input)
-                        (with-open-file (out pathname :direction :output :if-exists :supersede)
-                                        (do ((line (read-line in nil)
-                                                   (read-line in nil)))
-                                            ((null line))
-                                          (if included-projects-line 
-                                              (setf line (cl-ppcre:regex-replace "next_frame_number" line
-                                                                                 (format nil "included_projects ~A)~%	~A" included-projects-line "(next_frame_number"))))
-                                          (setf line (cl-ppcre:regex-replace "empty\.xml" line
-                                                                             (format nil "~A" (file-namestring xml-file))))
-                                          (write-line line out)))))))
+          (push (kb-protege-pprj-file k) included-pprj-file-list))
+        (setf pprj-new (put-info-into-protege-pprj pprj-old xml-file included-pprj-file-list))
+        (seq->file pprj-new pprj-file))))
+
+;
+; put info
+;
+
+(defun put-info-into-protege-pprj (pprj xml-file  included-pprj-file-list)
+  (let ((new-pprj nil)
+        (included-projects-line nil))
+    (dolist (k included-pprj-file-list)
+      (setf included-projects-line
+            (concatenate 'string included-projects-line
+                         (format nil " \"~a\"" 
+                                 (file-namestring k)))))
+    (setf new-pprj (cl-ppcre:regex-replace 
+                    "(.name\\s*\"source_file_name\"\\s*.\\s*.\\s*string_value\\s*\"(.*)\"\\s*.)"
+                    pprj
+                    (format nil "(name \"source_file_name\") (string_value \"~A\")" 
+                            (file-namestring xml-file))))
+    (setf new-pprj (cl-ppcre:regex-replace 
+                    "included_projects\\s*((\"([^\"]*)\"\\s*)*)"
+                    new-pprj
+                    (format nil "included_projects ~A ~%" 
+                            included-projects-line)))))
+          
 
 
 ;
@@ -105,5 +119,5 @@
 ; init variables
 ;
 
-(init-variable *empty-pprj-pathname* (get-resource-pathname "empty" "pprj"))
+(init-variable *empty-pprj-pathname* (find-kb-file "empty"))
 

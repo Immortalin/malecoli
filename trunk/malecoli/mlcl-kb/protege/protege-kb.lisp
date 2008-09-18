@@ -97,7 +97,7 @@
     (get-facet ":VALUES")))
       
 (defun make-protege-kb ()
-  (let ((kb (make-instance 'kb :protege-pprj-file (get-resource-pathname "protege" "pprj"))))
+  (let ((kb (make-instance 'kb :protege-pprj-file (find-kb-file "protege"))))
     (initialize-protege-kb kb)
     kb))
 

@@ -197,6 +197,13 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type frame frame)
   (eq frame (find-frame frame-des)))
 
+(defmacro frame-do-own-slot-values-list (frame slot-sym vals-sym &rest body)
+  (let ((osv (gensym)))
+    `(dolist (,osv (frame-own-slot-values-list ,frame))
+       (let ((,slot-sym (mlcl-kb:slot-values%-slot ,osv))
+             (,vals-sym (mlcl-kb:slot-values%-vals ,osv)))
+         ,@body))))
+
 ; own slot values
 (defun frame-ref-own-slot-values (frame slot-des)
   (check-type frame frame)
