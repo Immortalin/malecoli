@@ -15,9 +15,18 @@
                	:components
 	        	((:file "resource" :depends-on ()))
                 :depends-on ("package"))
-               ;(:module algorithm
-               ;	:components
-	       ; 	((:file "algorithm" :depends-on ()))
-               ; :depends-on ("package"))
+               (:module kb
+                :components
+	        	((:file "algorithm-kb" :depends-on ()))
+                 :depends-on ("package" "resources"))
+               (:module algorithm
+               	:components
+	        	((:file "algorithm" :depends-on ())
+	                 (:file "trivial-algorithm" :depends-on ()))		
+                :depends-on ("package"))
+               (:module make
+               	:components
+	        	((:file "makefile" :depends-on ()))	
+                :depends-on ("package" "algorithm" "kb"))
                )
   :depends-on ("mlcl-dataset"))
