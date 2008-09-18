@@ -19,8 +19,9 @@
                	:components
 	        	((:file "knn-kb" :depends-on ()))
                  :depends-on ("package" "resources"))
-               (:module cbr
+               (:module knn
                	:components
 	        	((:file "knn" :depends-on ()))
-                 :depends-on ("package" "knn")))
-  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-algorithm"))
+                 :depends-on ("package" "kb")))
+  :depends-on ("mlcl-algorithm"))
+
