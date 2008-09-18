@@ -15,5 +15,9 @@
                	:components
 	        	((:file "resource" :depends-on ()))
                 :depends-on ("package"))
+               ;(:module algorithm
+               ;	:components
+	       ; 	((:file "algorithm" :depends-on ()))
+               ; :depends-on ("package"))
                )
   :depends-on ("mlcl-dataset"))
