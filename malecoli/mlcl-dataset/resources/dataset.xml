@@ -5,49 +5,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd">
 
-	<class>
-		<name>:THING</name>
-		<type>:STANDARD-CLASS</type>
-		<own_slot_value>
-			<slot_reference>:ROLE</slot_reference>
-			<value value_type="string">Abstract</value>
-		</own_slot_value>
-	</class>
-
-	<class>
-		<name>:STANDARD-CLASS</name>
-		<type>:STANDARD-CLASS</type>
-		<own_slot_value>
-			<slot_reference>:ROLE</slot_reference>
-			<value value_type="string">Concrete</value>
-		</own_slot_value>
-		<superclass>:CLASS</superclass>
-		<template_slot>:ROLE</template_slot>
-		<template_slot>:DOCUMENTATION</template_slot>
-		<template_slot>:SLOT-CONSTRAINTS</template_slot>
-	</class>
-
-	<class>
-		<name>:STANDARD-SLOT</name>
-		<type>:STANDARD-CLASS</type>
-		<own_slot_value>
-			<slot_reference>:ROLE</slot_reference>
-			<value value_type="string">Concrete</value>
-		</own_slot_value>
-		<superclass>:SLOT</superclass>
-		<template_slot>:DOCUMENTATION</template_slot>
-		<template_slot>:SLOT-CONSTRAINTS</template_slot>
-		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
-		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
-		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
-		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
-		<template_slot>:SLOT-INVERSE</template_slot>
-		<template_slot>:SLOT-DEFAULTS</template_slot>
-		<template_slot>:SLOT-VALUES</template_slot>
-		<template_slot>:ASSOCIATED-FACET</template_slot>
-		<template_slot>:DIRECT-SUBSLOTS</template_slot>
-		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
-	</class>
 
 	<class>
 		<name>DatasetDataType</name>
