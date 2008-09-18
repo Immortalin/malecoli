@@ -23,4 +23,4 @@
                	:components
 	        	((:file "cbr" :depends-on ()))
                  :depends-on ("package" "kb")))
-  :depends-on ("mlcl-kb" "mlcl-dataset" "mlcl-algorithm"))
+  :depends-on ("mlcl-knn"))
