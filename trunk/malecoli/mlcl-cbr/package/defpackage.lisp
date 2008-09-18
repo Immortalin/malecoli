@@ -5,7 +5,7 @@
 
 (defpackage :mlcl-cbr
   (:nicknames :mlcl-cbr :ml-cbr)
-  (:use :cl)
+  (:use :cl :mlcl-algorithm)
   (:export
   
    ;; Exported symbols go here
