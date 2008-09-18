@@ -16,11 +16,14 @@
 ;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;;
 
-;;;; Created on 2008-09-12 11:06:01
+;;;; 2008-08-21 09:30:59
 
 (in-package :mlcl-algorithm)
 
-(push (if mlcl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-algorithm/resources/"
-          *load-truename*)
-      *kb-paths*)
+;
+; dataset knowledge base
+;
+
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (mlcl-kb:find-kb "algorithm" nil))
+        (mlcl-kb:make-kb (find-kb-file "algorithm"))))

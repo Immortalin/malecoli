@@ -21,9 +21,9 @@
 (in-package :common-lisp-user)
 
 (defpackage :mlcl-algorithm
-  (:nicknames :mlcl-algorithm :ml-algorithm)
+  (:nicknames :ml-algorithm)
   (:use :cl :mlcl-kb :mlcl-dataset)
   (:export  
-
+    algorithm
 ))
 
