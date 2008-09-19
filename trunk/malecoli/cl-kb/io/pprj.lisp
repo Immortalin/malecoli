@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-08-26 16:52:11
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; import/export protege pprj

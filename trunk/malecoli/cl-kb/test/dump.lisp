@@ -1,6 +1,6 @@
 ;;;; Created on 2008-04-23 16:33:28
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; dump of a knowledge base

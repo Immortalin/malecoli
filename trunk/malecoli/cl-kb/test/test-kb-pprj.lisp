@@ -8,22 +8,22 @@
 
 (defun test01 ()
   (let ((kb (or 
-             (mlcl-kb:find-kb "A")
-             (mlcl-kb:make-kb "A" 
+             (cl-kb:find-kb "A")
+             (cl-kb:make-kb "A" 
                               :protege-file #p"/tmp/a.pprj" 
-                              :use-list '(mlcl-kbs::protege-kb)))))
-    (if (not (mlcl-kb::kb-createdp kb)) (mlcl-kb:kb-create kb))
-    (mlcl-kb:kb-open kb)
-    (mlcl-kb:kb-save kb)
-    (mlcl-kb:kb-close kb)
+                              :use-list '(cl-kbs::protege-kb)))))
+    (if (not (cl-kb::kb-createdp kb)) (cl-kb:kb-create kb))
+    (cl-kb:kb-open kb)
+    (cl-kb:kb-save kb)
+    (cl-kb:kb-close kb)
     kb))
 
 (defun test02 ()
   (let ((kb (or 
-             (mlcl-kb:find-kb "B")
-             (mlcl-kb:make-kb "B" :use-list (list (mlcl-kb:find-kb "A")) :protege-file #p"/tmp/b.pprj"))))
-    (if (not (mlcl-kb::kb-createdp kb)) (mlcl-kb:kb-create kb))
-    (mlcl-kb:kb-open kb)
-    (mlcl-kb:kb-save kb)
-    (mlcl-kb:kb-close kb)
+             (cl-kb:find-kb "B")
+             (cl-kb:make-kb "B" :use-list (list (cl-kb:find-kb "A")) :protege-file #p"/tmp/b.pprj"))))
+    (if (not (cl-kb::kb-createdp kb)) (cl-kb:kb-create kb))
+    (cl-kb:kb-open kb)
+    (cl-kb:kb-save kb)
+    (cl-kb:kb-close kb)
     kb))

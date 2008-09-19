@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-04-30 12:23:57
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; A frame of a kb
@@ -200,8 +200,8 @@ if ERRORP is false, otherwise an error is signalled."
 (defmacro frame-do-own-slot-values-list (frame slot-sym vals-sym &rest body)
   (let ((osv (gensym)))
     `(dolist (,osv (frame-own-slot-values-list ,frame))
-       (let ((,slot-sym (mlcl-kb:slot-values%-slot ,osv))
-             (,vals-sym (mlcl-kb:slot-values%-vals ,osv)))
+       (let ((,slot-sym (slot-values%-slot ,osv))
+             (,vals-sym (slot-values%-vals ,osv)))
          ,@body))))
 
 ; own slot values

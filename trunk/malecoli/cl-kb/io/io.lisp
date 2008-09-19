@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-09-02 11:34:54
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 
 ;

@@ -18,17 +18,17 @@
 
 ;;;; 2008-08-05 15:59:48
 
-(defpackage #:mlcl-kb-test-asd
+(defpackage #:cl-kb-test-asd
   (:use :asdf))
 
-(in-package :mlcl-kb-test-asd)
+(in-package :cl-kb-test-asd)
 
-(defsystem mlcl-kb-test
-  :name "mlcl-kb-test"
+(defsystem cl-kb-test
+  :name "cl-kb-test"
   :version "0.1"
   :components ((:module test
                	:components
 	        	((:file "dump" :depends-on ())
 	        	 (:file "test-kb-pprj" :depends-on ("dump"))
 	        	 (:file "test-protege" :depends-on ("dump")))))
-  :depends-on ("mlcl-kb"))
+  :depends-on ("cl-kb"))

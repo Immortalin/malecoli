@@ -20,8 +20,8 @@
 
 (in-package :common-lisp-user)
 
-(defpackage :mlcl-kb
-  (:nicknames :mlcl-kb :ml-kb)
+(defpackage :cl-kb
+  (:nicknames :cl-kb :kb)
   (:use :cl)
   (:export
     #|
@@ -180,5 +180,5 @@
 
    ))
 
-(defpackage :mlcl-kbs)
+(defpackage :cl-kbs)
 
