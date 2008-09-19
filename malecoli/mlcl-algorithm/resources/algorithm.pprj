@@ -1,4 +1,4 @@
-; Thu Sep 18 17:48:47 CEST 2008
+; Fri Sep 19 09:26:52 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -318,21 +318,21 @@
 ([algorithm_ProjectKB_Instance_231] of  Property_List
 )
 
-([algorithm_ProjectKB_Instance_255] of  Map_Entry
+([algorithm_ProjectKB_Instance_232] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([algorithm_ProjectKB_Instance_256] of  Map_Entry
+([algorithm_ProjectKB_Instance_233] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([algorithm_ProjectKB_Instance_257] of  Map_Entry
+([algorithm_ProjectKB_Instance_234] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
@@ -399,6 +399,9 @@
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
+([KB_221421_Instance_161] of  Map
+)
+
 ([KB_534665_Instance_0] of  String
 
 	(name "factory_class_name")
@@ -407,9 +410,9 @@
 ([KB_534665_Instance_1] of  Map
 
 	(entries
-		[algorithm_ProjectKB_Instance_255]
-		[algorithm_ProjectKB_Instance_256]
-		[algorithm_ProjectKB_Instance_257]))
+		[algorithm_ProjectKB_Instance_232]
+		[algorithm_ProjectKB_Instance_233]
+		[algorithm_ProjectKB_Instance_234]))
 
 ([KB_534665_Instance_3] of  Options
 
@@ -508,9 +511,6 @@
 
 	(name "source_file_name")
 	(string_value "algorithm.xml"))
-
-([KB_812149_Instance_161] of  Map
-)
 
 ([LAYOUT_PROPERTIES] of  Property_List
 
