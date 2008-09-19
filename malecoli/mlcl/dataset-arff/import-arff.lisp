@@ -24,7 +24,7 @@
 ; convert an arff file into two dataset kbes
 ;
 
-(defun arff->dataset-kb (arff-pathname)
+(defun arff->dataset-kb (arff-pathname dest-dir)
   (let* ((fn (pathname-name arff-pathname))
          (fnd (format nil "~A-data" fn))
          (kb (cl-kb:find-kb fn nil))
@@ -33,9 +33,9 @@
         (progn
           (setf kb (cl-kb:make-kb (merge-pathnames
                                      (make-pathname 
-                                      :directory '(:relative "mlcl-tmp")
+                                      :name fn
                                       :type "pprj")
-                                     arff-pathname)
+                                     dest-dir)
                                     :use '(cl-kbs::|dataset|)))
           (cl-kb:kb-create kb))
         (progn 
@@ -45,10 +45,9 @@
         (progn
           (setf kbd (cl-kb:make-kb (merge-pathnames
                                                    (make-pathname 
-                                                    :directory '(:relative "mlcl-tmp")
                                                     :name fnd
                                                     :type "pprj")
-                                                   arff-pathname)
+                                                   dest-dir)
                                     :use (list kb)))
           (cl-kb:kb-create kbd))
         (progn
