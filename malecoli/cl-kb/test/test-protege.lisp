@@ -18,16 +18,16 @@
 
 
 (defun test03 ()
-  (let ((kb (mlcl-kb:find-kb "ciao" nil)))
+  (let ((kb (cl-kb:find-kb "ciao" nil)))
     (if (null kb)
         (progn
-          (setf kb (mlcl-kb:make-kb *output* :use '(mlcl-kbs::|protege|)))
-          (mlcl-kb:kb-create kb)))
-    (mlcl-kb:kb-clear kb)
-    (mlcl-kb::kb-import-from-protege-xml *protege-ex-01* kb)
-    (mlcl-kb:kb-save kb)
+          (setf kb (cl-kb:make-kb *output* :use '(cl-kbs::|protege|)))
+          (cl-kb:kb-create kb)))
+    (cl-kb:kb-clear kb)
+    (cl-kb::kb-import-from-protege-xml *protege-ex-01* kb)
+    (cl-kb:kb-save kb)
     (with-open-file (strm *output-txt* :direction :output :if-exists :supersede)
-                    (mlcl-kb::kb-dump strm kb))
+                    (cl-kb::kb-dump strm kb))
     kb))
 
 

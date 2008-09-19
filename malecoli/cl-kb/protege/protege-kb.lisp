@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-04-22 16:34:12
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; protege knowledge base

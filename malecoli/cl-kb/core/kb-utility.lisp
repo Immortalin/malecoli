@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-04-30 13:03:56
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; make an instance of a cls, slot, facet, and a simple-instance

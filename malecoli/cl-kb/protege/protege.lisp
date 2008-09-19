@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-04-22 16:34:12
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 (cl:eval-when (:compile-toplevel :load-toplevel)
               (cl:when (cl:not (cl:boundp 'concrete-value))

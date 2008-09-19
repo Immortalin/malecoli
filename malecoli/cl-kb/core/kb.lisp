@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-04-23 15:28:45
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; A generic element of a kb
@@ -152,7 +152,7 @@ if ERRORP is false, otherwise an error is signalled."
     (setf (slot-value kb 'use-list) nil)
     (dolist (u ul) (use-kb u kb)))
   (if (not (string-equal (kb-name kb) "protege")) (use-kb (find-kb "protege") kb))
-  (let ((kbsym (intern (kb-name kb) (find-package :mlcl-kbs))))
+  (let ((kbsym (intern (kb-name kb) (find-package :cl-kbs))))
     (setf (symbol-value kbsym) kb))
   (kb-import-from-protege-pprj% kb)
   (push kb *all-kbs*))
@@ -176,7 +176,7 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type kb-des kb-designator)
   (let ((kb (find-kb kb-des)))
     (kb-clear kb)
-    (let ((kbsym (find-symbol (kb-name kb) (find-package :mlcl-kbs))))
+    (let ((kbsym (find-symbol (kb-name kb) (find-package :cl-kbs))))
       (unintern kbsym))
     (delete-package (kb-package kb))))
 

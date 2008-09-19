@@ -18,7 +18,7 @@
 
 ;;;; Created on 2008-08-18 11:41:45
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
       
 ;
 ; import a protege kb 
@@ -63,7 +63,7 @@
 ; namespaces
 ;
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 (defpackage :protege-ns
   (:export 
@@ -87,7 +87,7 @@
 
 (s-xml:register-namespace "http://protege.stanford.edu/xml" "" :protege-ns)
 
-(in-package :mlcl-kb)
+(in-package :cl-kb)
 
 ;
 ; import functions

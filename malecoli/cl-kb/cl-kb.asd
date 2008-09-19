@@ -18,13 +18,13 @@
 
 ;;;; 2008-08-05 15:59:48
 
-(defpackage #:mlcl-kb-asd
+(defpackage #:cl-kb-asd
   (:use :cl :asdf))
 
-(in-package :mlcl-kb-asd)
+(in-package :cl-kb-asd)
 
-(defsystem mlcl-kb
-  :name "mlcl-kb"
+(defsystem cl-kb
+  :name "cl-kb"
   :version "0.1"
   :components ((:module package
                	:components
