@@ -32,7 +32,7 @@
     :type fixnum
     :initarg :id)))
 
-(defclass dataset-date (dataset-thing)
+(defclass dataset-date ()
   ((|time_year|
     :ACCESSOR |time_year|
     :INITFORM 0 

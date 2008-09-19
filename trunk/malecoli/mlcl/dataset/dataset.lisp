@@ -50,3 +50,17 @@
 (defun dataset-import-case-from-kb (dataset si-cas)
   (let ((c (dataset-kb-import-simple-instance (dataset-schema dataset) si-cas)))
     (dataset-add-case dataset c)))
+
+(defun dataset-store (dataset strm)
+  (if (not (dataset-temporaryp dataset))
+      (cl-store:store (mapcan #'(lambda (x) (if x (list x))) 
+                                    (mapcar #'dataset-case-id (dataset-cases dataset)))
+                      strm)
+      (cl-store:store nil strm)))
+
+(defun dataset-restore (dataset strm)
+  (let ((cases-list (cl-store:restore strm)))
+    (dolist (c cases-list)
+      (push  (aref (storage-cases (dataset-storage dataset)) c)
+                                         (slot-value dataset 'cases)))))
+

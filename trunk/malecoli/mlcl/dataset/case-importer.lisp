@@ -70,20 +70,21 @@
   (let ((symb (find-symbol (frame->lisp-name (cl-kb:instance-direct-type si)) package)))
     (if (null symb)
         (error "undefined class ~A in package ~A " (frame->lisp-name (cl-kb:instance-direct-type si)) (package-name package)))
-    (let ((el (make-instance symb :name-id (frame->lisp-name si))))
-      (setf (gethash (dataset-thing-name-id el) (import-info-objects importinfo)) el)
+    (let ((el nil))
+      (cond
+       ((cl-kb:instance-has-type si '|dataset|::|DatasetThing|)
+        (setf el (make-instance symb :name-id (frame->lisp-name si)))
+        (setf (gethash (dataset-thing-name-id el) (import-info-objects importinfo)) el))
+       ((cl-kb:instance-has-type si '|dataset|::|DatasetDataType|)
+        (setf el (make-instance symb)))
+       (t
+        (error "the instance ~A must have DatasetThing or DatasetDataType as type. " (cl-kb:frame-name si))))
       (cl-kb:frame-do-own-slot-values-list si slot vals
-                                     (dataset-kb-import-own-slot-value package el si slot vals importinfo))                      
+                                           (dataset-kb-import-own-slot-value package el si slot vals importinfo))
       el)))
-
-
-;
-;
-;
 
 (defun dataset-kb-get-simple-instance (package si &optional (importinfo (make-import-info)))
   (let ((el (gethash (frame->lisp-name si) (import-info-objects importinfo))))
-    ;(format t "GET ~A ~%" (frame->lisp-name si))
     (if (null el)
         (dataset-kb-import-simple-instance package si importinfo)
         el)))

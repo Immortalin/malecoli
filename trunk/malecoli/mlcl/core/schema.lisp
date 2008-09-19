@@ -44,12 +44,12 @@
   (if (null (schema-kb schema))
       (setf (slot-value schema 'kb) 
             (or (cl-kb:find-kb (schema-name schema) nil)
-                (cl-kb:make-kb (schema-pprj-file schema)
-                                 :use '(cl-kbs::|dataset|)))))
+                (cl-kb:make-kb (schema-pprj-file schema)))))
   (dolist (ukb (cl-kb:kb-use-list (schema-kb schema)))
-    (if (not (member ukb (list (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:find-kb 'cl-kbs::|protege|))))
+    (if (and (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
+             (null (find-package (format nil "~A-ws" (cl-kb:kb-name ukb)))))
         (let ((ns (make-instance 'schema :file (cl-kb:kb-protege-pprj-file ukb) :kb ukb)))
-          (use-package (schema-package ns) (schema-package schema))))) 
+          (use-package (schema-package ns) (schema-package schema)))))
   (schema-load schema))
 
 (defun schema-name (schema)
@@ -80,7 +80,7 @@
           (cl-kb:kb-close (schema-kb schema))
           (compile-file lispfile)
           (load (schema-compiled-list-file schema))
-          (funcall (find-symbol "INIT-DATASET" (schema-package schema))))
+          (funcall (find-symbol "INIT" (schema-package schema))))
         (progn
           (load (schema-compiled-list-file schema))))))
 
