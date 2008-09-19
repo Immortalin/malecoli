@@ -8,7 +8,9 @@
 (defsystem mlcl-test
   :name "mlcl-test"
   :version "0.1"
-  :components ((:module test
-               	:components
-	        	((:file "test01" :depends-on ()))))
+  :components (
+               ;(:module test
+               ;	:components
+	       ; 	((:file "test01" :depends-on ())))
+               )
   :depends-on ("mlcl"))
