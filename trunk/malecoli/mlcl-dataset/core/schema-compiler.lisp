@@ -50,7 +50,7 @@
   (format strm "(in-package \"~A\")~%~%" (package-name package))
   (dolist (ukb (mlcl-kb:kb-use-list kb))
     (if (not (member ukb (list (mlcl-kb:find-kb 'mlcl-kbs::|dataset|) (mlcl-kb:find-kb 'mlcl-kbs::|protege|))))
-        (format strm "(use-package \"~A-ds\")~%" (package-name (mlcl-kb:kb-package ukb)))))
+        (format strm "(use-package \"~A-ws\")~%" (package-name (mlcl-kb:kb-package ukb)))))
   (format strm "~%~%"))
 
 (defun schema-compile-trailer (package strm)
