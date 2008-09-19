@@ -1,9 +1,0 @@
-arff:
-	* import
-		- schema
-		- data
-dataset:
-	* ontology
-		- schema
-		- dataset
-		- ...
