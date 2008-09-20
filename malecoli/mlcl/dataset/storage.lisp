@@ -20,6 +20,10 @@
 
 (in-package :mlcl)
 
+;
+; storage
+; 
+
 (defclass storage ()
   ((file 
     :READER storage-file
@@ -51,7 +55,7 @@
   (dolist (c cases)
     (storage-add-case storage c)))
 
-(defun storage-remove (storage c)
+(defun storage-remove-case (storage c)
   (let ((cas (vector-pop (slot-value storage 'cases))))
     (if (< (dataset-case-id c) (length (storage-cases storage)))
         (progn

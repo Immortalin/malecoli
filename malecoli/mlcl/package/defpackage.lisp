@@ -31,7 +31,7 @@
     dataset-thing-name-id
     dataset-case
     dataset-case-id
-    dataset-date
+    |dataset-date|
     |time_year| 
     |time_month|
     |time_day| 
@@ -45,6 +45,9 @@
     dataset-storage
     dataset-cases  
     dataset-add-case
+    
+    dataset-temporaryp
+    dataset-import-case-from-kb
     
     #|
     schema
@@ -61,33 +64,45 @@
     storage
     |#
     storage
-    storage-pathname
+    storage-file
     storage-cases
     storage-load
     storage-save
     storage-add-case
     storage-add-cases
+    storage-remove-case
     
     #|
     workspace
     |#
     workspace
-    workspace-pathname
+    workspace-file
     workspace-storage
     workspace-schema
     workspace-datasets
+    workspace-algorithms
     
     workspace-load
     workspace-save
     
     workspace-make-dataset
+    workspace-make-temporary-dataset
+    workspace-case-import
     workspace-cases-import
-    
+    workspace-add-algorithm
+    workspace-make-algorithms
     
     #|
     arff
     |#
     
     arff->dataset-kb
+    
+    #|
+    algorithm
+    |#
+    algorithm
+    trivial-algorithm
    ))
+
 

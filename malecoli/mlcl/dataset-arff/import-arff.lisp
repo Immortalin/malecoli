@@ -78,7 +78,7 @@
 
 (defun arff-import-header (relation-name attributes comments kb)
   (let ((cl-kb:*kb* kb))
-    (let ((insi (cl-kb:mk-simple-instance (format nil "this") '|dataset|::|DatasetDescription|))
+    (let ((insi (cl-kb:mk-simple-instance (format nil "this-schema") '|dataset|::|DatasetDescription|))
           (cacl (cl-kb:mk-cls (format nil "~ACase" relation-name) :supercls '|dataset|::|DatasetCase|))
           (slots nil))
       (dolist (attr attributes)
@@ -116,7 +116,7 @@
         (seed nil)
         (num 0)
         (dssi nil))
-    (setf dssi (cl-kb:mk-simple-instance (format nil "~A-ds" relation-name) '|dataset|::|Dataset|))
+    (setf dssi (cl-kb:mk-simple-instance (format nil "whole-~A-dataset" relation-name) '|dataset|::|Dataset|))
     (arff-read-data attributes strm 
                     seed
                     #'(lambda (seed) 

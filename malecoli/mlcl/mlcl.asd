@@ -42,7 +42,7 @@
                (:module workspace
                	:components
                  	(
-	                 (:file "workspace" :depends-on ())
+	                 (:file "workspace" :depends-on ("makefile"))
                  	 (:file "makefile" :depends-on ())
                  	)
                 :depends-on ("package" "resources" "core" "dataset" "algorithm"))

@@ -21,7 +21,8 @@
 (in-package :mlcl)
 
 (push (if cl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl/resources/"
+          ;#p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl/resources/"
+          #p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl/resources/"
           *load-truename*)
       cl-kb:*kb-paths*)
 
