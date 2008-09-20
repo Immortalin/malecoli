@@ -30,9 +30,11 @@
     
     frame
     frame-kb
+    frame-systemp
     frame-own-slot-values-list
     frame-name
     frame-equal
+    frame-in-kb-p
     frame-own-slot-values
     frame-own-slot-value
     frame-do-own-slot-values-list
@@ -49,6 +51,8 @@
     cls-direct-superclses
     cls-direct-template-slots
     cls-direct-template-facet-values-list
+    cls-direct-subclses
+    cls-direct-instances
     cls-add-direct-supercls
     cls-remove-direct-supercls
     cls-has-direct-supercls
@@ -57,9 +61,13 @@
     cls-add-direct-template-slot
     cls-direct-template-facet-values
     cls-direct-template-facet-value
+    cls-do-instance-list
+    cls-do-subcls-list
+    cls-do-supercls-list
     
     slot
     slot-direct-superslots
+    slot-direct-subslots
     slot-add-direct-superslot
     slot-remove-direct-superslot
     slot-has-direct-superslot
@@ -70,14 +78,14 @@
     
     simple-instance
     
-    make-slot-values%
-    slot-values%-slot
-    slot-values%-vals
+;    make-slot-values%
+;    slot-values%-slot
+;    slot-values%-vals
     
-    make-facet-values%
-    facet-values%-slot
-    facet-values%-facet
-    facet-values%-values
+;    make-facet-values%
+;    facet-values%-slot
+;    facet-values%-facet
+;    facet-values%-values
         
     find-frame 
     find-cls
@@ -87,10 +95,10 @@
     
     #|
     |#
-    make-cls
-    make-slot
-    make-facet
-    make-simple-instance
+;    make-cls
+;    make-slot
+;    make-facet
+;    make-simple-instance
     get-cls
     get-slot
     get-facet
@@ -104,7 +112,6 @@
     kb
     kb-name
     kb-package
-    kb-interned-elements
     kb-use-list
     kb-protege-pprj-file
     kb-protege-xml-file
@@ -168,6 +175,9 @@
     slot-associated-facet
     facet-documentation
     facet-associated-slot
+    
+    frame-own-slot-values-r
+    frame-own-slot-value-r
     
     string->type-value
     string->role

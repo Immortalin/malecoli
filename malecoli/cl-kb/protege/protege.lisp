@@ -69,6 +69,7 @@
 ; cls
 ;
   
+; own slot value
 (defun cls-documentation (cls)
   (frame-own-slot-value cls '|protege|::|:DOCUMENTATION|))
 
@@ -99,11 +100,23 @@
 (defun (setf cls-constraints) (vs cls)
   (setf (frame-own-slot-values cls '|protege|::|:SLOT-CONSTRAINTS|) vs))
 
+; superclses
+(defun cls-metacls-p (cls)
+  (cls-has-supercls cls '|protege|::|:META-CLASS|))
+
+; template slot
+(defun cls-template-slot-values (cls slot)
+  (cls-template-facet-values cls slot '|protege|::|:VALUES|))
+
+(defun (setf cls-template-slot-values) (vs cls slot)
+  (setf (cls-template-facet-values cls slot '|protege|::|:VALUES|) vs))
+
 
 ;
 ; slot
 ;
 
+; own slot value
 (defun slot-documentation (slot)
   (frame-own-slot-value slot '|protege|::|:DOCUMENTATION|))
 
@@ -201,6 +214,7 @@
 ; facet
 ;
 
+; own slot value
 (defun facet-documentation (facet)
   (frame-own-slot-value facet '|protege|::|:DOCUMENTATION|))
 
@@ -218,6 +232,29 @@
 ; simple instance
 ;
 
+; own slot value
+
+
+;
+; reasoning
+;
+
+(defun frame-own-slot-values-r (frame slot-des)
+  (let ((it (frame-ref-own-slot-values frame slot-des)))
+    (setf it (and it (slot-values%-vals it)))
+    (if (and (null it) (typep frame 'instance))
+        (progn
+          (dolist (ty (instance-direct-types frame))
+            (setf it (cls-template-slot-values ty slot-des))
+            (if (null it)
+                (cls-do-supercls-list ty super
+                                      (if (null it)
+                                          (setf it (cls-template-slot-values super slot-des))))))))
+    it))
+
+(defun frame-own-slot-value-r (frame slot-des)
+  (car (frame-own-slot-values-r frame slot-des)))
+
 
 ;
 ; mk's functions
@@ -230,7 +267,7 @@
                     (concretep t))
   (check-type name string)
   (check-type kb kb)
-  (let ((cls (make-cls name :kb kb)))
+  (let ((cls (make-instance 'cls :name name :definedp t :kb kb)))
     (instance-add-direct-type cls type)
     (cls-add-direct-supercls cls supercls)
     (setf (cls-concretep cls) concretep)
@@ -239,21 +276,21 @@
 (defun mk-slot (name &key (kb *kb*) (type '|protege|::|:STANDARD-SLOT|))
   (check-type name string)
   (check-type kb kb)  
-  (let ((slot (make-slot name :kb kb)))
+  (let ((slot (make-instance 'slot :name name :definedp t :kb kb)))
     (instance-add-direct-type slot type)
     slot))
 
 (defun mk-facet (name &key (kb *kb*) (type '|protege|::|:STANDARD-FACET|))
   (check-type name string)
   (check-type kb kb)
-  (let ((facet (make-facet name :kb kb)))
+  (let ((facet (make-instance 'facet :name name :definedp t :kb kb)))
     (instance-add-direct-type facet type)
     facet))
 
 (defun mk-simple-instance (name cls &key (kb *kb*))
   (check-type name string)
   (check-type kb kb)
-  (let ((si (make-simple-instance name :kb kb)))
+  (let ((si (make-instance 'simple-instance :name name :definedp t :kb kb)))
     (instance-add-direct-type si cls)
     si))
 
