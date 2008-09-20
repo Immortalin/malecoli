@@ -28,6 +28,7 @@
    (package
     :READER schema-package
     :INITARG :package
+    :INITFORM nil
     :TYPE package)
    (kb
     :TYPE cl-kb:kb
@@ -37,17 +38,17 @@
 
 (defmethod initialize-instance :after ((schema schema) &rest initargs)
   (declare (ignore initargs))
-  (setf (slot-value schema 'package) 
-        (or (find-package (format nil "~A-ws" (schema-name schema))) 
-            (make-package (format nil "~A-ws" (schema-name schema)) 
-                          :use '(:cl :cl-kb :mlcl))))
+  (if (null (schema-package schema))
+      (setf (slot-value schema 'package) 
+            (or (find-package (format nil "~A-ws" (schema-name schema))) 
+                (make-package (format nil "~A-ws" (schema-name schema)) 
+                              :use '(:cl :cl-kb :mlcl)))))
   (if (null (schema-kb schema))
       (setf (slot-value schema 'kb) 
             (or (cl-kb:find-kb (schema-name schema) nil)
                 (cl-kb:make-kb (schema-pprj-file schema)))))
   (dolist (ukb (cl-kb:kb-use-list (schema-kb schema)))
-    (if (and (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
-             (null (find-package (format nil "~A-ws" (cl-kb:kb-name ukb)))))
+    (if (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
         (let ((ns (make-instance 'schema :file (cl-kb:kb-protege-pprj-file ukb) :kb ukb)))
           (use-package (schema-package ns) (schema-package schema)))))
   (schema-load schema))
@@ -83,5 +84,4 @@
           (funcall (find-symbol "INIT" (schema-package schema))))
         (progn
           (load (schema-compiled-list-file schema))))))
-
 

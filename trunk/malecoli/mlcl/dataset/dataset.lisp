@@ -19,6 +19,10 @@
 
 (in-package :mlcl)
 
+;
+; dataset
+;
+
 (defclass dataset ()
   ((name 
     :READER dataset-name
@@ -51,16 +55,31 @@
   (let ((c (dataset-kb-import-simple-instance (dataset-schema dataset) si-cas)))
     (dataset-add-case dataset c)))
 
-(defun dataset-store (dataset strm)
-  (if (not (dataset-temporaryp dataset))
-      (cl-store:store (mapcan #'(lambda (x) (if x (list x))) 
-                                    (mapcar #'dataset-case-id (dataset-cases dataset)))
-                      strm)
-      (cl-store:store nil strm)))
 
-(defun dataset-restore (dataset strm)
-  (let ((cases-list (cl-store:restore strm)))
-    (dolist (c cases-list)
-      (push  (aref (storage-cases (dataset-storage dataset)) c)
-                                         (slot-value dataset 'cases)))))
+;
+; store/restore methods
+;
 
+(defvar *dataset-code* (cl-store:register-code 110 'dataset))
+(defvar *clstore-schema* nil)
+(defvar *clstore-storage* nil)
+
+(cl-store:defstore-cl-store (obj dataset stream)
+                            (output-type-code *dataset-code* stream)
+                            (cl-store:store-object (dataset-name obj) stream)
+                            (if (not (dataset-temporaryp obj))
+                                (cl-store:store-object (mapcan #'(lambda (x) (if x (list x))) 
+                                                               (mapcar #'dataset-case-id (dataset-cases obj)))
+                                                       stream)
+                                (cl-store:store-object nil stream)))
+
+(cl-store:defrestore-cl-store (dataset stream)
+                              (let ((name (restore-object stream))
+                                    (cases-list (restore-object stream)))
+                                (let ((obj (make-instance 'dataset 
+                                                          :name name 
+                                                          :schema *clstore-schema*
+                                                          :storage *clstore-storage*)))
+                                  (dolist (c cases-list)
+                                    (push  (aref (storage-cases (dataset-storage obj)) c)
+                                           (slot-value obj 'cases))))))

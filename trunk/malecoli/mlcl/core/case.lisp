@@ -20,17 +20,31 @@
 
 (in-package :mlcl)
 
+;
+; dataset thing
+;
+
 (defclass dataset-thing ()
   ((name-id
     :reader dataset-thing-name-id
     :initarg :name-id
     :type string)))
+
+
+;
+; dataset case
+;
                  
 (defclass dataset-case (dataset-thing)
   ((id
     :reader dataset-case-id
     :type fixnum
     :initarg :id)))
+
+
+;
+; dataset date
+;
 
 (defclass dataset-date ()
   ((|time_year|
@@ -45,4 +59,3 @@
     :ACCESSOR |time_day|
     :INITFORM 0 
     :type fixnum)))
-

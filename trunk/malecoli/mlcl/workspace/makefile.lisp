@@ -1,3 +1,21 @@
+;;;
+;;; MaLeCoLi
+;;; Copyright (C) 2008 Alessandro Serra
+;;; 
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;;
+
 ;;;; Created on 2008-09-18 16:28:13
 
 (in-package :mlcl)
@@ -76,10 +94,9 @@
   (let ((compinfo (make-algocomp-info)))
     (makefile-compile-header package kb strm)
      (let ((algo-list nil))
-       (dolist (el (cl-kb:kb-interned-elements kb))
-         (if (and (typep el 'cl-kb:simple-instance) 
-                  (cl-kb:instance-has-type el '|algorithm|::|Algorithm|))
-             (push el algo-list)))
+       (cl-kb:cls-do-instance-list (cl-kb:find-cls '|algorithm|::|Algorithm|)
+                                   el
+                                   (push el algo-list))
        (dolist (algo algo-list)
          (makefile-compile-algorithm package algo compinfo strm)))
     (makefile-compile-trailer package fullname compinfo strm))
@@ -119,16 +136,17 @@
 ;
 
 (defun makefile-compile-algorithm (package algo compinfo strm)
-  (declare (ignore package)
-           (ignore compinfo))
+  (declare (ignore package))
   (let* ((compiler-frame 
-          (cl-kb:frame-own-slot-value algo '|algorithm|::|algorithm_compiler|))
+          ;(cl-kb:frame-own-slot-value algo '|algorithm|::|algorithm_compiler|))
+          (cl-kb:frame-own-slot-value-r algo '|algorithm|::|algorithm_compiler|))
          (class-name
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_class|))
          (class-package
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_package|))
          (class-asdf
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_asdf_package|)))
+    (format t "### ~A~%" compiler-frame)
     (format strm ";;;; Created algorithm ~A ~%~%" (cl-kb:frame-name algo))
     (format strm "(asdf:operate 'asdf:load-op '~A)~%~%" class-asdf)
     (asdf:operate 'asdf:load-op (make-symbol class-asdf))

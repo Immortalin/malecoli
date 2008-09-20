@@ -20,6 +20,10 @@
 
 (in-package :mlcl)
 
+;
+; workspace
+;
+
 (defclass workspace ()
   ((file 
     :READER workspace-file
@@ -44,6 +48,7 @@
     :TYPE list
     :INITFORM nil)))
   
+; initialize
 (defmethod initialize-instance :after ((workspace workspace) &rest initargs)
   (declare (ignore initargs))
   (if (null (workspace-schema workspace))
@@ -57,37 +62,23 @@
                                                               (workspace-file workspace)))))
   (workspace-load workspace))
 
+; i/o 
 (defun workspace-load (workspace)
   (let ((storefile (workspace-file workspace)))
     (if (probe-file storefile)
         (with-open-file (strm storefile :direction :input :element-type '(unsigned-byte 8))
-                        (let ((n (cl-store:restore strm)))
-                          (do ((i 0 (+ 1 i)))
-                              ((= i n) nil)
-                            (let ((name (cl-store:restore strm)))
-                              (let ((dataset (workspace-make-dataset workspace name)))
-                                (dataset-restore dataset strm)))))
-                        (let ((n (cl-store:restore strm)))
-                          (do ((i 0 (+ 1 i)))
-                              ((= i n) nil)
-                            (let ((dn (cl-store:restore strm)))
-                              (let ((algo (make-instance (cdr dn) :name (car dn))))
-                                (workspace-add-algorithm workspace algo)
-                                (algorithm-restore algo strm)))))))))
+                        (let ((*clstore-schema* (workspace-schema workspace))
+                              (*clstore-storage* (workspace-storage workspace)))
+                          (setf (slot-value workspace 'datasets) (cl-store:restore strm))
+                          (setf (slot-value workspace 'algorithms) (cl-store:restore strm)))))))
                         
 (defun workspace-save (workspace)
   (let ((storefile (workspace-file workspace)))
     (with-open-file (strm storefile :direction :output :if-exists :supersede :element-type '(unsigned-byte 8))
-                    (cl-store:store (length (workspace-datasets workspace)) strm)
-                    (dolist (ds (workspace-datasets workspace))
-                      (cl-store:store (dataset-name ds) strm)
-                      (dataset-store ds strm))
-                    (cl-store:store (length (workspace-algorithms workspace)) strm)
-                    (dolist (algo (workspace-algorithms workspace))
-                      (cl-store:store (cons (algorithm-name algo) (type-of algo)) strm)
-                      (algorithm-store algo strm)))))
-    
+                    (cl-store:store (workspace-datasets workspace) strm)
+                    (cl-store:store (workspace-algorithms workspace) strm))))
 
+; datasets
 (defun workspace-make-dataset (workspace name)
   (let ((dataset (make-instance 'dataset 
                                 :name name 
@@ -103,9 +94,7 @@
     (push dataset (slot-value workspace 'datasets))
     dataset))
 
-(defun workspace-add-algorithm (workspace algo)
-  (push algo (slot-value workspace 'algorithms)))
-
+; case importing
 (defun workspace-case-import (workspace cas)
   (dataset-kb-case-import (schema-package (workspace-schema workspace)) cas))
 
@@ -120,11 +109,11 @@
     (storage-save (workspace-storage workspace))
     (workspace-save workspace)))
 
-;
-;
-;
+; workspace algorithms
+(defun workspace-add-algorithm (workspace algo)
+  (push algo (slot-value workspace 'algorithms)))
 
-(defun workspace-make-algorithm (workspace makefile)
+(defun workspace-make-algorithms (workspace makefile)
   (if (typep makefile 'pathname)
       (setf makefile (make-instance 'makefile 
                                     :file makefile

@@ -29,10 +29,10 @@
   (let ((compinfo (make-compiler-info)))
     (schema-compile-header package kb strm)
     (let ((cls-list))
-      (dolist (el (cl-kb:kb-interned-elements kb))
-        (if (and (typep el 'cl-kb:cls) 
-                 (cl-kb:cls-has-supercls el '|dataset|::|DatasetThing|))
-            (push el cls-list)))
+      (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|)
+                                 el
+                                 (if (eq kb (cl-kb:frame-kb el))
+                                     (push el cls-list))) 
       (schema-compile-clses package cls-list strm compinfo))  
     (schema-compile-trailer package strm))
   (cl-kb:kb-close kb))
@@ -40,6 +40,7 @@
 (defstruct compiler-info
   (enum-types nil)
   (symbols nil))
+
 
 ;
 ; compile header/trailer
@@ -80,7 +81,6 @@
   (format strm ") (find-package \"~A\"))" (package-name package))
   (format strm "~%~%"))
   
-
 (defun schema-compile-cls (cls strm compinfo)
   (push (frame->lisp-name cls) (compiler-info-symbols compinfo))
   (format strm ";;;; Generation of cls ~A~%~%" (cl-kb:frame-name cls))
@@ -136,17 +136,13 @@
 
 (defun frame->lisp-name (fr)
   (let ((name (cl-kb:frame-name fr)))
-    (if (eq (cl-kb:frame-kb fr) (symbol-value 'cl-kbs::|dataset|))
+    (if (cl-kb:frame-in-kb-p fr (symbol-value 'cl-kbs::|dataset|))
         (progn
           (cond
-           ((cl-kb:frame-equal fr '|dataset|::|DatasetCase|)
-            (setf name "DATASET-CASE"))
-           ((cl-kb:frame-equal fr '|dataset|::|date|)
-            (setf name "DATASET-DATE"))
-           ((cl-kb:frame-equal fr '|dataset|::|DatasetThing|)
-            (setf name "DATASET-THING"))))
-        (progn
-          (setf name (cl-ppcre:regex-replace-all " " name "_"))
-          (setf name (cl-ppcre:regex-replace-all "\\?" name "p"))
-          (setf name (cl-ppcre:regex-replace-all "\\." name "_"))))
+            ((cl-kb:frame-equal fr '|dataset|::|DatasetCase|)
+             (setf name "DATASET-CASE"))
+            ((cl-kb:frame-equal fr '|dataset|::|DatasetThing|)
+             (setf name "DATASET-THING"))
+            ((cl-kb:frame-equal fr '|dataset|::|date|)
+             (setf name "DATASET-DATE")))))
     name))
