@@ -37,7 +37,12 @@
     :ACCESSOR frame-definedp
     :INITARG :definedp
     :INITFORM nil
-    :documentation "true iff the elemente is completely defined")))
+    :documentation "true iff the elemente is completely defined")
+   (systemp
+    :ACCESSOR frame-systemp
+    :INITARG :systemp
+    :INITFORM nil
+    :documentation "true iff the elemente is a system frame")))
 
 
 ;
@@ -67,6 +72,14 @@
    (direct-template-facet-values
     :ACCESSOR cls-direct-template-facet-values-list
     :INITFORM nil
+    :TYPE list)
+   (direct-subclses
+    :READER cls-direct-subclses
+    :INITFORM nil
+    :TYPE list)
+   (direct-instances
+    :READER cls-direct-instances
+    :INITFORM nil
     :TYPE list)))
 
 
@@ -78,7 +91,11 @@
   ((direct-superslots
    :READER slot-direct-superslots
    :INITFORM nil
-   :TYPE list)))
+   :TYPE list)
+   (direct-subslots
+    :READER slot-direct-subslots
+    :INITFORM nil
+    :TYPE list)))
 
 
 ;
@@ -197,6 +214,9 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type frame frame)
   (eq frame (find-frame frame-des)))
 
+(defun frame-in-kb-p (frame kb)
+  (eq (frame-kb frame) kb))
+
 (defmacro frame-do-own-slot-values-list (frame slot-sym vals-sym &rest body)
   (let ((osv (gensym)))
     `(dolist (,osv (frame-own-slot-values-list ,frame))
@@ -237,20 +257,26 @@ if ERRORP is false, otherwise an error is signalled."
 (defun instance-direct-type (inst)
   (car (instance-direct-types inst)))
 
-
 (defun (setf instance-direct-types) (cls-des-list inst)
-  (setf (slot-value inst 'direct-types) (mapcar #'find-cls cls-des-list)))
-
+  (dolist (c (slot-value inst 'direct-types)) 
+    (cls-remove-direct-instance% c inst))
+  (let ((cls-list (mapcar #'find-cls cls-des-list)))
+    (setf (slot-value inst 'direct-types) cls-list)
+    (dolist (c cls-list) 
+      (cls-add-direct-instance% c inst))))
+  
 (defun (setf instance-direct-type) (cls-des inst)
   (setf (instance-direct-types inst) (list cls-des)))
 
 (defun instance-add-direct-type (inst cls-des)
-  (push (find-cls cls-des) (instance-direct-types inst)))
+  (push (find-cls cls-des) (instance-direct-types inst))
+  (cls-add-direct-instance% (find-cls cls-des) inst))
 
 (defun instance-remove-direct-type (inst cls-des)
   (setf (instance-direct-types inst)
-        (delete (find-cls cls-des) (instance-direct-types inst))))
-
+        (delete (find-cls cls-des) (instance-direct-types inst)))
+  (cls-remove-direct-instance% (find-cls cls-des) inst))
+  
 (defun instance-has-direct-type (inst cls-des)
   (find (find-cls cls-des) (instance-direct-types inst)))
 
@@ -269,17 +295,31 @@ if ERRORP is false, otherwise an error is signalled."
   (car (cls-direct-superclses cls)))
 
 (defun (setf cls-direct-superclses) (cls-des-list cls)
-  (setf (slot-value cls 'direct-superclses) (mapcar #'find-cls cls-des-list)))
+  (dolist (c (slot-value cls 'direct-superclses))
+    (cls-remove-direct-subcls% c cls))
+  (let ((cls-list (mapcar #'find-cls cls-des-list)))
+    (setf (slot-value cls 'direct-superclses) cls-list)
+    (dolist (c cls-list)
+      (cls-add-direct-subcls% c cls))))
 
 (defun (setf cls-direct-supercls) (cls-des cls)
   (setf (cls-direct-superclses cls) (list cls-des)))
 
 (defun cls-add-direct-supercls (cls cls-des)
-  (push (find-cls cls-des) (cls-direct-superclses cls)))
+  (push (find-cls cls-des) (cls-direct-superclses cls))
+  (cls-add-direct-subcls% (find-cls cls-des) cls))
+
+(defun cls-add-direct-subcls% (cls cls-des)
+  (push (find-cls cls-des) (slot-value cls 'direct-subclses)))
 
 (defun cls-remove-direct-supercls (cls cls-des)
   (setf (cls-direct-superclses cls)
-        (delete (find-cls cls-des) (cls-direct-superclses cls))))
+        (delete (find-cls cls-des) (cls-direct-superclses cls)))
+  (cls-remove-direct-subcls% (find-cls cls-des) cls))
+
+(defun cls-remove-direct-subcls% (cls cls-des)
+  (setf (slot-value cls 'direct-subclses)
+        (delete (find-cls cls-des) (cls-direct-subclses cls))))
 
 (defun cls-has-direct-supercls (cls cls-des)
   (find (find-cls cls-des) (cls-direct-superclses cls)))
@@ -289,6 +329,28 @@ if ERRORP is false, otherwise an error is signalled."
     (or (cls-has-direct-supercls cls target-cls)
         (some #'(lambda (x) (cls-has-supercls x target-cls))
                   (cls-direct-superclses cls)))))
+
+(defmacro cls-do-subcls-list (cls subcls &rest body)
+  (let ((scls (gensym))
+        (fn (gensym)))
+    `(labels ((,fn (,subcls)
+                (progn
+                  ,@body
+                  (dolist (,scls (cls-direct-subclses ,subcls))   
+                    (,fn ,scls)))))
+       (dolist (,scls (cls-direct-subclses ,cls))
+         (,fn ,scls)))))
+
+(defmacro cls-do-supercls-list (cls supercls &rest body)
+  (let ((scls (gensym))
+        (fn (gensym)))
+    `(labels ((,fn (,supercls)
+                (progn
+                  ,@body
+                  (dolist (,scls (cls-direct-superclses ,supercls))   
+                    (,fn ,scls)))))
+       (dolist (,scls (cls-direct-superclses ,cls))
+         (,fn ,scls)))))
                 
 ; direct template slot
 (defun (setf cls-direct-template-slots) (slot-des-list cls)
@@ -318,7 +380,7 @@ if ERRORP is false, otherwise an error is signalled."
                (and
                 (eq (facet-values%-slot x) (find-slot slot-des))
                 (eq (facet-values%-facet x) (find-facet facet-des))))
-           (slot-value cls 'direct-template-facet-values-list)))
+           (slot-value cls 'direct-template-facet-values)))
 
 (defun cls-direct-template-facet-values (cls slot-des facet-des)
   (let ((it (cls-ref-direct-template-facet-values cls slot-des facet-des)))
@@ -334,7 +396,7 @@ if ERRORP is false, otherwise an error is signalled."
         (push (make-facet-values% :slot (find-slot slot-des) 
                                   :facet (find-facet facet-des) 
                                   :vals (convert-values% vals))
-              (slot-value cls 'direct-template-facet-values-list)))))
+              (slot-value cls 'direct-template-facet-values)))))
 
 (defun (setf cls-direct-template-facet-value) (val cls slot-des facet-des)
   (setf (cls-direct-template-facet-values cls slot-des facet-des) `(,val)))
@@ -360,6 +422,25 @@ if ERRORP is false, otherwise an error is signalled."
 (defun (setf cls-template-facet-value) (val cls slot-des facet-des)
   (setf (cls-template-facet-values cls slot-des facet-des) `(,val)))
 
+; instances
+(defun cls-add-direct-instance% (cls inst-des)
+  (push (find-frame inst-des) (slot-value cls 'direct-instances)))
+
+(defun cls-remove-direct-instance% (cls inst-des)
+  (setf (slot-value cls 'direct-instances)
+        (delete (find-frame inst-des) (cls-direct-instances cls))))
+
+(defmacro cls-do-instance-list (cls inst &rest body)
+  (let ((fn (gensym))
+        (subcls (gensym))
+        (c (gensym)))
+    `(labels ((,fn (,c)
+                (dolist (,inst (cls-direct-instances ,c))
+                  ,@body)
+                (dolist (,subcls (cls-direct-subclses ,c))   
+                  (,fn ,subcls))))
+       (,fn ,cls))))
+
 
 ;
 ; slot functions
@@ -371,17 +452,31 @@ if ERRORP is false, otherwise an error is signalled."
 
 (defun (setf slot-direct-superslots) (slot-des-list slot)
   (check-type slot slot)
-  (setf (slot-value slot 'direct-superslots) (mapcar #'find-slot slot-des-list)))
+  (dolist (s (slot-value slot 'direct-superslots))
+      (slot-remove-direct-subslot% s slot))
+  (let ((slot-list (mapcar #'find-slot slot-des-list)))
+    (setf (slot-value slot 'direct-superslots) slot-list)
+    (dolist (s slot-list)
+      (slot-add-direct-subslot% s slot))))
 
 (defun (setf slot-direct-superslot) (slot-des slot)
   (setf (slot-direct-superslots slot) (list slot-des)))
 
 (defun slot-add-direct-superslot (slot slot-des)
-  (push (find-slot slot-des) (slot-direct-superslots slot)))
+  (push (find-slot slot-des) (slot-direct-superslots slot))
+  (slot-add-direct-subslot% (find-slot slot-des) slot))
+
+(defun slot-add-direct-subslot% (slot slot-des)
+  (push (find-slot slot-des) (slot-value slot 'direct-subslots)))
 
 (defun slot-remove-direct-superslot (slot slot-des)
   (setf (slot-direct-superslots slot)
-        (delete (find-slot slot-des) (slot-direct-superslots slot))))
+        (delete (find-slot slot-des) (slot-direct-superslots slot)))
+  (slot-remove-direct-subslot% (find-slot slot-des) slot))
+
+(defun slot-remove-direct-subslot% (slot slot-des)
+  (setf (slot-value slot 'direct-subslots)
+        (delete (find-slot slot-des) (slot-direct-subslots slot))))
 
 (defun slot-has-direct-superslot (slot slot-des)
   (find (find-slot slot-des) (slot-direct-superslots slot)))
@@ -392,3 +487,36 @@ if ERRORP is false, otherwise an error is signalled."
   (let ((target-slot (find-slot slot-des)))
     (or (slot-has-direct-superslot slot target-slot)
         (some #'(lambda (x) (slot-has-direct-superslot x target-slot)) (slot-direct-superslots slot)))))
+
+
+;
+; delete frame functions 
+;
+
+(defgeneric delete-frame (frame)
+  (:method ((frame frame))
+    (setf (slot-value frame 'kb) nil)
+    (setf (slot-value frame 'own-slot-values-list) nil)
+    (setf (slot-value frame 'definedp) nil)
+    (setf (slot-value frame 'systemp) nil))
+  (:method ((frame instance))
+    (call-next-method)
+    (dolist (cl (instance-direct-types frame))
+      (cls-remove-direct-instance% cl frame))
+    (setf (slot-value frame 'direct-types) nil))
+  (:method ((frame cls))
+    (call-next-method)
+    (dolist (cl (cls-direct-superclses frame))
+      (cls-remove-direct-subcls% cl frame))
+    (setf (slot-value frame 'direct-superclses) nil)
+    (setf (slot-value frame 'direct-template-slots) nil)
+    (setf (slot-value frame 'direct-template-facet-values) nil)
+    (setf (slot-value frame 'direct-subclses) nil)
+    (setf (slot-value frame 'direct-instances) nil))
+  (:method ((frame slot))
+    (call-next-method)
+    (dolist (sl (slot-direct-superslots frame))
+      (slot-remove-direct-subslot% sl frame))
+    (setf (slot-value frame 'direct-superslots) nil)
+    (setf (slot-value frame 'direct-subslots) nil)))
+   

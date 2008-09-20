@@ -90,25 +90,22 @@
 
 (defun find-kb-file (file-des &optional (errorp t))
   (check-type file-des kb-file-designator)
-  (etypecase file-des
-             (string 
-              (let ((path (make-pathname :name file-des :type "pprj")))
-                (if (probe-file path) 
-                    path
-                    (progn 
-                      (setf path (do ((paths *kb-paths* (cdr paths))
-                                      (p nil))
-                                     ((or (null paths) (and p (probe-file p))) (and (probe-file p) p))
-                                   (setf p (merge-pathnames 
-                                            (make-pathname :name file-des :type "pprj")
-                                            (car paths)))))
-                      (if path
-                          path
-                          (if errorp (error "File designed by ~S does not exist." file-des) nil))))))
-             (pathname
-              (if (probe-file file-des) 
-                  file-des
-                  (if errorp (error "File designed by ~S does not exist." file-des) nil)))))
+  (let ((path (etypecase file-des
+                         (string 
+                          (make-pathname :name file-des :type "pprj"))
+                         (pathname
+                          file-des))))
+    (if path
+        (if (not (probe-file path))
+            (setf path (do ((paths *kb-paths* (cdr paths))
+                            (p nil))
+                           ((or (null paths) (and p (probe-file p))) (and (probe-file p) p))
+                         (setf p (merge-pathnames 
+                                  path
+                                  (car paths)))))))
+    (if path
+        path
+        (if errorp (error "File designed by ~S does not exist." file-des) nil))))
   
   
 
@@ -137,8 +134,8 @@ if ERRORP is false, otherwise an error is signalled."
                           (setf kb (make-instance 'kb :protege-pprj-file path)))
                       (if kb 
                           kb
-                          (if errorp (error "Kb designed by ~S does not exist." kb-des) nil)) )
-                    (if errorp (error "Kb designed by ~S does not exist." kb-des) nil))))))
+                          (if errorp (error "Kb designed by pathname ~S does not exist." kb-des) nil)) )
+                    (if errorp (error "Kb designed by pathname ~S does not exist." kb-des) nil))))))
 
 ; initialize
 (defmethod initialize-instance :after ((kb kb) &rest initargs)
@@ -187,6 +184,7 @@ if ERRORP is false, otherwise an error is signalled."
       (let ((it (element-name->symbol (kb-element-name el) kb)))
         (if it
             (progn
+              (delete-frame (symbol-value it))
               (setf (symbol-value it) nil)
               (unexport it (slot-value kb 'package))
               (unintern it (slot-value kb 'package))))))

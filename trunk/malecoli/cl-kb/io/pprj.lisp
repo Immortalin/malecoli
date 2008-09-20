@@ -33,6 +33,12 @@
       (multiple-value-bind (xml-pathname includes_projects) (extract-info-from-protege-pprj pathname)
         (setf (kb-protege-xml-file kb) xml-pathname)
         (dolist (p includes_projects)
+          (if (null (pathname-directory p))
+              (let ((pp (merge-pathnames
+                         (make-pathname :directory (pathname-directory pathname))
+                         p)))
+                (if (probe-file pp)
+                    (setf p pp))))
           (let ((ukb (find-kb p t t)))
             (use-kb ukb kb))))             
       (error "PPRJ protege file ~S does not exist." pathname)))
@@ -52,6 +58,7 @@
           (push (kb-protege-pprj-file k) included-pprj-file-list))
         (setf pprj-new (put-info-into-protege-pprj pprj-old xml-file included-pprj-file-list))
         (seq->file pprj-new pprj-file))))
+
 
 ;
 ; put info
@@ -76,7 +83,6 @@
                     (format nil "included_projects ~A ~%" 
                             included-projects-line)))))
           
-
 
 ;
 ; extract info
@@ -107,9 +113,7 @@
     (let ((ips nil))
       (dolist (ip includes_projects)
         (setf ip (string-trim "\" 	" ip))
-        (if (equal (char ip 0) #\/ )
-            (setf ip (pathname ip))
-            (setf ip (merge-pathnames (merge-pathnames (pathname ip) (make-pathname :directory (pathname-directory pathname))))))
+        (setf ip (pathname ip))
         (push ip ips))
       (setf includes_projects ips))
     (values xml-pathname includes_projects)))

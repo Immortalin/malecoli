@@ -24,25 +24,25 @@
 ; make an instance of a cls, slot, facet, and a simple-instance
 ;
 
-(defun make-cls (name &key (kb *kb*) (definedp t))
+(defun make-system-cls (name &key (kb *kb*))
   (check-type name string)
   (check-type kb kb)
-  (make-instance 'cls :name name :definedp definedp :kb kb))
+  (make-instance 'cls :name name :definedp nil :systemp t :kb kb))
 
-(defun make-slot (name &key (kb *kb*) (definedp t))
+(defun make-system-slot (name &key (kb *kb*))
   (check-type name string)
   (check-type kb kb)  
-  (make-instance 'slot :name name :definedp definedp :kb kb))
+  (make-instance 'slot :name name :definedp nil :systemp t :kb kb))
 
-(defun make-facet (name &key (kb *kb*) (definedp t))
+(defun make-system-facet (name &key (kb *kb*))
   (check-type name string)
   (check-type kb kb)
-  (make-instance 'facet :name name :definedp definedp :kb kb))
+  (make-instance 'facet :name name :definedp nil :systemp t :kb kb))
 
-(defun make-simple-instance (name &key (kb *kb*) (definedp t))
+(defun make-system-simple-instance (name &key (kb *kb*))
   (check-type name string)
   (check-type kb kb)
-  (make-instance 'simple-instance :name name :definedp definedp :kb kb))
+  (make-instance 'simple-instance :name name :definedp nil :systemp t :kb kb))
 
 
 ;
@@ -52,23 +52,24 @@
 (defun get-cls (name &key (kb *kb*))
   (let ((it (element-name->element name kb)))
     (if (null it)
-        (values (make-cls name :kb kb :definedp nil) t)
+        (values (make-instance 'cls :name name :definedp nil :kb kb) t)
         (values it nil))))
 
 (defun get-slot (name &key (kb *kb*))
   (let ((it (element-name->element name kb)))
     (if (null it)
-        (values (make-slot name :kb kb :definedp nil) t)
+        (values (make-instance 'slot :name name :definedp nil :kb kb) t)
         (values it nil))))
 
 (defun get-facet (name &key (kb *kb*))
   (let ((it (element-name->element name kb)))
     (if (null it)
-        (values (make-facet name :kb kb :definedp nil) t)
+        (values (make-instance 'facet :name name :definedp nil :kb kb) t)
         (values it nil))))
 
 (defun get-simple-instance (name &key (kb *kb*))
   (let ((it (element-name->element name kb)))
     (if (null it)
-        (values (make-simple-instance name :kb kb :definedp nil) t)
+        (values (make-instance 'simple-instance :name name :definedp nil :kb kb) t)
         (values it nil))))
+

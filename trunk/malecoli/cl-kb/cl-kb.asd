@@ -50,6 +50,6 @@
 	        	((:file "protege-kb" :depends-on ())
 	        	 (:file "protege" :depends-on ("protege-kb"))
 	        	 )
-                :depends-on ("package" "core"))
+                :depends-on ("package" "core" "io" "resources"))
                )
   :depends-on ("s-xml" "cl-ppcre"))
