@@ -33,7 +33,7 @@
                                    (push inst si-list))
       (cl-kb::cls-do-instance-list (cl-kb:find-frame '|dataset|::|Dataset|) d 
                                    (push d ds-list))
-      (time (dataset-kb-import-cases package si-list importinfo))
+      (dataset-kb-import-cases package si-list importinfo)
       (dataset-kb-import-datasets package ds-list importinfo))
     (cl-kb:kb-close kb)
     (values (import-info-cases importinfo)
