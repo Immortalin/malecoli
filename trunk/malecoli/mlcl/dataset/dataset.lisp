@@ -65,7 +65,7 @@
 (defvar *clstore-storage* nil)
 
 (cl-store:defstore-cl-store (obj dataset stream)
-                            (output-type-code *dataset-code* stream)
+                            (cl-store:output-type-code *dataset-code* stream)
                             (cl-store:store-object (dataset-name obj) stream)
                             (if (not (dataset-temporaryp obj))
                                 (cl-store:store-object (mapcan #'(lambda (x) (if x (list x))) 
@@ -74,8 +74,8 @@
                                 (cl-store:store-object nil stream)))
 
 (cl-store:defrestore-cl-store (dataset stream)
-                              (let ((name (restore-object stream))
-                                    (cases-list (restore-object stream)))
+                              (let ((name (cl-store:restore-object stream))
+                                    (cases-list (cl-store:restore-object stream)))
                                 (let ((obj (make-instance 'dataset 
                                                           :name name 
                                                           :schema *clstore-schema*

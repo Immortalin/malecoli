@@ -71,7 +71,7 @@
          (storage (mlcl::workspace-storage workspace))
          (schema (mlcl::workspace-schema workspace)))
     (if (eq (length (mlcl::storage-cases storage)) 0)
-        (mlcl::workspace-cases-import workspace 
+        (time (mlcl::workspace-cases-import workspace 
                                               (or
                                                (cl-kb::find-kb (format nil "~A-data" arff) nil)
                                                (make-instance 'cl-kb:kb 
@@ -81,7 +81,7 @@
                                                                                    :type "pprj")
                                                                                   cl-kb:*kb-default-path*)
                                                               :use (list 'cl-kbs::|dataset| 
-                                                                         (mlcl::schema-kb schema))))))
+                                                                         (mlcl::schema-kb schema)))))))
     #|
     (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
         (mlcl::workspace-make-algorithms workspace (merge-pathnames
