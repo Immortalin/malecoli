@@ -20,7 +20,17 @@
 
 (in-package :mlcl-cbr)
 
-(push (if mlcl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-cbr/resources/"
+(push (if cl-kb::*cusp-developmentp* 
+          ;#p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-knn/resources/"
+          #p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-cbr/resources/"
           *load-truename*)
-      mlcl-kb:*kb-paths*)
+      cl-kb:*kb-paths*)
+
+;
+; knn knowledge base
+;
+
+(eval-when (:LOAD-TOPLEVEL :EXECUTE)
+  (if (null (cl-kb:find-kb "cbr" nil))
+        (cl-kb:make-kb (cl-kb:find-kb-file "cbr"))))
+
