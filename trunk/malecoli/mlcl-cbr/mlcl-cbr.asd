@@ -14,13 +14,9 @@
                (:module resources
                	:components
 	        	((:file "resource" :depends-on ()))
-                :depends-on ("package"))	
-               (:module kb
-               	:components
-	        	((:file "cbr-kb" :depends-on ()))
-                 :depends-on ("package" "resources"))
+                :depends-on ("package"))	           
                (:module cbr
                	:components
 	        	((:file "cbr" :depends-on ()))
-                 :depends-on ("package" "kb")))
+                 :depends-on ("package" "resources")))
   :depends-on ("mlcl-knn"))
