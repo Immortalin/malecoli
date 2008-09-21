@@ -1,20 +1,45 @@
+;;;
+;;; MaLeCoLi
+;;; Copyright (C) 2008 Alessandro Serra
+;;; 
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;;
+
+;;;; 2008-08-21 09:30:59
 
 (in-package :mlcl-knn)
 
-;(defclass knn (algorithm)
-;  ())
+;
+; knn
+;
 
-(defclass knn ()
-  ((workspace 
-    :TYPE mlcl-dataset:workspace
-    :READER knn-workspace)
-   (k
-    :ACCESSOR knn-k)
+(defclass knn (algorithm)
+  ((k
+    :TYPE integer
+    :ACCESSOR knn-k
+    :INITFORM 1
+    :INITARG :k)
    (similarity-fn
     :TYPE symbol
-    :ACCESSOR knn-similarity-fn)))
-   
-   
-
-(defun knn-similarity (knn x y)
-  (funcall (knn-similarity-fn knn) x y))
+    :ACCESSOR knn-similarity-fn
+    :INITFORM nil
+    :INITARG :similarity-fn)
+   (dataset-name
+    :TYPE string
+    :ACCESSOR knn-dataset-name
+    :INITFORM "knn"
+    :INITARG :dataset-name)))
+      
+;(defun knn-similarity (knn x y)
+;  (funcall (knn-similarity-fn knn) x y))
