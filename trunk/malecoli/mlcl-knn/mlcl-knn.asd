@@ -15,13 +15,9 @@
                	:components
 	        	((:file "resource" :depends-on ()))
                 :depends-on ("package"))	
-               (:module kb
-               	:components
-	        	((:file "knn-kb" :depends-on ()))
-                 :depends-on ("package" "resources"))
                (:module knn
                	:components
 	        	((:file "knn" :depends-on ()))
-                 :depends-on ("package" "kb")))
-  :depends-on ("mlcl-algorithm"))
+                 :depends-on ("package" "resources")))
+  :depends-on ("mlcl"))
 

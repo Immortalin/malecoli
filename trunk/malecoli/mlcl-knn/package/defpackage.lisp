@@ -5,10 +5,16 @@
 
 (defpackage :mlcl-knn
   (:nicknames :ml-knn)
-  (:use :cl :mlcl-kb :mlcl-algorithm)
+  (:use :cl)
   (:export
+    
+    #|
     knn
-   ;; Exported symbols go here
+    |#
+    knn
+    knn-k
+    knn-similarity-fn
+    knn-dataset-name
 ))
 
 
