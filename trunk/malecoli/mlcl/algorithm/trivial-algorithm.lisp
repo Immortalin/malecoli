@@ -27,9 +27,6 @@
 (defclass trivial-algorithm (algorithm)
   ())
 
-(defmethod algorithm-init-arguments ((algorithm trivial-algorithm))
-  nil)
-
 
 ;
 ; trivial algorithm compiler
@@ -38,5 +35,7 @@
 (defclass trivial-algorithm-compiler (algorithm-compiler)
   ())
 
-(defmethod algorithm-compiler-compile ((algorithm-compiler trivial-algorithm-compiler) algo-frame)
-  (make-instance 'trivial-algorithm :name (cl-kb:frame-name algo-frame)))
+(defmethod algorithm-compiler-compile ((algorithm-compiler trivial-algorithm-compiler) algo-frame strm)
+  (let ((code (cl-kb:frame-own-slot-value algo-frame '|algorithm|::|trivial_algorithm_code|)))
+    (format strm "~A~%~%" code))
+  (list (cl-kb:frame-name algo-frame) `(make-instance 'trivial-algorithm :name ,(cl-kb:frame-name algo-frame))))

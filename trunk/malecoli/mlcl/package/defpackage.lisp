@@ -103,6 +103,9 @@
     |#
     algorithm
     trivial-algorithm
+    algorithm-compiler
+    trivial-algorithm-compiler
+    algorithm-compiler-compile
    ))
 
 

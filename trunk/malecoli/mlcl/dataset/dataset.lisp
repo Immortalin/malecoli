@@ -82,4 +82,5 @@
                                                           :storage *clstore-storage*)))
                                   (dolist (c cases-list)
                                     (push  (aref (storage-cases (dataset-storage obj)) c)
-                                           (slot-value obj 'cases))))))
+                                           (slot-value obj 'cases)))
+                                  obj)))

@@ -30,8 +30,6 @@
     :READER algorithm-name
     :INITARG :name)))
 
-(defgeneric algorithm-init-arguments (algorithm))
-
 
 ;
 ; Algorithm Compiler
@@ -40,5 +38,5 @@
 (defclass algorithm-compiler ()
   ())
 
-(defgeneric algorithm-compiler-compile (algorithm-compiler algo-frame))
+(defgeneric algorithm-compiler-compile (algorithm-compiler algo-frame strm))
 
