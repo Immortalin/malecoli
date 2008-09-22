@@ -46,6 +46,10 @@
    (algorithms 
     :READER workspace-algorithms
     :TYPE list
+    :INITFORM nil)
+   (makefiles 
+    :READER workspace-makefiles
+    :TYPE list
     :INITFORM nil)))
   
 ; initialize
@@ -63,6 +67,7 @@
   (workspace-load workspace))
 
 ; i/o 
+
 (defun workspace-load (workspace)
   (let ((storefile (workspace-file workspace)))
     (if (probe-file storefile)
@@ -70,12 +75,14 @@
                         (let ((*clstore-schema* (workspace-schema workspace))
                               (*clstore-storage* (workspace-storage workspace)))
                           (setf (slot-value workspace 'datasets) (cl-store:restore strm))
+                          (setf (slot-value workspace 'makefiles) (cl-store:restore strm))
                           (setf (slot-value workspace 'algorithms) (cl-store:restore strm)))))))
                         
 (defun workspace-save (workspace)
   (let ((storefile (workspace-file workspace)))
     (with-open-file (strm storefile :direction :output :if-exists :supersede :element-type '(unsigned-byte 8))
                     (cl-store:store (workspace-datasets workspace) strm)
+                    (cl-store:store (workspace-makefiles workspace) strm)
                     (cl-store:store (workspace-algorithms workspace) strm))))
 
 ; datasets
@@ -118,5 +125,6 @@
       (setf makefile (make-instance 'makefile 
                                     :file makefile
                                     :schema (workspace-schema workspace))))
+  (push makefile (slot-value workspace 'makefiles))
   (dolist (algo (makefile-make makefile))
     (push algo (slot-value workspace 'algorithms))))

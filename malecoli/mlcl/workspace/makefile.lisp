@@ -121,10 +121,7 @@
   (format strm "(defun |get-~A-algorithms| ()" fullname)
   (format strm "~%	(list ")
   (dolist (algo (algocomp-info-algorithms compinfo))
-    (format strm "~%		(make-instance '~A :name \"~A\" ~{ ~A ~})" 
-            (type-of algo) 
-            (algorithm-name algo)
-            (algorithm-init-arguments algo)))
+    (format strm "~%		|~A|" algo))
   (format strm "))~%~%")
   (format strm "(export '(|get-~A-algorithms|))~%~%" fullname)
   (format strm "(format t \"!! loaded ~A !!~A\")" (package-name package) "~%~%")
@@ -138,7 +135,6 @@
 (defun makefile-compile-algorithm (package algo compinfo strm)
   (declare (ignore package))
   (let* ((compiler-frame 
-          ;(cl-kb:frame-own-slot-value algo '|algorithm|::|algorithm_compiler|))
           (cl-kb:frame-own-slot-value-r algo '|algorithm|::|algorithm_compiler|))
          (class-name
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_class|))
@@ -152,8 +148,10 @@
     (asdf:operate 'asdf:load-op (make-symbol class-asdf))
     (let ((symb (find-symbol class-name (find-package class-package))))
       (let ((algorithm-compiler (make-instance symb)))
-        (push (algorithm-compiler-compile algorithm-compiler algo)
-              (algocomp-info-algorithms compinfo))))))
+        (let ((al (algorithm-compiler-compile algorithm-compiler algo strm)))
+          (format strm "(defvar |~A| ~S)~%~%" (car al) (car (cdr al)))
+          (push (car al) (algocomp-info-algorithms compinfo)))))))
+
 
 ;
 ;
@@ -166,3 +164,19 @@
     (setf algorithms (funcall symb))
     algorithms))
 
+
+;
+; store/restore methods
+;
+
+(defvar *makefile-code* (cl-store:register-code 111 'makefile))
+
+(cl-store:defstore-cl-store (obj makefile stream)
+                            (cl-store:output-type-code *makefile-code* stream)
+                            (cl-store:store-object (makefile-pprj-file obj) stream))
+
+(cl-store:defrestore-cl-store (makefile stream)
+                              (let ((file (cl-store:restore-object stream)))
+                                (make-instance 'makefile
+                                               :file file 
+                                               :schema *clstore-schema*)))
