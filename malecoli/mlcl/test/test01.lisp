@@ -81,7 +81,8 @@
                                                                                    :type "pprj")
                                                                                   cl-kb:*kb-default-path*)
                                                               :use (list 'cl-kbs::|dataset| 
-                                                                         (mlcl::schema-kb schema)))))))
+                                                                         (mlcl::schema-kb schema))))))
+        (mlcl:workspace-save workspace))
     (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
         (mlcl::workspace-make-algorithms workspace (merge-pathnames
                                                  (make-pathname 

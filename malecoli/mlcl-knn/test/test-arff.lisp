@@ -40,17 +40,24 @@
                                            :name arff
                                            :type "workspace")
                                           cl-kb:*kb-default-path*)))
-         (storage (mlcl::workspace-storage workspace))
-         (schema (mlcl::workspace-schema workspace)))
+         (storage (mlcl::workspace-storage workspace)))
     (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
         (mlcl::workspace-make-algorithms workspace (merge-pathnames
                                                  (make-pathname 
-                                                  :name "make-knn-01"
+                                                  :name "make-knn-02"
                                                   :type "pprj")
-                                                 cl-kb:*kb-default-path*)))
+                                                 cl-kb:*kb-default-path*))
+        (mlcl:workspace-save workspace))
     (format t "#cases=~A~%" (length (mlcl::storage-cases storage)))
     (format t "#datasets=~A~%" (length (mlcl::workspace-datasets workspace)))        
     (format t "#algorithms=~A~%" (length (mlcl::workspace-algorithms workspace)))
-    workspace
+    (test-knn workspace)
     ))
+
+(defun test-knn (workspace)
+  (let ((knn (mlcl:workspace-find-algorithm workspace "make-knn-02")))
+    (mlcl-knn:knn-init knn workspace)
+    (let ((cas (nth 10 (mlcl:dataset-cases (mlcl:workspace-find-dataset workspace (mlcl-knn:knn-dataset-name knn))))))
+      (let ((tops (mlcl-knn:knn-search knn workspace cas)))
+        (list workspace knn tops)))))
 

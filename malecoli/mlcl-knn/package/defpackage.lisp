@@ -32,6 +32,11 @@
     knn-k
     knn-similarity-fn
     knn-dataset-name
+    
+    knn-default-similarity
+    
+    knn-init
+    knn-search
 ))
 
 

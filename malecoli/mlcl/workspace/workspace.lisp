@@ -86,6 +86,10 @@
                     (cl-store:store (workspace-algorithms workspace) strm))))
 
 ; datasets
+(defun workspace-find-dataset (workspace dadasetname)
+  (find-if #'(lambda (x) (string-equal (dataset-name x) dadasetname))
+           (workspace-datasets workspace)))
+
 (defun workspace-make-dataset (workspace name)
   (let ((dataset (make-instance 'dataset 
                                 :name name 
@@ -119,6 +123,10 @@
 ; workspace algorithms
 (defun workspace-add-algorithm (workspace algo)
   (push algo (slot-value workspace 'algorithms)))
+
+(defun workspace-find-algorithm (workspace algoname)
+  (find-if #'(lambda (x) (string-equal (algorithm-name x) algoname))
+           (workspace-algorithms workspace)))
 
 (defun workspace-make-algorithms (workspace makefile)
   (if (typep makefile 'pathname)
