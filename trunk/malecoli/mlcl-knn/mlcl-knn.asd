@@ -17,7 +17,8 @@
                 :depends-on ("package"))	
                (:module knn
                	:components
-	        	((:file "knn" :depends-on ()))
+	        	((:file "knn" :depends-on ())
+	        	 (:file "similarity" :depends-on ()))
                  :depends-on ("package" "resources")))
   :depends-on ("mlcl"))
 

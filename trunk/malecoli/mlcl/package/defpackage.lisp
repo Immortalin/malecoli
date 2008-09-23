@@ -92,6 +92,9 @@
     workspace-add-algorithm
     workspace-make-algorithms
     
+    WORKSPACE-FIND-ALGORITHM
+    workspace-find-dataset
+    
     #|
     arff
     |#

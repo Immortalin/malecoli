@@ -38,5 +38,5 @@
 (defclass algorithm-compiler ()
   ())
 
-(defgeneric algorithm-compiler-compile (algorithm-compiler algo-frame strm))
+(defgeneric algorithm-compiler-compile (algorithm-compiler algo-frame schema-kb strm))
 

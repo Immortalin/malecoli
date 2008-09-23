@@ -52,7 +52,8 @@
 (defclass knn-algorithm-compiler (mlcl:algorithm-compiler)
   ())
 
-(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame strm)
+(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema-kb strm)
+  (declare (ignore schema-kb))
   (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
         (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
         (simfn (cl-kb:frame-name (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|))))
@@ -62,5 +63,30 @@
                                                         :similarity-fn ,simfn
                                                         :dataset-name ,datasetname))))
 
+;
+;
+;
 
+(defun knn-init (knn workspace)
+  (let ((ds (mlcl:workspace-find-dataset workspace (knn-dataset-name knn))))
+    (if (null ds)
+        (progn 
+          (setf ds (mlcl:workspace-make-dataset workspace (knn-dataset-name knn)))
+          (map nil #'(lambda (x) (mlcl:dataset-add-case ds x)) 
+               (mlcl:storage-cases (mlcl:workspace-storage workspace)))))
+    ds))
 
+(defun knn-search (knn workspace cas)
+  (let ((ds (mlcl:workspace-find-dataset workspace (knn-dataset-name knn)))
+        (fn (symbol-function (find-symbol (knn-similarity-fn knn) (mlcl:schema-package (mlcl:workspace-schema workspace)))))
+        (tops nil))
+    (dolist (c (mlcl:dataset-cases ds))
+      (let ((s (funcall fn c cas)))
+        (push (cons s cas) tops)))
+    (let ((so (sort  tops #'(lambda (x y) (< (car x) (car y))))))
+      (if (< (length so) (knn-k knn))
+          (setf tops so)
+          (setf tops (nthcdr (- (length so) (knn-k knn)) so))))
+    (format t "^^^^^ ~A~%" tops)
+    tops))
+    

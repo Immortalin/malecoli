@@ -76,9 +76,11 @@
             (< (file-write-date lispfile) (file-write-date (schema-pprj-file (makefile-dataset-schema makefile)))))
         (progn
           (cl-kb:kb-open (makefile-kb makefile))
+          (cl-kb:kb-open (schema-kb (makefile-dataset-schema makefile)))
           (with-open-file (strm (makefile-source-list-file makefile) :direction :output :if-exists :supersede)
-                          (makefile-compile (makefile-package makefile) (makefile-kb makefile) (makefile-fullname makefile) strm))
+                          (makefile-compile (makefile-package makefile) (makefile-kb makefile) (schema-kb (makefile-dataset-schema makefile)) (makefile-fullname makefile) strm))
           (cl-kb:kb-close (makefile-kb makefile))
+          (cl-kb:kb-close (schema-kb (makefile-dataset-schema makefile)))
           (compile-file lispfile)
           (load (makefile-compiled-list-file makefile))
           (funcall (find-symbol "INIT" (makefile-package makefile))))
@@ -89,7 +91,7 @@
 ;
 ;
 
-(defun makefile-compile (package kb fullname strm)
+(defun makefile-compile (package kb schema-kb fullname strm)
   (cl-kb:kb-open kb)
   (let ((compinfo (make-algocomp-info)))
     (makefile-compile-header package kb strm)
@@ -98,7 +100,7 @@
                                    el
                                    (push el algo-list))
        (dolist (algo algo-list)
-         (makefile-compile-algorithm package algo compinfo strm)))
+         (makefile-compile-algorithm package algo schema-kb compinfo strm)))
     (makefile-compile-trailer package fullname compinfo strm))
   (cl-kb:kb-close kb))
 
@@ -132,7 +134,7 @@
 ;
 ;
 
-(defun makefile-compile-algorithm (package algo compinfo strm)
+(defun makefile-compile-algorithm (package algo schema-kb compinfo strm)
   (declare (ignore package))
   (let* ((compiler-frame 
           (cl-kb:frame-own-slot-value-r algo '|algorithm|::|algorithm_compiler|))
@@ -148,9 +150,10 @@
     (asdf:operate 'asdf:load-op (make-symbol class-asdf))
     (let ((symb (find-symbol class-name (find-package class-package))))
       (let ((algorithm-compiler (make-instance symb)))
-        (let ((al (algorithm-compiler-compile algorithm-compiler algo strm)))
+        (let ((al (algorithm-compiler-compile algorithm-compiler algo schema-kb strm)))
           (format strm "(defvar |~A| ~S)~%~%" (car al) (car (cdr al)))
           (push (car al) (algocomp-info-algorithms compinfo)))))))
+
 
 
 ;

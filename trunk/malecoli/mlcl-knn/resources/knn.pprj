@@ -1,4 +1,4 @@
-; Mon Sep 22 17:53:54 CEST 2008
+; Tue Sep 23 14:41:45 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -168,28 +168,28 @@
 	(name "source_file_name")
 	(string_value "knn.xml"))
 
-([KB_524936_Instance_209] of  Map
+([KB_856442_Instance_209] of  Map
 
 	(entries
-		[KB_524936_Instance_210]
-		[KB_524936_Instance_211]
-		[KB_524936_Instance_212]))
+		[KB_856442_Instance_210]
+		[KB_856442_Instance_211]
+		[KB_856442_Instance_212]))
 
-([KB_524936_Instance_210] of  Map_Entry
+([KB_856442_Instance_210] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([KB_524936_Instance_211] of  Map_Entry
+([KB_856442_Instance_211] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([KB_524936_Instance_212] of  Map_Entry
+([KB_856442_Instance_212] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
