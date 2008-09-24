@@ -28,20 +28,19 @@
   (test-one *gare-model*))                   
 
 (defun test03 ()
-  (let ((kb (mlcl-kb:find-kb 'mlcl-kbs::|gare|)))
-    (format t "!!! ~A~%" (mlcl-kb:kb-name kb))
-    (let ((workspace (make-instance 'mlcl-dataset::workspace
+  (let ((kb (cl-kb:find-kb 'cl-kbs::|gare|)))
+    (let ((workspace (make-instance 'mlcl::workspace
                                     :file (merge-pathnames 
                                            (make-pathname :type "workspace")
-                                           (mlcl-kb:kb-protege-pprj-file kb))
-                                    :schema (make-instance 'mlcl-dataset:schema 
-                                                           :file (mlcl-kb:kb-protege-pprj-file kb) 
+                                           (cl-kb:kb-protege-pprj-file kb))
+                                    :schema (make-instance 'mlcl:schema 
+                                                           :file (cl-kb:kb-protege-pprj-file kb) 
                                                            :kb kb))))
-      (if (eq (length (mlcl-dataset::storage-cases (mlcl-dataset::workspace-storage workspace))) 0)
+      (if (eq (length (mlcl::storage-cases (mlcl::workspace-storage workspace))) 0)
           (progn
-            (mlcl-dataset:workspace-save workspace)
+            (mlcl:workspace-save workspace)
             (format t "! ~A~%" workspace)
-            (mlcl-dataset:workspace-cases-import workspace (mlcl-kb:find-kb 'mlcl-kbs::|gare-instances|))
+            (mlcl:workspace-cases-import workspace (cl-kb:find-kb 'cl-kbs::|gare-instances|))
             (format t "!!! ~A~%" workspace)))
       workspace
       )))
@@ -50,11 +49,10 @@
 (defun test-one (modelfile)
   (let ((kb (clone-ml::onemodel-import modelfile)))
     (format t "!!! ~A~%" kb)
-    (let ((workspace (make-instance 'mlcl-dataset::workspace
+    (let ((workspace (make-instance 'mlcl::workspace
                                      :file (merge-pathnames 
                                            (make-pathname :type "workspace")
-                                           (mlcl-kb:kb-protege-pprj-file kb)))))
-      (mlcl-dataset:workspace-save workspace)
-      (format t "!!! ~A~%" workspace)
+                                           (cl-kb:kb-protege-pprj-file kb)))))
+      (mlcl:workspace-save workspace)
       workspace
       )))
