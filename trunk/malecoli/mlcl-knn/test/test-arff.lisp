@@ -44,7 +44,7 @@
     (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
         (mlcl::workspace-make-algorithms workspace (merge-pathnames
                                                  (make-pathname 
-                                                  :name "make-knn-02"
+                                                  :name "make-knn-01"
                                                   :type "pprj")
                                                  cl-kb:*kb-default-path*))
         (mlcl:workspace-save workspace))
@@ -55,7 +55,7 @@
     ))
 
 (defun test-knn (workspace)
-  (let ((knn (mlcl:workspace-find-algorithm workspace "make-knn-02")))
+  (let ((knn (mlcl:workspace-find-algorithm workspace "make-knn-01")))
     (mlcl-knn:knn-init knn workspace)
     (let ((cas (nth 10 (mlcl:dataset-cases (mlcl:workspace-find-dataset workspace (mlcl-knn:knn-dataset-name knn))))))
       (let ((tops (mlcl-knn:knn-search knn workspace cas)))

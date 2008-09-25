@@ -28,7 +28,8 @@
   ((kb
     :READER frame-kb
     :INITARG :kb
-    :TYPE kb)
+    :TYPE kb
+    :documentation "owner of the frame")
    (own-slot-values-list
     :ACCESSOR frame-own-slot-values-list
     :INITFORM nil
@@ -89,9 +90,9 @@
 
 (defclass slot (instance)
   ((direct-superslots
-   :READER slot-direct-superslots
-   :INITFORM nil
-   :TYPE list)
+    :READER slot-direct-superslots
+    :INITFORM nil
+    :TYPE list)
    (direct-subslots
     :READER slot-direct-subslots
     :INITFORM nil
@@ -335,6 +336,7 @@ if ERRORP is false, otherwise an error is signalled."
         (fn (gensym)))
     `(labels ((,fn (,subcls)
                 (progn
+                  (format t "####$$$### ~A    ~A~%" ,subcls (cls-direct-subclses ,subcls))
                   ,@body
                   (dolist (,scls (cls-direct-subclses ,subcls))   
                     (,fn ,scls)))))
