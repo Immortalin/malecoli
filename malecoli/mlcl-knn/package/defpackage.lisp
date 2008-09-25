@@ -33,6 +33,7 @@
     knn-similarity-fn
     knn-dataset-name
     
+    similarity-measure
     knn-default-similarity
     
     knn-init

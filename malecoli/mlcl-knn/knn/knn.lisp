@@ -41,30 +41,8 @@
     :INITFORM "knn"
     :INITARG :dataset-name)))
       
-;(defun knn-similarity (knn x y)
-;  (funcall (knn-similarity-fn knn) x y))
-
-
 ;
-; trivial algorithm compiler
-;
-
-(defclass knn-algorithm-compiler (mlcl:algorithm-compiler)
-  ())
-
-(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema-kb strm)
-  (declare (ignore schema-kb))
-  (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
-        (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
-        (simfn (cl-kb:frame-name (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|))))
-    (list (cl-kb:frame-name algo-frame) `(make-instance 'knn 
-                                                        :name ,(cl-kb:frame-name algo-frame)
-                                                        :k ,k
-                                                        :similarity-fn ,simfn
-                                                        :dataset-name ,datasetname))))
-
-;
-;
+; knn algorithms
 ;
 
 (defun knn-init (knn workspace)
@@ -82,11 +60,29 @@
         (tops nil))
     (dolist (c (mlcl:dataset-cases ds))
       (let ((s (funcall fn c cas)))
-        (push (cons s cas) tops)))
+        (push (cons s c) tops)))
     (let ((so (sort  tops #'(lambda (x y) (< (car x) (car y))))))
       (if (< (length so) (knn-k knn))
           (setf tops so)
           (setf tops (nthcdr (- (length so) (knn-k knn)) so))))
-    (format t "^^^^^ ~A~%" tops)
     tops))
-    
+
+
+;
+; knn algorithm compiler
+;
+
+(defclass knn-algorithm-compiler (mlcl:algorithm-compiler)
+  ())
+
+(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema-kb strm)
+  (declare (ignore schema-kb))
+  (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
+        (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
+        (simfn (cl-kb:frame-name (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|))))
+    (list (cl-kb:frame-name algo-frame) `(make-instance 'knn 
+                                                        :name ,(cl-kb:frame-name algo-frame)
+                                                        :k ,k
+                                                        :similarity-fn ,simfn
+                                                        :dataset-name ,datasetname))))
+
