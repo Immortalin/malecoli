@@ -35,10 +35,14 @@
                 :depends-on ("package" "core"))		
                (:module core
                	:components
-	        	((:file "frame" :depends-on ("kb"))
-	        	 (:file "kb" :depends-on ())
-	        	 (:file "kb-utility" :depends-on ("kb" "frame")))
+	        	((:file "frame" :depends-on ("kb-core"))
+	        	 (:file "kb-core" :depends-on ()))
                  :depends-on ("package"))
+               (:module kb
+               	:components
+	        	((:file "kb" :depends-on ())
+	        	 (:file "kb-utility" :depends-on ("kb")))
+                 :depends-on ("package" "core" "io"))
                (:module io
                	:components
 	        	((:file "io" :depends-on ())
