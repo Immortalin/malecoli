@@ -20,68 +20,6 @@
 
 (in-package :cl-kb)
 
-
-;
-; kb
-;
-
-; initialize
-(defmethod kb-import-from-protege-pprj% ((kb kb))
-  (if (kb-createdp kb)
-      (kb-import-from-protege-pprj (kb-protege-pprj-file kb) kb)))
-
-;
-; protege create
-;
-
-(defun kb-create (&optional (kb *kb*))
-  (check-type kb kb)
-  (if (not (kb-openedp kb))
-      (progn
-        (dolist (ukb (kb-use-list kb))
-          (kb-open ukb))
-        (if (null (kb-protege-xml-file kb))
-            (setf (kb-protege-xml-file kb) (merge-pathnames 
-                                            (make-pathname :type "xml")
-                                            (kb-protege-pprj-file kb))))
-        (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t t)
-        (setf (kb-openedp kb) t))))
-
-(defun kb-createdp (&optional (kb *kb*))
-  (check-type kb kb)
-  (probe-file (kb-protege-pprj-file kb)))
-
-;
-; protege save
-;
-
-(defun kb-save (&optional (kb *kb*))
-  (check-type kb kb)
-  (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t t))
-
-
-;
-; open/close
-;
-
-(defun kb-open (&optional (kb *kb*))
-  (check-type kb kb)  
-  (if (not (kb-openedp kb))
-      (progn
-        (dolist (ukb (kb-use-list kb))
-          (kb-open ukb))
-        (kb-import-from-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb)
-        (setf (kb-openedp kb) t))))
-
-(defun kb-close (&optional (kb *kb*))
-  (check-type kb kb)
-  (if (kb-openedp kb)
-      (progn
-        (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb nil nil)
-        (kb-clear kb)
-        (setf (kb-openedp kb) nil))))
-
-
 ;
 ; import/export functions
 ;

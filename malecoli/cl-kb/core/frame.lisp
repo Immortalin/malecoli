@@ -183,17 +183,17 @@ if ERRORP is false, otherwise an error is signalled."
   
 
 ;
-; values converter
+; values designator
 ;
 
-(defun convert-values% (vals)
+(defun frame-value-designators->values (vals)
   (let ((vs (if (listp vals) vals (list vals))))
     (labels ((conv (val)
                (etypecase val
                           (symbol 
                            (symbol-value val))
                           (list 
-                           (convert-values% val))
+                           (frame-value-designators->values val))
                           (t
                            val))))
       (mapcar #'conv vs))))
@@ -215,8 +215,12 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type frame frame)
   (eq frame (find-frame frame-des)))
 
-(defun frame-in-kb-p (frame kb)
+(defun frame-direct-in-kb-p (frame kb)
   (eq (frame-kb frame) kb))
+
+(defun frame-in-kb-p (frame kb)
+  (or (frame-direct-in-kb-p frame kb)
+      (some #'(lambda (ukb) (frame-in-kb-p frame ukb)) (kb-use-list kb))))
 
 (defmacro frame-do-own-slot-values-list (frame slot-sym vals-sym &rest body)
   (let ((osv (gensym)))
@@ -242,8 +246,8 @@ if ERRORP is false, otherwise an error is signalled."
 (defun (setf frame-own-slot-values) (vals frame slot-des)
   (let ((it (frame-ref-own-slot-values frame slot-des)))
     (if it
-        (setf (slot-values%-vals it) (convert-values% vals))
-        (push (make-slot-values% :slot (find-slot slot-des) :vals (convert-values% vals))  
+        (setf (slot-values%-vals it) (frame-value-designators->values vals))
+        (push (make-slot-values% :slot (find-slot slot-des) :vals (frame-value-designators->values vals))  
               (slot-value frame 'own-slot-values-list)))))
 
 (defun (setf frame-own-slot-value) (val frame slot-des)
@@ -331,12 +335,11 @@ if ERRORP is false, otherwise an error is signalled."
         (some #'(lambda (x) (cls-has-supercls x target-cls))
                   (cls-direct-superclses cls)))))
 
-(defmacro cls-do-subcls-list (cls subcls &rest body)
+(defmacro cls-do-subcls-list% (cls subcls &rest body)
   (let ((scls (gensym))
         (fn (gensym)))
     `(labels ((,fn (,subcls)
                 (progn
-                  (format t "####$$$### ~A    ~A~%" ,subcls (cls-direct-subclses ,subcls))
                   ,@body
                   (dolist (,scls (cls-direct-subclses ,subcls))   
                     (,fn ,scls)))))
@@ -394,10 +397,10 @@ if ERRORP is false, otherwise an error is signalled."
 (defun (setf cls-direct-template-facet-values) (vals cls slot-des facet-des)    
   (let ((it (cls-ref-direct-template-facet-values cls slot-des facet-des)))
     (if it
-        (setf (facet-values%-vals it) (convert-values% vals))
+        (setf (facet-values%-vals it) (frame-value-designators->values vals))
         (push (make-facet-values% :slot (find-slot slot-des) 
                                   :facet (find-facet facet-des) 
-                                  :vals (convert-values% vals))
+                                  :vals (frame-value-designators->values vals))
               (slot-value cls 'direct-template-facet-values)))))
 
 (defun (setf cls-direct-template-facet-value) (val cls slot-des facet-des)
@@ -432,7 +435,7 @@ if ERRORP is false, otherwise an error is signalled."
   (setf (slot-value cls 'direct-instances)
         (delete (find-frame inst-des) (cls-direct-instances cls))))
 
-(defmacro cls-do-instance-list (cls inst &rest body)
+(defmacro cls-do-instance-list% (cls inst &rest body)
   (let ((fn (gensym))
         (subcls (gensym))
         (c (gensym)))
