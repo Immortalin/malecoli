@@ -11,6 +11,7 @@
               #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/model/"))))
 
 
+
 (defvar *english-auction-model* (merge-pathnames (make-pathname
                                                   :name "EnglishAuction" :type "nme" :case :local)
                                                  *default-one-model-pathname*))
@@ -42,8 +43,17 @@
             (format t "! ~A~%" workspace)
             (mlcl:workspace-cases-import workspace (cl-kb:find-kb 'cl-kbs::|gare-instances|))
             (format t "!!! ~A~%" workspace)))
-      workspace
-      )))
+      (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
+          (mlcl::workspace-make-algorithms workspace (merge-pathnames
+                                                      (make-pathname 
+                                                       :name "make-knn-02"
+                                                       :type "pprj")
+                                                      clone-ml::*default-one-model-kb-pathname*))
+          (mlcl:workspace-save workspace))
+      (format t "#cases=~A~%" (length (mlcl::storage-cases (mlcl:workspace-storage workspace))))
+      (format t "#datasets=~A~%" (length (mlcl::workspace-datasets workspace)))        
+      (format t "#algorithms=~A~%" (length (mlcl::workspace-algorithms workspace)))
+      (time (test-knn workspace)))))
 
 
 (defun test-one (modelfile)
@@ -54,5 +64,23 @@
                                            (make-pathname :type "workspace")
                                            (cl-kb:kb-protege-pprj-file kb)))))
       (mlcl:workspace-save workspace)
-      workspace
-      )))
+      (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
+          (mlcl::workspace-make-algorithms workspace (merge-pathnames
+                                                      (make-pathname 
+                                                       :name "make-knn-02"
+                                                       :type "pprj")
+                                                      clone-ml::*default-one-model-kb-pathname*))
+          (mlcl:workspace-save workspace))
+      (format t "#cases=~A~%" (length (mlcl::storage-cases (mlcl:workspace-storage workspace))))
+      (format t "#datasets=~A~%" (length (mlcl::workspace-datasets workspace)))        
+      (format t "#algorithms=~A~%" (length (mlcl::workspace-algorithms workspace)))
+      ;(test-knn workspace)))
+      workspace)))
+
+
+(defun test-knn (workspace)
+  (let ((knn (mlcl:workspace-find-algorithm workspace "make-knn-02")))
+    (mlcl-knn:knn-init knn workspace)
+    (let ((cas (nth 10 (mlcl:dataset-cases (mlcl:workspace-find-dataset workspace (mlcl-knn:knn-dataset-name knn))))))
+      (let ((tops (mlcl-knn:knn-search knn workspace cas)))
+        (list workspace knn cas tops)))))

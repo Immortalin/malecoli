@@ -21,18 +21,31 @@
 (in-package :cl-kb)
 
 ;
-; kb
+; kb functions
 ;
+
+; default path
+
 
 ; initialize
-(defmethod kb-import-from-protege-pprj% ((kb kb))
+(defmethod initialize-instance :after ((kb kb) &rest initargs)
+  (declare (ignore initargs))
+  (if (find-kb (kb-protege-pprj-file kb) nil)
+      (error "Kb ~s already exists." (kb-protege-pprj-file kb)))
+  (if (find-package (kb-name kb))
+      (error "Package named ~s already exists." (kb-name kb)))
+  (setf (slot-value kb 'package) (make-package (kb-name kb) :use nil))
+  (let ((ul (kb-use-list kb)))
+    (setf (slot-value kb 'use-list) nil)
+    (dolist (u ul) (use-kb u kb)))
+  (if (not (string-equal (kb-name kb) "protege")) (use-kb (find-kb "protege") kb))
+  (let ((kbsym (intern (kb-name kb) (find-package :cl-kbs))))
+    (setf (symbol-value kbsym) kb))
   (if (kb-createdp kb)
-      (kb-import-from-protege-pprj (kb-protege-pprj-file kb) kb)))
+      (kb-import-from-protege-pprj (kb-protege-pprj-file kb) kb))
+  (push kb *all-kbs*))
 
-;
 ; protege create
-;
-
 (defun kb-create (&optional (kb *kb*))
   (check-type kb kb)
   (if (not (kb-openedp kb))
@@ -50,19 +63,12 @@
   (check-type kb kb)
   (probe-file (kb-protege-pprj-file kb)))
 
-;
 ; protege save
-;
-
 (defun kb-save (&optional (kb *kb*))
   (check-type kb kb)
   (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t t))
 
-
-;
 ; open/close
-;
-
 (defun kb-open (&optional (kb *kb*))
   (check-type kb kb)  
   (if (not (kb-openedp kb))
@@ -79,22 +85,4 @@
         (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb nil nil)
         (kb-clear kb)
         (setf (kb-openedp kb) nil))))
-
-
-;
-;
-;
-
-
-(defmacro cls-do-subcls-list (cls subcls &rest body &key (kb *kb*))
-  `(cls-do-subcls-list% ,cls ,subcls 
-                        (if (frame-in-kb ,subcls ,kb) 
-                            (progn 
-                              ,@body))))
-
-(defmacro cls-do-instance-list (cls inst &rest body &key (kb *kb*))
- `(cls-do-instance-list% ,cls ,inst 
-                        (if (frame-in-kb ,inst ,kb) 
-                            (progn 
-                              ,@body))))
 

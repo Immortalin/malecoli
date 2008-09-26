@@ -24,125 +24,96 @@
 ; dataset kb compile
 ;
 
-(defun schema-compile (package kb strm)
-  (cl-kb:kb-open kb)
+
+(defun schema-compile (package kb)
   (let ((compinfo (make-compiler-info)))
-    (schema-compile-header package kb strm)
-    (let ((cls-list))
-      (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|)
-                                 el
-                                 (if (eq kb (cl-kb:frame-kb el))
-                                     (push el cls-list))) 
-      (schema-compile-clses package cls-list strm compinfo))  
-    (schema-compile-trailer package strm))
-  (cl-kb:kb-close kb))
+    (cl-kb:with-kb kb nil
+                   (append (schema-compile-header package kb)
+                           (let ((cls-list))
+                             (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|)
+                                                       el
+                                                       (if (eq kb (cl-kb:frame-kb el))
+                                                           (push el cls-list))) 
+                             (schema-compile-clses package cls-list compinfo))
+                           (schema-compile-trailer package)))))
   
 (defstruct compiler-info
   (enum-types nil)
   (symbols nil))
 
-
 ;
 ; compile header/trailer
 ;
 
-(defun schema-compile-header (package kb strm)
-  (format strm ";;;; Created on ~A~%~%" (get-universal-time))
-  (format strm "(in-package \"~A\")~%~%" (package-name package))
-  (dolist (ukb (cl-kb:kb-use-list kb))
-    (if (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
-        (format strm "(use-package \"~A-ws\")~%" (package-name (cl-kb:kb-package ukb)))))
-  (format strm "~%~%"))
+(defun schema-compile-header (package kb )
+  (let ((codes nil))
+    (push `(in-package ,(format nil "~A" (package-name package))) codes)
+    (dolist (ukb (cl-kb:kb-use-list kb))
+      (if (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
+          (push `(use-package ,(format nil "~A-ws" (package-name (cl-kb:kb-package ukb)))) codes)))
+    codes))
 
-(defun schema-compile-trailer (package strm)
-  (format strm "(defun init ()")
-  (format strm "~%	(init-clses))")
-  (format strm "~%~%")
-  (format strm "(format t \"!! loaded ~A !!~A\")" (package-name package) "~%~%")
-  (format strm "~%~%")
-  (format strm ";;;; Created on ~A~%" (get-universal-time)))
+(defun schema-compile-trailer (package)
+  (list `(format t "!! loaded ~A !!~%" ,(package-name package))))
 
 
 ;
 ; compile clses
 ;
 
-(defun schema-compile-clses (package cls-list strm compinfo)
-  (dolist (cls cls-list)
-    (schema-compile-cls cls strm compinfo))
-  (dolist (typ (compiler-info-enum-types compinfo))
-    (schema-compile-enum typ strm))
-  (format strm "(defun init-clses ()")
-  (format strm ")~%")
-  (format strm "~%~%")
-  (format strm "(export '(")
-  (dolist (sym (compiler-info-symbols compinfo))
-    (format strm " |~A|" sym))
-  (format strm ") (find-package \"~A\"))" (package-name package))
-  (format strm "~%~%"))
-  
-(defun schema-compile-cls (cls strm compinfo)
-  (push (frame->lisp-name cls) (compiler-info-symbols compinfo))
-  (format strm ";;;; Generation of cls ~A~%~%" (cl-kb:frame-name cls))
-  (format strm "(defclass |~A| (~{|~A| ~}) (" (frame->lisp-name cls) 
-          (mapcar #'(lambda (s) (frame->lisp-name s))
-                  (cl-kb:cls-direct-superclses cls)))
-  (dolist (slot (cl-kb:cls-direct-template-slots cls))
-    (push (frame->lisp-name slot) (compiler-info-symbols compinfo))
-    (schema-compile-slot slot strm compinfo))
-  (format strm "))~%")
-  (format strm "~%~%"))
+(defun schema-compile-clses (package cls-list compinfo)
+  (let ((codes nil))
+    (dolist (cls cls-list)
+      (push (schema-compile-cls package cls compinfo) codes))
+    (dolist (typ (compiler-info-enum-types compinfo))
+      (schema-compile-enum typ))
+    (append codes
+            (list
+             `(export ',(mapcar #'(lambda (x) x) (compiler-info-symbols compinfo))
+                      (find-package ,(package-name package)))))))
+           
+(defun schema-compile-cls (package cls compinfo)
+  (let ((framesymb (cl-kb:frame->symbol cls package)))
+    (push framesymb (compiler-info-symbols compinfo))
+    `(defclass 
+       ,framesymb
+       ,(mapcar #'(lambda (s) (cl-kb:frame->symbol s package))
+                                   (cl-kb:cls-direct-superclses cls))
+       ,(mapcar #'(lambda (slot) 
+                    (push (cl-kb:frame->symbol slot package) (compiler-info-symbols compinfo))
+                    (schema-compile-slot package slot compinfo))
+                (cl-kb:cls-direct-template-slots cls)))))
 
-(defun schema-compile-slot (slot strm compinfo)
-  (format strm "~%	(|~A|~%	 "
-          (frame->lisp-name slot))
-  (schema-compile-slot-type slot strm compinfo)
-  (format strm "~%	 :accessor ~A)" 
-          (format nil "|~A|" (frame->lisp-name slot))))
-
-(defun schema-compile-slot-type (slot strm compinfo)
+(defun schema-compile-slot (package slot compinfo)
+  (let ((slotsymb (cl-kb:frame->symbol slot package)))
+    `(,slotsymb :accessor ,slotsymb :type ,(schema-compile-slot-type slot compinfo))))
+                
+(defun schema-compile-slot-type (slot compinfo)
   (if (eq (cl-kb:slot-maximum-cardinality slot) 1)
       (let ((typ (cl-kb:slot-value-type slot)))
         (cond 
          ((eq typ 'cl-kb:integer-type-value)
-          (format strm ":type integer "))
+          'integer)
          ((eq typ 'cl-kb:float-type-value)
-          (format strm ":type float "))
+          'float)
          ((eq typ 'cl-kb:string-type-value)
-          (format strm ":type string "))
+          'string)
          ((eq typ 'cl-kb:boolean-type-value)
-          (format strm ":type boolean "))
+          'boolean)
          ((eq typ 'cl-kb:symbol-type-value)
           (push slot (compiler-info-enum-types compinfo))
-          (format strm ":type string "))
+          'string)
          ((eq typ 'cl-kb:instance-type-value)
-          (if (eq (length (cl-kb:slot-allowed-clses slot)) 1)
-              (format strm ";; :type ~A" (frame->lisp-name (car (cl-kb:slot-allowed-clses slot))))))))
-      (format strm ":type list")))
+          t)))
+      'list))
         
 
 ;
 ; enum
 ;
 
-(defun schema-compile-enum (slot strm)
-  (format strm ";;;; Generation of enum ~A~%~%" (cl-kb:frame-name slot))
-  (format strm "~%"))
+(defun schema-compile-enum (slot)
+  (declare (ignore slot))
+  nil)
 
   
-;
-; conversion functions
-;
-
-(defun frame->lisp-name (fr)
-  (let ((name (cl-kb:frame-name fr)))
-    (if (cl-kb:frame-in-kb-p fr (symbol-value 'cl-kbs::|dataset|))
-        (progn
-          (cond
-            ((cl-kb:frame-equal fr '|dataset|::|DatasetCase|)
-             (setf name "DATASET-CASE"))
-            ((cl-kb:frame-equal fr '|dataset|::|DatasetThing|)
-             (setf name "DATASET-THING"))
-            ((cl-kb:frame-equal fr '|dataset|::|date|)
-             (setf name "DATASET-DATE")))))
-    name))

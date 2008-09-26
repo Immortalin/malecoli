@@ -77,15 +77,6 @@
     facet
     
     simple-instance
-    
-;    make-slot-values%
-;    slot-values%-slot
-;    slot-values%-vals
-    
-;    make-facet-values%
-;    facet-values%-slot
-;    facet-values%-facet
-;    facet-values%-values
         
     find-frame 
     find-cls
@@ -95,10 +86,6 @@
     
     #|
     |#
-;    make-cls
-;    make-slot
-;    make-facet
-;    make-simple-instance
     get-cls
     get-slot
     get-facet
@@ -187,7 +174,12 @@
     mk-facet
     mk-simple-instance
     
-
+    #|
+    kb
+    |#
+    frame->symbol
+    string->symbol
+    with-kb
    ))
 
 (defpackage :cl-kbs)

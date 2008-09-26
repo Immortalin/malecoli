@@ -27,11 +27,11 @@
     #|
     case
     |#
-    dataset-thing
+    |DatasetThing|
+    |DatasetCase|
+    |date|
     dataset-thing-name-id
-    dataset-case
     dataset-case-id
-    dataset-date
     |time_year| 
     |time_month|
     |time_day| 

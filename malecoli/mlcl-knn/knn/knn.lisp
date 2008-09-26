@@ -75,14 +75,17 @@
 (defclass knn-algorithm-compiler (mlcl:algorithm-compiler)
   ())
 
-(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema-kb strm)
-  (declare (ignore schema-kb))
+(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema)
   (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
         (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
         (simfn (cl-kb:frame-name (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|))))
-    (list (cl-kb:frame-name algo-frame) `(make-instance 'knn 
-                                                        :name ,(cl-kb:frame-name algo-frame)
-                                                        :k ,k
-                                                        :similarity-fn ,simfn
-                                                        :dataset-name ,datasetname))))
+    (cons
+     `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema))
+        (make-instance 'knn 
+                       :name ,(cl-kb:frame-name algo-frame)
+                       :k ,k
+                       :similarity-fn ,simfn
+                       :dataset-name ,datasetname))
+     nil)))
+
 

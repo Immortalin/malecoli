@@ -24,7 +24,7 @@
 ; dataset thing
 ;
 
-(defclass dataset-thing ()
+(defclass |DatasetThing| ()
   ((name-id
     :reader dataset-thing-name-id
     :initarg :name-id
@@ -35,7 +35,7 @@
 ; dataset case
 ;
                  
-(defclass dataset-case (dataset-thing)
+(defclass |DatasetCase| (|DatasetThing|)
   ((id
     :reader dataset-case-id
     :type fixnum
@@ -46,7 +46,7 @@
 ; dataset date
 ;
 
-(defclass dataset-date ()
+(defclass |date| ()
   ((|time_year|
     :ACCESSOR |time_year|
     :INITFORM 0 
