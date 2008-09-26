@@ -71,12 +71,17 @@
       (setf codes (append 
                    codes 
                    maincodes
-                   (mapcar #'(lambda(own-val) 
-                               (let* ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
-                                      (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|))
-                                      (wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) (mlcl:schema-package schema))))
-                                 `(setf ,wd ,we)))
-                           (cl-kb:frame-own-slot-values algo-frame '|knn|::|knn_similarity_algorithm_weights|)))))
+                   (let ((weight-slots nil))
+                     (cl-kb:cls-do-instance-list (cl-kb:find-cls '|knn|::|KnnSimilarityWeigh|) inst
+                                                 (if (eq (cl-kb:frame-own-slot-value inst '|knn|::|knn_similary_weight_fn|)
+                                                         algo-frame)
+                                                     (push inst weight-slots)))
+                     (mapcar #'(lambda(own-val) 
+                                 (let* ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
+                                        (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|))
+                                        (wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) (mlcl:schema-package schema))))
+                                   `(setf ,wd ,we)))
+                             weight-slots)))))
     (cons
      `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema))
         (make-instance 'similarity-measure 
