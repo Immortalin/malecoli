@@ -50,48 +50,56 @@
 (defclass knn-similarity-compiler (mlcl:algorithm-compiler)
   ())
 
-(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-similarity-compiler) algo-frame schema-kb strm)
-  (let ((cl-kb:*kb* schema-kb)
-        (funname (format nil "~A" (cl-kb:frame-name algo-frame))))
-    (format strm "(defgeneric |~A| (x y))~%~%" funname)
-    (format strm "(defmethod |~A| (x y)" funname)
-    (format strm "~%	(mlcl-knn:knn-default-similarity x y))~%~%")
+(defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-similarity-compiler) algo-frame schema)
+  (let* ((funsymb (cl-kb:string->symbol (format nil "~A" (cl-kb:frame-name algo-frame)) (mlcl:schema-package schema)))
+         (codes nil))
+    (push `(defmethod ,funsymb (x y)
+             (mlcl-knn:knn-default-similarity x y)) codes)
+    (push `(defgeneric ,funsymb (x y)) codes)
     (let ((weights nil)
-          (main nil)) 
-      (setf main (with-output-to-string (out)
-                                        (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|) el
-                                                                  (if (or (cl-kb:frame-in-kb-p el schema-kb)
-                                                                          (and  (not (cl-kb:frame-in-kb-p el (cl-kb:find-kb "dataset")))
-                                                                                (member (cl-kb:frame-kb el) (cl-kb:kb-use-list schema-kb))))
-                                                                      (progn 
-                                                                        (setf weights (append (similarity-function-gen funname el out)
-                                                                                              weights)))))))
+          (maincodes nil)) 
+      (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|) el
+                                (if (or (cl-kb:frame-in-kb-p el (mlcl:schema-kb schema)) 
+                                        (and  (not (cl-kb:frame-in-kb-p el (cl-kb:find-kb "dataset")))
+                                              (member (cl-kb:frame-kb el) (cl-kb:kb-use-list (mlcl:schema-kb schema)))))
+                                    (progn 
+                                      (let ((s (similarity-function-gen funsymb el (mlcl:schema-package schema))))
+                                        (setf weights (car s))
+                                        (push (car (cdr s)) maincodes)))))
       (dolist (w weights)
-        (format strm "(defvar ~A 1.0)~%" w))
-      (format strm "~%~%")
-      (write-string main strm)
-      (format strm "~%~%"))
-    (dolist (own-val (cl-kb:frame-own-slot-values algo-frame '|knn|::|knn_similarity_algorithm_weights|))
-      (let ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
-            (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|)))
-        (format strm "(setf ~A ~A)~%" (format nil "|~A-~A-weight|" funname (cl-kb:frame-name slot)) we)))
-    (list (cl-kb:frame-name algo-frame) `(make-instance 'similarity-measure 
-                                                        :name ,(cl-kb:frame-name algo-frame)))))
+        (push `(defvar ,w 1.0) codes))
+      (setf codes (append 
+                   codes 
+                   maincodes
+                   (mapcar #'(lambda(own-val) 
+                               (let* ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
+                                      (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|))
+                                      (wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) (mlcl:schema-package schema))))
+                                 `(setf ,wd ,we)))
+                           (cl-kb:frame-own-slot-values algo-frame '|knn|::|knn_similarity_algorithm_weights|)))))
+    (cons
+     `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema))
+        (make-instance 'similarity-measure 
+                          :name ,(cl-kb:frame-name algo-frame)))
+     codes)))
 
-(defun similarity-function-gen (name frame strm)
-  (let ((weights nil))
-    (format strm "(defmethod |~A| ((x |~A|) (y |~A|))" 
-            name (cl-kb:frame-name frame) (cl-kb:frame-name frame))
-    (format strm "~%	(if (or (null x) (null y))")
-    (format strm "~%		0")
-    (format strm "~%		(let ((s (call-next-method)) (w 1))")
-    (dolist (slot (cl-kb:cls-direct-template-slots frame))
-      (let ((wd (format nil "|~A-~A-weight|" name (cl-kb:frame-name slot))))
-        (push wd weights)
-        (format strm "~%			(setf w (+ w ~A))" wd)
-        (format strm "~%			(if (and (slot-boundp x '|~A|) (slot-boundp y '|~A|))"  (cl-kb:frame-name slot) (cl-kb:frame-name slot))
-        (format strm "~%			(setf s (+ s (* ~A (|~A| (slot-value x '|~A|) (slot-value y '|~A|))))))"
-                wd name (cl-kb:frame-name slot) (cl-kb:frame-name slot))))
-    (format strm "~%		(float (/ s w))")
-    (format strm ")))~%~%")
-    weights))
+(defun similarity-function-gen (funsymb algo-frame package)
+  (let* ((codes nil)
+         (weights nil))
+    (setf codes `(defmethod ,funsymb ((x ,(cl-kb:frame->symbol algo-frame package)) (y ,(cl-kb:frame->symbol algo-frame package))) 
+                   (if (or (null x) (null y))
+                       0
+                       (let ((s (call-next-method)) (w 1))
+                           ,@(mapcar 
+                              #'(lambda (slot) (let ((wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) package))
+                                                     (sd (cl-kb:string->symbol (cl-kb:frame-name slot) package)))
+                                                 (push wd weights) 
+                                                 `(progn      
+                                                    (setf w (+ w ,wd))
+                                                    (if (and (slot-boundp x ',sd) 
+                                                             (slot-boundp y ',sd))
+                                                        (setf s (+ s (* ,wd 
+                                                                        (,funsymb (slot-value x ',sd) (slot-value y ',sd)))))))))
+                              (cl-kb:cls-direct-template-slots algo-frame))             
+                         (float (/ s w))))))
+    (list weights codes)))

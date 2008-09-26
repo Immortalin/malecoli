@@ -131,7 +131,7 @@
 (defun workspace-make-algorithms (workspace makefile)
   (if (typep makefile 'pathname)
       (setf makefile (make-instance 'makefile 
-                                    :file makefile
+                                    :algorithms-file makefile
                                     :schema (workspace-schema workspace))))
   (push makefile (slot-value workspace 'makefiles))
   (dolist (algo (makefile-make makefile))

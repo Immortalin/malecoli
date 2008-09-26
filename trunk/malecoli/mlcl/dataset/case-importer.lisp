@@ -25,19 +25,18 @@
 ;
 
 (defun dataset-kb-import (package kb)
-  (cl-kb:kb-open kb)
-  (let ((importinfo (make-import-info)))
-    (let ((si-list nil)
-          (ds-list nil))
-      (cl-kb::cls-do-instance-list (cl-kb:find-frame '|dataset|::|DatasetCase|) inst 
-                                   (push inst si-list))
-      (cl-kb::cls-do-instance-list (cl-kb:find-frame '|dataset|::|Dataset|) d 
-                                   (push d ds-list))
-      (dataset-kb-import-cases package si-list importinfo)
-      (dataset-kb-import-datasets package ds-list importinfo))
-    (cl-kb:kb-close kb)
-    (values (import-info-cases importinfo)
-            (import-info-datasets importinfo))))
+  (cl-kb:with-kb kb nil
+                 (let ((importinfo (make-import-info)))
+                   (let ((si-list nil)
+                         (ds-list nil))
+                     (cl-kb::cls-do-instance-list (cl-kb:find-frame '|dataset|::|DatasetCase|) inst 
+                                                  (push inst si-list))
+                     (cl-kb::cls-do-instance-list (cl-kb:find-frame '|dataset|::|Dataset|) d 
+                                                  (push d ds-list))
+                     (dataset-kb-import-cases package si-list importinfo)
+                     (dataset-kb-import-datasets package ds-list importinfo))
+                   (values (import-info-cases importinfo)
+                           (import-info-datasets importinfo)))))
 
 (defun dataset-kb-case-import (package cas)
   (let ((importinfo (make-import-info)))
@@ -64,9 +63,9 @@
       (push el (import-info-cases importinfo)))))
 
 (defun dataset-kb-import-simple-instance (package si importinfo)
-  (let ((symb (find-symbol (frame->lisp-name (cl-kb:instance-direct-type si)) package)))
+  (let ((symb (cl-kb:frame->symbol (cl-kb:instance-direct-type si) package)))
     (if (null symb)
-        (error "undefined class ~A in package ~A " (frame->lisp-name (cl-kb:instance-direct-type si)) (package-name package)))
+        (error "undefined class ~A in package ~A " (cl-kb:instance-direct-type si) (package-name package)))
     (let ((el nil))
       (cond
         ((cl-kb:instance-has-type si '|dataset|::|DatasetThing|)

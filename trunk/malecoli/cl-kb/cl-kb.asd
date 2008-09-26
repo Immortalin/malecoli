@@ -46,14 +46,15 @@
                (:module io
                	:components
 	        	((:file "io" :depends-on ())
-	        	 (:file "xml" :depends-on ("pprj" "io"))
-	        	 (:file "pprj" :depends-on ("io")))
+	        	 (:file "io-utils" :depends-on ())
+	        	 (:file "xml" :depends-on ("pprj" "io" "io-utils"))
+	        	 (:file "pprj" :depends-on ("io" "io-utils")))
                  :depends-on ("package" "core" "resources"))
                (:module protege
                	:components
 	        	((:file "protege-kb" :depends-on ())
 	        	 (:file "protege" :depends-on ("protege-kb"))
 	        	 )
-                :depends-on ("package" "core" "io" "resources"))
+                :depends-on ("package" "core" "io" "resources" "kb"))
                )
   :depends-on ("s-xml" "cl-ppcre"))

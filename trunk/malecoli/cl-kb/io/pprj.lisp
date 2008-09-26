@@ -24,7 +24,7 @@
 ; import/export protege pprj
 ;
 
-(defvar *empty-pprj-pathname*)
+(defvar *empty-pprj-pathname* (find-kb-file "empty"))
 
 (defun kb-import-from-protege-pprj (pathname kb)
   (check-type pathname pathname)
@@ -118,10 +118,4 @@
       (setf includes_projects ips))
     (values xml-pathname includes_projects)))
 
-        
-;
-; init variables
-;
-
-(init-variable *empty-pprj-pathname* (find-kb-file "empty"))
 

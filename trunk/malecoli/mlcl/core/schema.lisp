@@ -75,13 +75,12 @@
   (let ((lispfile (schema-source-list-file schema)))
     (if (or (not (probe-file lispfile)) (< (file-write-date lispfile) (file-write-date (schema-xml-kb-file schema))))
         (progn
-          (cl-kb:kb-open (schema-kb schema))
           (with-open-file (strm (schema-source-list-file schema) :direction :output :if-exists :supersede)
-                          (schema-compile (schema-package schema) (schema-kb schema) strm))
-          (cl-kb:kb-close (schema-kb schema))
+                          (format strm ";;;; Created on ~A~%~%" (get-universal-time))
+                          (format strm "~{~S~%~}~%~%" (schema-compile (schema-package schema) (schema-kb schema))))
           (compile-file lispfile)
-          (load (schema-compiled-list-file schema))
-          (funcall (find-symbol "INIT" (schema-package schema))))
+          (load (schema-compiled-list-file schema)))
         (progn
           (load (schema-compiled-list-file schema))))))
+
 

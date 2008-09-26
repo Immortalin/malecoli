@@ -32,23 +32,6 @@
 
 (setf *kb-default-path* #p"/tmp")
 
-
-(defun file->seq (file)
- (with-open-file (in file :direction :input)
-                 (stream->seq in)))
-
-(defun stream->seq (stream)
-  (let ((seq (make-array (file-length stream) :element-type 'character :fill-pointer t)))
-    (setf (fill-pointer seq) (read-sequence seq stream))
-    seq))
-
-(defun seq->stream (seq stream)
-  (write-sequence seq stream))
-
-(defun seq->file (seq file)
-  (with-open-file (out file :direction :output :if-exists :supersede) 
-                  (seq->stream seq out)))
-
 (defmacro init-variable (var code)
   `(eval-when (:LOAD-TOPLEVEL :EXECUTE)
      (if (null (boundp ',var))

@@ -16,27 +16,27 @@
 ;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;;
 
-;;;; Created on 2008-09-17 15:45:10
+;;;; Created on 2008-09-26 11:24:07
 
-(in-package :mlcl)
-
-;
-; Algorithm
-;
-
-(defclass algorithm ()
-  ((name 
-    :TYPE string
-    :READER algorithm-name
-    :INITARG :name)))
-
+(in-package :cl-kb)
 
 ;
-; Algorithm Compiler
+; utility functions
 ;
 
-(defclass algorithm-compiler ()
-  ())
+(defun file->seq (file)
+ (with-open-file (in file :direction :input)
+                 (stream->seq in)))
 
-(defgeneric algorithm-compiler-compile (algorithm-compiler algo-frame schema))
+(defun stream->seq (stream)
+  (let ((seq (make-array (file-length stream) :element-type 'character :fill-pointer t)))
+    (setf (fill-pointer seq) (read-sequence seq stream))
+    seq))
+
+(defun seq->stream (seq stream)
+  (write-sequence seq stream))
+
+(defun seq->file (seq file)
+  (with-open-file (out file :direction :output :if-exists :supersede) 
+                  (seq->stream seq out)))
 

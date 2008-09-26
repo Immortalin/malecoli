@@ -73,3 +73,48 @@
         (values (make-instance 'simple-instance :name name :definedp nil :kb kb) t)
         (values it nil))))
 
+
+;
+; do macros
+;
+
+(defmacro cls-do-subcls-list (cls subcls &rest body)
+  `(cls-do-subcls-list% ,cls ,subcls 
+                        (if (frame-in-kb-p ,subcls *kb*) 
+                            (progn 
+                              ,@body))))
+
+(defmacro cls-do-instance-list (cls inst &rest body)
+ `(cls-do-instance-list% ,cls ,inst 
+                        (if (frame-in-kb-p ,inst *kb*) 
+                            (progn 
+                              ,@body))))
+
+;
+; coding
+;
+
+(defun frame->symbol (frame package)
+  (or (find-symbol (frame-name frame) package)
+      (let ((symb (make-symbol (frame-name frame))))
+        (import symb package)
+        symb)))
+
+(defun string->symbol (name package)
+  (or (find-symbol name package)
+      (let ((symb (make-symbol name)))
+        (import symb package)
+        symb)))
+;
+; with macros
+; 
+
+(defmacro with-kb (kb savep &rest code)
+  (let ((res (gensym)))
+    `(let ((*kb* ,kb))
+       (kb-open ,kb)
+       (let ((,res (progn 
+                   ,@code)))
+         (if ,savep (kb-save ,kb))
+         (kb-close ,kb)
+         ,res))))

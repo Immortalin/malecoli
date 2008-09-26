@@ -114,17 +114,13 @@
 (defun arff-import-data (relation-name attributes strm kbd)
   (let ((cl-kb:*kb* kbd)
         (seed nil)
-        (num 0)
-        (dssi nil))
-    (setf dssi (cl-kb:mk-simple-instance (format nil "whole-~A-dataset" relation-name) '|dataset|::|Dataset|))
+        (num 0))
     (arff-read-data attributes strm 
                     seed
                     #'(lambda (seed) 
                         (declare (ignore seed))
                         (let ((si (cl-kb:mk-simple-instance (format nil "case-~9,'0d" num) (format nil "~ACase" relation-name))))
                           (setf num (+ 1 num))
-                          (push si (cl-kb:frame-own-slot-values 
-                                    dssi '|dataset|::|dataset_case|))
                           si))
                     #'(lambda (seed) 
                         (declare (ignore seed))

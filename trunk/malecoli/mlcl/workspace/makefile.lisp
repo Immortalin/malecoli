@@ -24,7 +24,12 @@
   ((file 
     :READER makefile-pprj-file
     :INITARG :file
+    :INITFORM nil
     :TYPE pathname)
+   (algorithms-file
+    :READER makefile-algorithms-pprj-file
+    :INITARG :algorithms-file
+    :TYPE schema)
    (schema
     :READER makefile-dataset-schema
     :INITARG :schema
@@ -44,15 +49,24 @@
   (declare (ignore initargs))
   (setf (slot-value makefile 'package) 
         (schema-package (makefile-dataset-schema makefile)))
+  (if (null (makefile-pprj-file makefile))
+      (setf (slot-value makefile 'file) (merge-pathnames 
+                                         (make-pathname :name (makefile-fullname makefile))
+                                         (makefile-algorithms-pprj-file makefile))))
   (if (null (makefile-kb makefile))
       (setf (slot-value makefile 'kb) 
             (or (cl-kb:find-kb (makefile-pprj-file makefile) nil)
-                (cl-kb:make-kb (makefile-pprj-file makefile)))))
+                (cl-kb:make-kb (makefile-pprj-file makefile) :use (list 
+                                                                   (cl-kb:find-kb (makefile-algorithms-pprj-file makefile) t t)
+                                                                   (schema-kb (makefile-dataset-schema makefile)))))))
+  (if (not (cl-kb:kb-createdp (makefile-kb makefile)))
+      (cl-kb:kb-create (makefile-kb makefile)))
   (makefile-load makefile))
+
 
 (defun makefile-fullname (makefile)
   (format nil "~A-~A" 
-          (pathname-name (makefile-pprj-file makefile))
+          (pathname-name (makefile-algorithms-pprj-file makefile))
           (schema-name (makefile-dataset-schema makefile))))
 
 (defun makefile-source-list-file (makefile)
@@ -73,17 +87,20 @@
   (let ((lispfile (makefile-source-list-file makefile)))
     (if (or (not (probe-file lispfile)) 
             (< (file-write-date lispfile) (file-write-date (makefile-pprj-file makefile)))
+            (< (file-write-date lispfile) (file-write-date (makefile-algorithms-pprj-file makefile)))
             (< (file-write-date lispfile) (file-write-date (schema-pprj-file (makefile-dataset-schema makefile)))))
         (progn
           (cl-kb:kb-open (makefile-kb makefile))
           (cl-kb:kb-open (schema-kb (makefile-dataset-schema makefile)))
           (with-open-file (strm (makefile-source-list-file makefile) :direction :output :if-exists :supersede)
-                          (makefile-compile (makefile-package makefile) (makefile-kb makefile) (schema-kb (makefile-dataset-schema makefile)) (makefile-fullname makefile) strm))
+                          (format strm "~{~S~%~}~%~%" (makefile-compile (makefile-package makefile) 
+                                                                   (makefile-kb makefile) 
+                                                                   (makefile-dataset-schema makefile) 
+                                                                   (makefile-fullname makefile))))
           (cl-kb:kb-close (makefile-kb makefile))
           (cl-kb:kb-close (schema-kb (makefile-dataset-schema makefile)))
           (compile-file lispfile)
-          (load (makefile-compiled-list-file makefile))
-          (funcall (find-symbol "INIT" (makefile-package makefile))))
+          (load (makefile-compiled-list-file makefile)))
         (progn
           (load (makefile-compiled-list-file makefile))))))
 
@@ -91,18 +108,16 @@
 ;
 ;
 
-(defun makefile-compile (package kb schema-kb fullname strm)
-  (cl-kb:kb-open kb)
-  (let ((compinfo (make-algocomp-info)))
-    (makefile-compile-header package kb strm)
-     (let ((algo-list nil))
-       (cl-kb:cls-do-instance-list (cl-kb:find-cls '|algorithm|::|Algorithm|)
-                                   el
-                                   (push el algo-list))
-       (dolist (algo algo-list)
-         (makefile-compile-algorithm package algo schema-kb compinfo strm)))
-    (makefile-compile-trailer package fullname compinfo strm))
-  (cl-kb:kb-close kb))
+(defun makefile-compile (package kb schema-kb fullname)
+  (cl-kb:with-kb kb nil
+                 (let ((compinfo (make-algocomp-info)))
+                   (append (makefile-compile-header package kb)
+                           (let ((algo-list nil))
+                             (cl-kb:cls-do-instance-list (cl-kb:find-cls '|algorithm|::|Algorithm|)
+                                                         el
+                                                         (push el algo-list))
+                             (mapcan #'(lambda (algo) (makefile-compile-algorithm package algo schema-kb compinfo)) algo-list))
+                           (makefile-compile-trailer package fullname compinfo)))))
 
 (defstruct algocomp-info
   (algorithms nil))
@@ -111,30 +126,22 @@
 ; compile header/trailer
 ;
 
-(defun makefile-compile-header (package kb  strm)
+(defun makefile-compile-header (package kb)
   (declare (ignore kb))
-  (format strm ";;;; Created on ~A~%~%" (get-universal-time))
-  (format strm "(in-package \"~A\")~%~%" (package-name package))
-  (format strm "~%~%"))
+  (list `(in-package ,(package-name package))))
 
-(defun makefile-compile-trailer (package fullname compinfo strm)
-  (format strm "(defun init () ")
-  (format strm "nil) ~%~%")
-  (format strm "(defun |get-~A-algorithms| ()" fullname)
-  (format strm "~%	(list ")
-  (dolist (algo (algocomp-info-algorithms compinfo))
-    (format strm "~%		|~A|" algo))
-  (format strm "))~%~%")
-  (format strm "(export '(|get-~A-algorithms|))~%~%" fullname)
-  (format strm "(format t \"!! loaded ~A !!~A\")" (package-name package) "~%~%")
-  (format strm "~%~%")
-  (format strm ";;;; Created on ~A~%" (get-universal-time)))
+(defun makefile-compile-trailer (package fullname compinfo)
+  (let ((fsymb (cl-kb:string->symbol (format nil "get-~A-algorithms" fullname) package)))
+    (list
+     `(defun ,fsymb () (list ,@(algocomp-info-algorithms compinfo)))
+     `(export '(,fsymb) (find-package ,(package-name package)))
+     `(format t ,(format nil "!! loaded ~A !!~A" (package-name package) "~%~%")))))
 
 ;
 ;
 ;
 
-(defun makefile-compile-algorithm (package algo schema-kb compinfo strm)
+(defun makefile-compile-algorithm (package algo schema-kb compinfo)
   (declare (ignore package))
   (let* ((compiler-frame 
           (cl-kb:frame-own-slot-value-r algo '|algorithm|::|algorithm_compiler|))
@@ -144,15 +151,14 @@
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_package|))
          (class-asdf
           (cl-kb:frame-own-slot-value compiler-frame '|algorithm|::|algorithm_compiler_asdf_package|)))
-    (format t "### ~A~%" compiler-frame)
-    (format strm ";;;; Created algorithm ~A ~%~%" (cl-kb:frame-name algo))
-    (format strm "(asdf:operate 'asdf:load-op '~A)~%~%" class-asdf)
     (asdf:operate 'asdf:load-op (make-symbol class-asdf))
-    (let ((symb (find-symbol class-name (find-package class-package))))
-      (let ((algorithm-compiler (make-instance symb)))
-        (let ((al (algorithm-compiler-compile algorithm-compiler algo schema-kb strm)))
-          (format strm "(defvar |~A| ~S)~%~%" (car al) (car (cdr al)))
-          (push (car al) (algocomp-info-algorithms compinfo)))))))
+    (cons
+     `(asdf:operate 'asdf:load-op ,class-asdf)
+     (let ((symb (find-symbol class-name (find-package class-package))))
+       (let ((algorithm-compiler (make-instance symb)))
+         (let ((al (algorithm-compiler-compile algorithm-compiler algo schema-kb)))
+           (push (nth 1 (car al)) (algocomp-info-algorithms compinfo))
+           al))))))
 
 
 
