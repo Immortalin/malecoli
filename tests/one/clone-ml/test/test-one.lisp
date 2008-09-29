@@ -48,9 +48,9 @@
   (test-import (car *model-instances*)))
 
 (defun test-import (modelfile)
-   (let ((kb (clone-ml::onemodel-import modelfile)))
-     (format t "!!! ~A~%" (cl-kb:kb-name kb))
-     kb))
+  (let ((model (clone-ml::onemodel-import modelfile)))
+    (format t "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@~%~A~%" model)
+    (clone-ml::import-model-instance model)))
 
 (defun test03 ()
   (let ((kb (cl-kb:find-kb 'cl-kbs::|gare|)))
