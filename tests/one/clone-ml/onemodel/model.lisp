@@ -11,7 +11,8 @@
 
 (defstruct attribute
   (name)
-  (onetype))
+  (onetype)
+  (value nil))
 
 (defstruct issue
   (name)
@@ -58,6 +59,11 @@
           (setf typ (make-onetype :id typeid :name name))
           (push typ (model-types model))))
     typ))
+
+(defun model-get-value (model value type)
+  (declare (ignore model))
+  (format t "~A ~A ~%" value type)
+  value)
 
 (defun model-get-type-by-id (model typeid)
   (let ((typ (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model))))
