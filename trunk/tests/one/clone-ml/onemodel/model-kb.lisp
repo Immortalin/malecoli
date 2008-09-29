@@ -13,22 +13,24 @@
 (defun model-fullname (name version)
   (format nil "~A~A" name version))
 
-(defun find-model-kb (name version)
-  (cl-kb:find-kb (model-fullname name version) nil))
+(defun find-model-kb (model)
+  (format t "###$$$$@@@@ ~A~%" (model-fullname (model-name model) (model-version model)))
+  (cl-kb:find-kb (model-fullname (model-name model) (model-version model)) nil t))
 
-(defun make-model-kb (name version &key (pathname (merge-pathnames
-                                                   (make-pathname
-                                                    :name (model-fullname name version)
-                                                    :type "pprj" :case :local)
-                                                   *default-one-model-kb-pathname*)))
+(defun make-model-kb (model &key (pathname (merge-pathnames
+                                            (make-pathname
+                                             :name (model-fullname (model-name model) (model-version model))
+                                             :type "pprj" :case :local)
+                                            *default-one-model-kb-pathname*)))
+  (format t "###$@@@ ~A~%" pathname)
   (let ((kb (cl-kb:make-kb pathname 
                      :use '(cl-kbs::|onenegotiation|))))
     (cl-kb:kb-create kb)
-    (let ((this (cl-kb:mk-simple-instance (format nil "model @ ~A" (model-fullname name version)) 
+    (let ((this (cl-kb:mk-simple-instance (format nil "model @ ~A" (model-fullname (model-name model) (model-version model)))
                                           '|onenegotiation|::|one_model| 
                                           :kb kb)))
-      (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_id|) name)
-      (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_version|) version))
+      (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_id|) (model-name model))
+      (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_version|) (model-version model)))
     (cl-kb:kb-save kb)
     kb))
   

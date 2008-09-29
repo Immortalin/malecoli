@@ -36,6 +36,7 @@
 (defstruct model
   (name)
   (version)
+  (id)
   (neginfo (make-neginfo))
   (protoinfo (make-protoinfo))
   (infomodel (make-infomodel))

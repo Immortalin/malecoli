@@ -22,15 +22,7 @@
                                                           :new-element-hook #'model-import-new-element-hook
                                                           :finish-element-hook #'model-import-finish-element-hook
                                                           :text-hook #'model-import-text-hook)))
-    (format t "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@~%~A~%" model)
-    (let ((kb (find-model-kb (model-name model) (model-version model))))
-      (if (null kb)
-          (setf kb (make-model-kb (model-name model) (model-version model)))
-          (cl-kb:kb-clear kb))
-      (cl-kb:kb-open kb)
-      (convert-one-model model kb)
-      (cl-kb:kb-save kb)
-      kb)))
+    model))
 
 ;
 ; namespaces
@@ -87,7 +79,8 @@
     (cond 
      ((eq name 'onemodel-ns:|NegotiationModel|)
       (setf (model-name (seed-model seed)) (cdr (assoc ':|name| attributes)))
-      (setf (model-version (seed-model seed)) (cdr (assoc ':|version| attributes))))
+      (setf (model-version (seed-model seed)) (cdr (assoc ':|version| attributes)))
+      (setf (model-id (seed-model seed)) (cdr (assoc ':|id| attributes))))
      ((eq name ':|informationModel|)
       (setf (infomodel-name (seed-infomodel seed)) (cdr (assoc ':|name| attributes)))
       (setf (seed-inim seed) t)
