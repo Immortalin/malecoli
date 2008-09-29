@@ -94,17 +94,19 @@
 ; coding
 ;
 
-(defun frame->symbol (frame package)
-  (or (find-symbol (frame-name frame) package)
-      (let ((symb (make-symbol (frame-name frame))))
-        (import symb package)
-        symb)))
+(defun frame->symbol (frame package &optional (unexport nil))
+  (string->symbol (frame-name frame) package unexport))
 
-(defun string->symbol (name package)
-  (or (find-symbol name package)
-      (let ((symb (make-symbol name)))
-        (import symb package)
-        symb)))
+(defun string->symbol (name package &optional (unexport nil))
+  (let ((it (find-symbol name package)))
+    (if it
+        (progn
+          (if unexport
+              (unexport it package))
+          it)
+        (let ((symb (make-symbol name)))
+          (import symb package)
+          symb))))
 ;
 ; with macros
 ; 

@@ -90,19 +90,16 @@
             (< (file-write-date lispfile) (file-write-date (makefile-algorithms-pprj-file makefile)))
             (< (file-write-date lispfile) (file-write-date (schema-pprj-file (makefile-dataset-schema makefile)))))
         (progn
-          (cl-kb:kb-open (makefile-kb makefile))
-          (cl-kb:kb-open (schema-kb (makefile-dataset-schema makefile)))
           (with-open-file (strm (makefile-source-list-file makefile) :direction :output :if-exists :supersede)
                           (format strm "~{~S~%~}~%~%" (makefile-compile (makefile-package makefile) 
-                                                                   (makefile-kb makefile) 
-                                                                   (makefile-dataset-schema makefile) 
-                                                                   (makefile-fullname makefile))))
-          (cl-kb:kb-close (makefile-kb makefile))
-          (cl-kb:kb-close (schema-kb (makefile-dataset-schema makefile)))
+                                                                        (makefile-kb makefile) 
+                                                                        (makefile-dataset-schema makefile) 
+                                                                        (makefile-fullname makefile))))
           (compile-file lispfile)
           (load (makefile-compiled-list-file makefile)))
         (progn
           (load (makefile-compiled-list-file makefile))))))
+
 
 ;
 ;
@@ -122,6 +119,7 @@
 (defstruct algocomp-info
   (algorithms nil))
 
+
 ;
 ; compile header/trailer
 ;
@@ -131,11 +129,12 @@
   (list `(in-package ,(package-name package))))
 
 (defun makefile-compile-trailer (package fullname compinfo)
-  (let ((fsymb (cl-kb:string->symbol (format nil "get-~A-algorithms" fullname) package)))
+  (let ((fsymb (cl-kb:string->symbol (format nil "get-~A-algorithms" fullname) package t)))
     (list
      `(defun ,fsymb () (list ,@(algocomp-info-algorithms compinfo)))
      `(export '(,fsymb) (find-package ,(package-name package)))
      `(format t ,(format nil "!! loaded ~A !!~A" (package-name package) "~%~%")))))
+
 
 ;
 ;
@@ -159,7 +158,6 @@
          (let ((al (algorithm-compiler-compile algorithm-compiler algo schema-kb)))
            (push (nth 1 (car al)) (algocomp-info-algorithms compinfo))
            al))))))
-
 
 
 ;

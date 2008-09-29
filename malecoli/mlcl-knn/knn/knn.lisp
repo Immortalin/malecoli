@@ -59,7 +59,7 @@
         (fn (symbol-function (find-symbol (knn-similarity-fn knn) (mlcl:schema-package (mlcl:workspace-schema workspace)))))
         (tops nil))
     (dolist (c (mlcl:dataset-cases ds))
-      (let ((s (funcall fn c cas)))
+      (let ((s (funcall fn c cas t)))
         (push (cons s c) tops)))
     (let ((so (sort  tops #'(lambda (x y) (< (car x) (car y))))))
       (if (< (length so) (knn-k knn))
@@ -78,7 +78,7 @@
 (defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema)
   (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
         (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
-        (simfn (cl-kb:frame-name (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|))))
+        (simfn (cl-kb:frame-own-slot-value (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|) '|knn|::|knn_similarity_algorithm_name|)))
     (cons
      `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema))
         (make-instance 'knn 
