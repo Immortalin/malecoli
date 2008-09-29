@@ -3,30 +3,54 @@
 
 (in-package :common-lisp-user)
 
-(progn
-  (defvar *default-one-model-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*default-one-model-kb-pathname*))
-        (setq *default-one-model-pathname*            
-              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/model/"))))
+(defvar *default-one-model-pathname*            
+  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/model/")
 
 
-
-(defvar *english-auction-model* (merge-pathnames (make-pathname
-                                                  :name "EnglishAuction" :type "nme" :case :local)
-                                                 *default-one-model-pathname*))
+(defvar *default-one-inst-pathname*            
+  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/instances/")
   
- 
-(defvar *gare-model* (merge-pathnames (make-pathname
-                                                  :name "Gare-Tender" :type "nme" :case :local)
-                                                 *default-one-model-pathname*))
-  
+(defvar *models* 
+  (list (merge-pathnames (make-pathname
+                          :name "EnglishAuction" :type "nme" :case :local)
+                         *default-one-model-pathname*)
+        (merge-pathnames (make-pathname
+                          :name "Gare-Tender" :type "nme" :case :local)
+                         *default-one-model-pathname*)))
 
-(defun test01 ()
-  (test-one *english-auction-model*))
-  
-(defun test02 ()
-  (test-one *gare-model*))                   
+
+(defun gni (name)
+  (merge-pathnames (make-pathname
+                    :name name :type "nmi" :case :local)
+                   *default-one-inst-pathname*))
+
+(defvar *model-instances* 
+  (list (gni "canovi")
+        (gni "Gara+Round+1")
+        (gni "Gare-Tender-instance001")
+        (gni "LOGISTICA+E+TRASPORTI")
+        (gni "Mora_2")
+        (gni "scocco_1")
+        (gni "Gara_Alb")
+        (gni "Gara+Servizi+IT")
+        (gni "Gare-Tender-instance002")
+        (gni "Mora_1")
+        (gni "SAN")))
+
+(defun test-import-all ()
+  (dolist (m *models*)
+    (test-import m)))
+
+(defun test-import-01 ()
+  (test-import (car (reverse *models*))))
+
+(defun test-import-02 ()
+  (test-import (car *model-instances*)))
+
+(defun test-import (modelfile)
+   (let ((kb (clone-ml::onemodel-import modelfile)))
+     (format t "!!! ~A~%" (cl-kb:kb-name kb))
+     kb))
 
 (defun test03 ()
   (let ((kb (cl-kb:find-kb 'cl-kbs::|gare|)))

@@ -22,6 +22,7 @@
                                                           :new-element-hook #'model-import-new-element-hook
                                                           :finish-element-hook #'model-import-finish-element-hook
                                                           :text-hook #'model-import-text-hook)))
+    (format t "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@~%~A~%" model)
     (let ((kb (find-model-kb (model-name model) (model-version model))))
       (if (null kb)
           (setf kb (make-model-kb (model-name model) (model-version model)))
@@ -51,8 +52,7 @@
    ))
 
 (s-xml:register-namespace "http://www.omg.org/XMI" "xmi" :xmi-ns)
-(s-xml:register-namespace "http://NegotiationMetaModel_v1.3.1.ecore" "negmod" :onemodel-ns)
-
+(s-xml:register-namespace "http://NegotiationMetaModel_v1.3.2.ecore" "negmod" :onemodel-ns)
 (in-package :clone-ml)
 
 ; seed
@@ -112,6 +112,9 @@
       (setf (attribute-onetype attr) (model-get-type (seed-model seed) 
                                                      (cdr (assoc ':|type| attributes))
                                                      nil))
+      (setf (attribute-value attr) (model-get-value (seed-model seed) 
+                                                    (cdr (assoc ':|value| attributes))
+                                                    (attribute-onetype attr)))
       (push attr (seed-attributes parent-seed))))
    ((eq name ':|issue|)
     (let ((issue (make-issue)))

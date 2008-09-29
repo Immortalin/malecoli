@@ -11,20 +11,19 @@ s;;;; Created on 2008-04-30 15:58:29
    #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/"))
 
 (defun generate-gare-instances ()
-  (cl-kb:kb-open (cl-kb:find-kb 'cl-kbs::|gare-instances|))
-  (cl-kb:kb-clear (cl-kb:find-kb 'cl-kbs::|gare-instances|))
-  (let ((cl-kb:*kb* (cl-kb:find-kb 'cl-kbs::|gare-instances|)))
-    (format t "--> category~%")
-    (load (gare-data-pathanme "service-category"))
-    (format t "--> items~%")
-    (load (gare-data-pathanme "items"))
-    (format t "--> protos ~%")
-    (load (gare-data-pathanme "protos"))
-    (format t "--> concs~%")
-    (load (gare-data-pathanme "concs")))
-  (format t "--> save all <-- ~%")
-  (cl-kb:kb-save (cl-kb:find-kb 'cl-kbs::|gare-instances|))
-  nil)
+  (cl-kb:with-kb (cl-kb:find-kb 'cl-kbs::|gare-instances|) t
+                 (cl-kb:kb-clear (cl-kb:find-kb 'cl-kbs::|gare-instances|))
+                 (let ((cl-kb:*kb* (cl-kb:find-kb 'cl-kbs::|gare-instances|)))
+                   (format t "--> category~%")
+                   (load (gare-data-pathanme "service-category"))
+                   (format t "--> items~%")
+                   (load (gare-data-pathanme "items"))
+                   (format t "--> protos ~%")
+                   (load (gare-data-pathanme "protos"))
+                   (format t "--> concs~%")
+                   (load (gare-data-pathanme "concs")))
+                 (format t "--> save all <-- ~%")
+                 nil))
 
 ;
 ; AG functions
