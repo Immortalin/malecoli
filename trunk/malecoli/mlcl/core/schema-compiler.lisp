@@ -73,7 +73,7 @@
                       (find-package ,(package-name package)))))))
            
 (defun schema-compile-cls (package cls compinfo)
-  (let ((framesymb (cl-kb:frame->symbol cls package)))
+  (let ((framesymb (cl-kb:frame->symbol cls package t)))  
     (push framesymb (compiler-info-symbols compinfo))
     `(defclass 
        ,framesymb
@@ -85,7 +85,7 @@
                 (cl-kb:cls-direct-template-slots cls)))))
 
 (defun schema-compile-slot (package slot compinfo)
-  (let ((slotsymb (cl-kb:frame->symbol slot package)))
+  (let ((slotsymb (cl-kb:frame->symbol slot package t)))
     `(,slotsymb :accessor ,slotsymb :type ,(schema-compile-slot-type slot compinfo))))
                 
 (defun schema-compile-slot-type (slot compinfo)

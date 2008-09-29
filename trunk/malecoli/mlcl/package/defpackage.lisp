@@ -95,6 +95,9 @@
     WORKSPACE-FIND-ALGORITHM
     workspace-find-dataset
     
+    workspace-add-variable
+    workspace-remove-variable
+    
     #|
     arff
     |#

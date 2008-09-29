@@ -50,6 +50,10 @@
    (makefiles 
     :READER workspace-makefiles
     :TYPE list
+    :INITFORM nil)
+   (variables
+    :READER workspace-variables
+    :TYPE list
     :INITFORM nil)))
   
 ; initialize
@@ -75,15 +79,21 @@
                         (let ((*clstore-schema* (workspace-schema workspace))
                               (*clstore-storage* (workspace-storage workspace)))
                           (setf (slot-value workspace 'datasets) (cl-store:restore strm))
-                          (setf (slot-value workspace 'makefiles) (cl-store:restore strm))
-                          (setf (slot-value workspace 'algorithms) (cl-store:restore strm)))))))
+                          (setf (slot-value workspace 'algorithms) (cl-store:restore strm))
+                          (dolist (mk (cl-store:restore strm))
+                            (workspace-add-makefile workspace mk))
+                          (dolist (var (cl-store:restore strm))
+                            (workspace-add-variable workspace (car var) (cdr var))))))))
                         
 (defun workspace-save (workspace)
   (let ((storefile (workspace-file workspace)))
     (with-open-file (strm storefile :direction :output :if-exists :supersede :element-type '(unsigned-byte 8))
                     (cl-store:store (workspace-datasets workspace) strm)
-                    (cl-store:store (workspace-makefiles workspace) strm)
-                    (cl-store:store (workspace-algorithms workspace) strm))))
+                    (cl-store:store (workspace-algorithms workspace) strm)
+                    (cl-store:store (mapcar #'(lambda(x) (makefile-algorithms-pprj-file x))
+                                            (workspace-makefiles workspace)) strm)
+                    (cl-store:store (mapcar #'(lambda(x) (cons (symbol-name x) (symbol-value x)))
+                                            (workspace-variables workspace)) strm))))
 
 ; datasets
 (defun workspace-find-dataset (workspace dadasetname)
@@ -136,3 +146,21 @@
   (push makefile (slot-value workspace 'makefiles))
   (dolist (algo (makefile-make makefile))
     (push algo (slot-value workspace 'algorithms))))
+
+(defun workspace-add-makefile (workspace makefile)
+  (if (typep makefile 'pathname)
+      (setf makefile (make-instance 'makefile 
+                                    :algorithms-file makefile
+                                    :schema (workspace-schema workspace))))
+  (push makefile (slot-value workspace 'makefiles)))
+
+; variables
+(defun workspace-add-variable (workspace name &optional (val nil))
+  (let* ((package (schema-package (workspace-schema workspace)))
+         (symb (cl-kb:string->symbol name package)))
+    (export symb package)
+    (if (or val (not (boundp symb))) (setf (symbol-value symb) val))
+    (push symb (slot-value workspace 'variables))))
+
+(defun workspace-remove-variable (workspace symb)
+    (setf (slot-value workspace 'variables) (delete symb (slot-value workspace 'variables))))

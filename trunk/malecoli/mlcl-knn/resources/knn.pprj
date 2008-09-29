@@ -1,4 +1,4 @@
-; Fri Sep 26 19:14:38 CEST 2008
+; Mon Sep 29 15:46:58 CEST 2008
 ; 
 ;+ (version "3.4")
 ;+ (build "Build 128")
@@ -62,6 +62,34 @@
 ([INSTANCES_TAB] of  Widget
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([KB_072324_Instance_209] of  Map
+
+	(entries
+		[KB_072324_Instance_210]
+		[KB_072324_Instance_211]
+		[KB_072324_Instance_212]))
+
+([KB_072324_Instance_210] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([KB_072324_Instance_211] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([KB_072324_Instance_212] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "true")
+	(value_class "java.lang.String"))
 
 ([KB_301664_Instance_0] of  String
 
@@ -167,34 +195,6 @@
 
 	(name "source_file_name")
 	(string_value "knn.xml"))
-
-([KB_302168_Instance_209] of  Map
-
-	(entries
-		[KB_302168_Instance_210]
-		[KB_302168_Instance_211]
-		[KB_302168_Instance_212]))
-
-([KB_302168_Instance_210] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([KB_302168_Instance_211] of  Map_Entry
-
-	(key "change_tracking_active")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
-([KB_302168_Instance_212] of  Map_Entry
-
-	(key "add_name_on_instance_form")
-	(key_class "java.lang.String")
-	(value "true")
-	(value_class "java.lang.String"))
 
 ([knn_ProjectKB_Instance_213] of  Widget
 

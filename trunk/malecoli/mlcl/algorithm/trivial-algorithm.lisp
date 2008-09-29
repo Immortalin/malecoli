@@ -44,4 +44,4 @@
     (cons
     `(defvar ,(cl-kb:frame->symbol algo-frame (schema-package schema))
        (make-instance 'trivial-algorithm :name ,(cl-kb:frame-name algo-frame)))
-     codes)))
+     (nreverse codes))))
