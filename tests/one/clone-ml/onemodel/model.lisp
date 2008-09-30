@@ -1,3 +1,4 @@
+
 ;;;; Created on 2008-04-15 13:01:59
 
 (in-package :clone-ml)
@@ -7,7 +8,8 @@
   (id)
   (kind)
   (globalp nil)
-  (vals nil))
+  (vals nil)
+  (val-ids nil))
 
 (defstruct attribute
   (name)
@@ -62,8 +64,8 @@
     typ))
 
 (defun model-get-value (model value type)
-  (declare (ignore model))
-  (format t "~A ~A ~%" value type)
+  (declare (ignore model)
+           (ignore type))
   value)
 
 (defun model-get-type-by-id (model typeid)

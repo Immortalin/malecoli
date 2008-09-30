@@ -1,4 +1,3 @@
-;;;; Created on 2008-08-25 11:03:10
 
 ;;;; Created on 2008-08-18 11:41:45
 
@@ -95,10 +94,12 @@
     (model-import-add-type 'complex attributes seed))
    ((eq name ':|enumeration|)
     (let ((type (model-import-add-type 'enum attributes seed)))
-      (setf (onetype-vals type) (seed-literals seed))))
+      (setf (onetype-vals type) (mapcar #'car (seed-literals seed)))
+      (setf (onetype-val-ids type) (mapcar #'cdr (seed-literals seed)))))
    ((eq name ':|literal|)
-    (let ((lit (cdr (assoc ':|name| attributes))))
-      (push lit (seed-literals parent-seed))))
+    (let ((lit (cdr (assoc ':|name| attributes)))
+          (id (cdr (assoc 'xmi-ns::|id| attributes))))
+      (push (cons lit id) (seed-literals parent-seed))))
    ((eq name ':|attribute|)
     (let ((attr (make-attribute)))
       (setf (attribute-name attr) (cdr (assoc ':|name| attributes)))
@@ -124,10 +125,16 @@
     (setf (neginfo-attributes (model-neginfo (seed-model seed))) (seed-attributes seed)))
    ((eq name ':|negotiationProtocol|)
     (push (make-attribute :name "startDate"
-                          :onetype (model-get-type (seed-model seed) nil "negmod:OneDate"))
+                          :onetype (model-get-type (seed-model seed) nil "negmod:OneDate")
+                          :value (model-get-value (seed-model seed) 
+                                                 (cdr (assoc ':|startDate| attributes))
+                                                 (model-get-type (seed-model seed) nil "negmod:OneDate")))
           (seed-attributes seed))
     (push (make-attribute :name "endDate"
-                          :onetype (model-get-type (seed-model seed) nil "negmod:OneDate"))
+                          :onetype (model-get-type (seed-model seed) nil "negmod:OneDate")
+                          :value (model-get-value (seed-model seed) 
+                                                 (cdr (assoc ':|endDate| attributes))
+                                                 (model-get-type (seed-model seed) nil "negmod:OneDate")))
           (seed-attributes seed))
     (setf (protoinfo-attributes (model-protoinfo (seed-model seed))) (seed-attributes seed))
     ))

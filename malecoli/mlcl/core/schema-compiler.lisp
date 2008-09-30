@@ -47,10 +47,10 @@
 
 (defun schema-compile-header (package kb )
   (let ((codes nil))
-    (push `(in-package ,(format nil "~A" (package-name package))) codes)
     (dolist (ukb (cl-kb:kb-use-list kb))
       (if (member (cl-kb:find-kb 'cl-kbs::|dataset|) (cl-kb:kb-use-list ukb))
           (push `(use-package ,(format nil "~A-ws" (package-name (cl-kb:kb-package ukb)))) codes)))
+    (push `(in-package ,(format nil "~A" (package-name package))) codes)
     codes))
 
 (defun schema-compile-trailer (package)

@@ -1,3 +1,4 @@
+
 ;;;; Created on 2008-08-25 13:26:16
 
 (in-package :clone-ml)
@@ -9,24 +10,39 @@
         (setq *default-one-model-kb-pathname*            
               #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/kb/"))))
 
+;
+; names
+;
 
-(defun model-fullname (name version)
-  (format nil "~A~A" name version))
+(defun model-full-name (model)
+  (format nil "~A~A~A" (model-name model) (model-version model) (model-id model)))
+
+(defun instance-full-name (model) 
+  (format nil "~A~A~A~A" 
+          (model-name model) (model-version model)
+          (attribute-value (find-if #'(lambda (x) (string-equal (attribute-name x) "name")) (neginfo-attributes (model-neginfo model))))
+          (attribute-value (find-if #'(lambda (x) (string-equal (attribute-name x) "id")) (neginfo-attributes (model-neginfo model))))))
+
+;
+; find and make kbs
+;
+
 
 (defun find-model-kb (model)
-  (format t "###$$$$@@@@ ~A~%" (model-fullname (model-name model) (model-version model)))
-  (cl-kb:find-kb (model-fullname (model-name model) (model-version model)) nil t))
+  (cl-kb:find-kb (model-full-name model) nil t))
+
+(defun find-instance-model-kb (model)
+  (cl-kb:find-kb (instance-full-name model) nil t))
 
 (defun make-model-kb (model &key (pathname (merge-pathnames
                                             (make-pathname
-                                             :name (model-fullname (model-name model) (model-version model))
+                                             :name (model-full-name model)
                                              :type "pprj" :case :local)
                                             *default-one-model-kb-pathname*)))
-  (format t "###$@@@ ~A~%" pathname)
   (let ((kb (cl-kb:make-kb pathname 
-                     :use '(cl-kbs::|onenegotiation|))))
+                           :use '(cl-kbs::|onenegotiation|))))
     (cl-kb:kb-create kb)
-    (let ((this (cl-kb:mk-simple-instance (format nil "model @ ~A" (model-fullname (model-name model) (model-version model)))
+    (let ((this (cl-kb:mk-simple-instance (format nil "model @ ~A" (model-full-name model))
                                           '|onenegotiation|::|one_model| 
                                           :kb kb)))
       (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_id|) (model-name model))
@@ -34,40 +50,14 @@
     (cl-kb:kb-save kb)
     kb))
   
-
-(defun get-model-case (kb name version)
-  (let ((id (format nil "case @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-context (kb name version)
-  (let ((id (format nil "context @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-conclusion (kb name version)
-  (let ((id (format nil "conclusion @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-protocol (kb name version)
-  (let ((id (format nil "protocol @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-process (kb name version)
-  (let ((id (format nil "process @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-item (kb name version)
-  (let ((id (format nil "item @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-proposal (kb name version)
-  (let ((id (format nil "proposal @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-base-issue (kb name version)
-  (let ((id (format nil "issue @ ~A" (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
-
-(defun get-model-issue (kb name version issuename)
-  (let ((id (format nil "~A @ ~A" issuename (model-fullname name version))))
-    (cl-kb:get-cls id :kb kb)))
+(defun make-instance-model-kb (model &key (pathname (merge-pathnames
+                                                     (make-pathname
+                                                      :name (instance-full-name model)
+                                                      :type "pprj" :case :local)
+                                                     *default-one-model-kb-pathname*)))
+  (let ((kb (cl-kb:make-kb pathname 
+                           :use (list (find-model-kb model)))))
+    (cl-kb:kb-create kb)
+    (cl-kb:kb-save kb)
+    kb))
 

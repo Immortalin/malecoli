@@ -19,13 +19,16 @@
                	:components
 	        	((:file "gare2protege" :depends-on ()))
                  :depends-on ("package" "resources"))
+               (:module cbr
+               	:components
+	        	((:file "onecbr" :depends-on ()))
+                 :depends-on ("package" "resources" "onemodel"))
                (:module onemodel
                	:components
                 	((:file "model" :depends-on ())
 	        	 (:file "model-kb" :depends-on ("model"))
 	        	 (:file "xml" :depends-on ("model" "model-kb"))
-                	 (:file "model2kb" :depends-on ("model" "model-kb"))
-	        	 (:file "model2protege" :depends-on ("model" "model-kb")))
+                	 (:file "model2kb" :depends-on ("model" "model-kb")))
                  :depends-on ("package" "resources"))
                )
   :depends-on ("cl-kb" "mlcl" "mlcl-knn"))
