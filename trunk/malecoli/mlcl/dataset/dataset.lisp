@@ -52,8 +52,10 @@
   (push cas (slot-value dataset 'cases)))
 
 (defun dataset-import-case-from-kb (dataset si-cas)
-  (let ((c (dataset-kb-import-simple-instance (dataset-schema dataset) si-cas)))
-    (dataset-add-case dataset c)))
+  (let ((c (dataset-kb-import-simple-instance (schema-package (dataset-schema dataset)) si-cas)))
+    (setf (slot-value c 'id) nil)
+    (dataset-add-case dataset c)
+    c))
 
 
 ;

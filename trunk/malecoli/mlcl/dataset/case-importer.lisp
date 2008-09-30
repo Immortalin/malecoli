@@ -62,7 +62,7 @@
     (let ((el (dataset-kb-import-simple-instance package si importinfo)))
       (push el (import-info-cases importinfo)))))
 
-(defun dataset-kb-import-simple-instance (package si importinfo)
+(defun dataset-kb-import-simple-instance (package si &optional (importinfo (make-import-info)))
   (let ((symb (cl-kb:frame->symbol (cl-kb:instance-direct-type si) package)))
     (if (null symb)
         (error "undefined class ~A in package ~A " (cl-kb:instance-direct-type si) (package-name package)))
@@ -79,7 +79,7 @@
                                            (dataset-kb-import-own-slot-value package el si slot vals importinfo))
       el)))
 
-(defun dataset-kb-get-simple-instance (package si &optional (importinfo (make-import-info)))
+(defun dataset-kb-get-simple-instance (package si importinfo)
   (let ((el (gethash (cl-kb:frame-name si) (import-info-objects importinfo))))
     (if (null el)
         (dataset-kb-import-simple-instance package si importinfo)

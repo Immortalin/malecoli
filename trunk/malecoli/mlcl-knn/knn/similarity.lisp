@@ -72,7 +72,7 @@
                                                     (member (cl-kb:frame-kb el) (cl-kb:kb-use-list (mlcl:schema-kb schema)))))
                                           (progn 
                                             (let ((s (similarity-function-gen funsymb el nil nil (mlcl:schema-package schema))))
-                                              (setf weights (car s))
+                                              (setf weights (append  (car s) weights))
                                               (push (car (cdr s)) maincodes))))))
           (progn            
             (let ((s (similarity-function-gen funsymb funcls funslot funcode (mlcl:schema-package schema))))
