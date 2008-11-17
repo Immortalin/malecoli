@@ -1,12 +1,12 @@
 ;;;; 2008-08-21 12:54:28
 
-(defpackage #:clone-ml-asd
+(defpackage #:clone-kb-asd
   (:use :cl :asdf))
 
-(in-package :clone-ml-asd)
+(in-package :clone-kb-asd)
 
-(defsystem clone-ml
-  :name "clone-ml"
+(defsystem clone-kb
+  :name "clone-kb"
   :version "0.1"
   :components ((:module package
                	:components
@@ -22,5 +22,11 @@
 	        	 (:file "xml" :depends-on ("model" "model-kb"))
                 	 (:file "model2kb" :depends-on ("model" "model-kb")))
                  :depends-on ("package" "resources"))
+               (:module message
+               	:components
+                	((:file "message" :depends-on ())
+	        	 (:file "xml" :depends-on ("message"))
+                	 (:file "message2kb" :depends-on ("message")))
+                 :depends-on ("package" "resources" "model"))
                )
-  :depends-on ("cl-kb" "mlcl" "mlcl-knn"))
+  :depends-on ("cl-kb"))

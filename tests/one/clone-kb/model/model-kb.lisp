@@ -1,14 +1,14 @@
 
 ;;;; Created on 2008-08-25 13:26:16
 
-(in-package :clone-ml)
+(in-package :clone-kb)
 
 (progn
   (defvar *default-one-model-kb-pathname*)
   (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
     (if (null (boundp '*default-one-model-kb-pathname*))
         (setq *default-one-model-kb-pathname*            
-              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/kb/"))))
+              #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/"))))
 
 ;
 ; names

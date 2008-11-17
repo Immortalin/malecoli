@@ -1,7 +1,7 @@
 
 ;;;; Created on 2008-04-15 13:01:59
 
-(in-package :clone-ml)
+(in-package :clone-kb)
 
 (defstruct onetype 
   (name)
