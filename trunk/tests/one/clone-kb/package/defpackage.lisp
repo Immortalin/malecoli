@@ -3,8 +3,8 @@
 
 (in-package :common-lisp-user)
 
-(defpackage :clone-ml
-  (:nicknames :clone-ml)
+(defpackage :clone-kb
+  (:nicknames :clone-kb)
   (:use :cl)
   (:export
   

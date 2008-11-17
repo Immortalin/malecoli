@@ -1,7 +1,7 @@
 
 ;;;; Created on 2008-09-29 18:10:28
 
-(in-package :clone-ml)
+(in-package :clone-kb)
 
 (defun import-model (model)
   (let ((kb (find-model-kb model)))

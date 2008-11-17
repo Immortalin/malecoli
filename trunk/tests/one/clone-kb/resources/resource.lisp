@@ -18,14 +18,7 @@
 
 ;;;; Created on 2008-09-12 11:06:01
 
-(in-package :clone-ml)
-
-(push (if cl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/"
-          ;#p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/"
-          *load-truename*)
-      cl-kb:*kb-paths*)
-
+(in-package :clone-kb)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "negotiation" nil))
@@ -35,5 +28,4 @@
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "onenegotiation" nil))
         (cl-kb:make-kb (cl-kb:find-kb-file "onenegotiation"))))
-
 
