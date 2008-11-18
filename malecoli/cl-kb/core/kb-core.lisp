@@ -137,8 +137,8 @@ if ERRORP is false, otherwise an error is signalled."
                           (setf kb (make-instance 'kb :protege-pprj-file path)))
                       (if kb 
                           kb
-                          (if errorp (error "Kb designed by pathname ~S does not exist." kb-des) nil)))
-                    (if errorp (error "Kb designed by pathname ~S does not exist." kb-des) nil))))))
+                          (if errorp (error "Kb designed by pathname ~S does not exist (1)." kb-des) nil)))
+                    (if errorp (error "Kb designed by pathname ~S does not exist (2)." kb-des) nil))))))
 
 ; make, delete, and clear
 (defun make-kb (protege-pprj-file &key (use nil))
