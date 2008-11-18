@@ -15,12 +15,10 @@
 ;
 
 (defun model-full-name (model)
-  (format nil "~A~A~A" (model-name model) (model-version model) (model-id model)))
+  (format nil "model-~A" (model-id model)))
 
 (defun instance-full-name (model) 
-  (format nil "~A~A~A~A" 
-          (model-name model) (model-version model)
-          (attribute-value (find-if #'(lambda (x) (string-equal (attribute-name x) "name")) (neginfo-attributes (model-neginfo model))))
+  (format nil "instance-~A" 
           (attribute-value (find-if #'(lambda (x) (string-equal (attribute-name x) "id")) (neginfo-attributes (model-neginfo model))))))
 
 ;
