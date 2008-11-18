@@ -8,10 +8,8 @@
 
 (defun test01 ()
   (let ((kb (or 
-             (cl-kb:find-kb "A")
-             (cl-kb:make-kb "A" 
-                              :protege-file #p"/tmp/a.pprj" 
-                              :use-list '(cl-kbs::protege-kb)))))
+             (cl-kb:find-kb "a" nil)
+             (cl-kb:make-kb #p"/tmp/a.pprj"))))
     (if (not (cl-kb::kb-createdp kb)) (cl-kb:kb-create kb))
     (cl-kb:kb-open kb)
     (cl-kb:kb-save kb)

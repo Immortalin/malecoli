@@ -20,17 +20,8 @@
 
 (in-package :cl-kb)
 
-(defvar *cusp-developmentp*
-  #+sbcl t
-  #-sbcl nil)
-
-(push (if *cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/cl-kb/resources/"
-          ;#p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/cl-kb/resources/"
-          *load-truename*)
-      *kb-paths*)
-
-(setf *kb-default-path* #p"/tmp")
+(setf *kb-paths* '(#p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/"))
+(setf *kb-default-path* #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/tmp/")
 
 (defmacro init-variable (var code)
   `(eval-when (:LOAD-TOPLEVEL :EXECUTE)
