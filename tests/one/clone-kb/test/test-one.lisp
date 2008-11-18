@@ -6,10 +6,13 @@
 (defvar *default-one-model-pathname*            
   #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/model/")
 
-
 (defvar *default-one-inst-pathname*            
   #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/instances/")
+
+(defvar *default-one-log-pathname*            
+  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/logs/")
   
+
 (defvar *models* 
   (list (merge-pathnames (make-pathname
                           :name "EnglishAuction" :type "nme" :case :local)
@@ -24,18 +27,26 @@
                     :name name :type "nmi" :case :local)
                    *default-one-inst-pathname*))
 
-(defvar *model-instances* 
-  (list (gni "canovi")
-        (gni "Gara+Round+1")
-     ;   (gni "Gare-Tender-instance001")
-        (gni "LOGISTICA+E+TRASPORTI")
-        (gni "Mora_2")
-        (gni "scocco_1")
-        (gni "Gara_Alb")
-        (gni "Gara+Servizi+IT")
-     ;   (gni "Gare-Tender-instance002")
-        (gni "Mora_1")
-        (gni "SAN")))
+(defun gnilog (name)
+  (merge-pathnames (make-pathname
+                    :name name :type "nmi" :case :local)
+                   *default-one-log-pathname*))
+
+(defvar *model-instances*)
+(setf *model-instances*
+  (list 
+        ;(gni "canovi")
+        ;(gni "Gara+Round+1")
+        ;(gni "LOGISTICA+E+TRASPORTI")
+        ;(gni "Mora_2")
+        ;(gni "scocco_1")
+        ;(gni "Gara_Alb")
+        ;(gni "Gara+Servizi+IT")
+        ;(gni "Mora_1")
+        ;(gni "SAN")
+        ;(gnilog "668f31fa-53e9-4cb2-8da3-9d540f3bd995")
+        (gnilog "a34d5089-eed7-45a4-889b-c5e3aed3032a")
+        ))
 
 (defun test-import-all ()
   (dolist (m *model-instances*)
@@ -49,7 +60,11 @@
 
 (defun test-import (modelfile)
   (let ((model (clone-kb::xml-model-import modelfile)))
-    (clone-kb::import-model-instance model)))
+    (clone-kb::import-model-instance model)
+    (clone-kb::xml-messages-import (merge-pathnames 
+                                   (make-pathname :type "xml" :name (format nil "~A-messages" (pathname-name modelfile)))
+                                   modelfile))))
+
 
 ;(defun test-onecbr-all ()
 ;  (setf (clone-kb::onecbr-workspaces clone-kb::*onecbr*) nil)

@@ -21,6 +21,7 @@
                                                           :new-element-hook #'model-import-new-element-hook
                                                           :finish-element-hook #'model-import-finish-element-hook
                                                           :text-hook #'model-import-text-hook)))
+    ;(format t "## ~A~%" (infomodel-item (model-infomodel model)))
     model))
 
 

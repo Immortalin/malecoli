@@ -17,10 +17,12 @@
   (value nil))
 
 (defstruct issue
+  (id)
   (name)
   (attributes nil))
 
 (defstruct item
+  (id)
   (name)
   (attributes nil)
   (issues nil))
