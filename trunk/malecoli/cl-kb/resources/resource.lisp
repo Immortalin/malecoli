@@ -21,7 +21,7 @@
 (in-package :cl-kb)
 
 (setf *kb-paths* '(#p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/"))
-(setf *kb-default-path* #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/tmp/")
+(setf *kb-default-path* #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/")
 
 (defmacro init-variable (var code)
   `(eval-when (:LOAD-TOPLEVEL :EXECUTE)
