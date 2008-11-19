@@ -207,6 +207,9 @@
   (declare (ignore model))
   (format nil "msg ~A" (message-id message)))
 
+(defun instance-party-id (id model)
+  (declare (ignore model))
+  (format nil "party ~A" id))
 
 
 
