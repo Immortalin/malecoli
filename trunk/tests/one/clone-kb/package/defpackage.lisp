@@ -10,5 +10,10 @@
     xml-negotiation-import
     xml-model-import
     xml-messages-import
+    
+    negotiation->kb
+    model->kb
+    model-instance->kb
+    messages->kb
    ))
 

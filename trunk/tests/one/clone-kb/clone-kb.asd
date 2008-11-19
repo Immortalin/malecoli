@@ -30,7 +30,8 @@
                	:components
                 	((:file "model-kb" :depends-on ())
                 	 (:file "model2kb" :depends-on ("model-kb"))
-                	 (:file "message2kb" :depends-on ()))
+                	 (:file "message2kb" :depends-on ())
+                	 (:file "negotiation2kb" :depends-on ()))
                  :depends-on ("package" "resources" "negotiation"))
                )
   :depends-on ("cl-kb"))
