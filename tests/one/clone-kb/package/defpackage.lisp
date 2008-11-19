@@ -7,6 +7,8 @@
   (:nicknames :clone-kb)
   (:use :cl)
   (:export
-  
+    xml-negotiation-import
+    xml-model-import
+    xml-messages-import
    ))
 

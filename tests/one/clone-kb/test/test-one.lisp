@@ -59,12 +59,8 @@
   (test-import (nth 1 *model-instances*)))
 
 (defun test-import (modelfile)
-  (let ((model (clone-kb::xml-model-import modelfile)))
-    (clone-kb::import-model-instance model)
-    (clone-kb::xml-messages-import (merge-pathnames 
-                                   (make-pathname :type "xml" :name (format nil "~A-messages" (pathname-name modelfile)))
-                                   modelfile))))
-
+  (let ((neg (clone-kb:xml-negotiation-import modelfile)))
+    neg))
 
 ;(defun test-onecbr-all ()
 ;  (setf (clone-kb::onecbr-workspaces clone-kb::*onecbr*) nil)

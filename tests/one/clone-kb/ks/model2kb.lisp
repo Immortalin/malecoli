@@ -128,6 +128,7 @@
 ;
 
 (defun attribute->slot (model kb attr item)
+  ;(format t "@@$$@@ ~A~%" (attribute-name attr))
   (let ((attrname (format nil "~A @ ~A~A " (attribute-name attr) (model-name model) (model-version model) )))
     (let ((at (cl-kb:mk-slot attrname :kb kb)))
       (cl-kb:cls-add-direct-template-slot item at)

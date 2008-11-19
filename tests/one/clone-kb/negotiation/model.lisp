@@ -3,40 +3,7 @@
 
 (in-package :clone-kb)
 
-(defstruct onetype 
-  (name)
-  (id)
-  (kind)
-  (globalp nil)
-  (vals nil)
-  (val-ids nil))
-
-(defstruct attribute
-  (name)
-  (onetype)
-  (value nil))
-
-(defstruct issue
-  (id)
-  (name)
-  (attributes nil))
-
-(defstruct item
-  (id)
-  (name)
-  (attributes nil)
-  (issues nil))
-
-(defstruct neginfo 
-  (attributes))
-
-(defstruct protoinfo 
-  (attributes))
-
-(defstruct infomodel
-  (name)
-  (item (make-item)))
-  
+; model
 (defstruct model
   (name)
   (version)
@@ -46,14 +13,48 @@
   (infomodel (make-infomodel))
   (types nil))
 
-(defstruct instance-model 
-  (model-kb nil)
-  (vals nil))
+; info
+(defstruct neginfo 
+  (attributes))
+
+(defstruct protoinfo 
+  (attributes))
+
+; information model
+(defstruct infomodel
+  (name)
+  (version)
+  (id)
+  (item (make-item)))
+
+; item 
+(defstruct item
+  (id)
+  (name)
+  (attributes nil)
+  (issues nil))
 
 
-;
-; functions
-;
+; issue
+(defstruct issue
+  (id)
+  (name)
+  (attributes nil))
+
+; attribute 
+(defstruct attribute
+  (name)
+  (onetype)
+  (value nil))
+
+; type
+(defstruct onetype 
+  (name)
+  (id)
+  (kind)
+  (globalp nil)
+  (vals nil)
+  (val-ids nil))
 
 (defun model-get-type (model typeid name)
   (let ((typ (or
@@ -65,10 +66,6 @@
           (push typ (model-types model))))
     typ))
 
-(defun model-get-value (model value type)
-  (declare (ignore model)
-           (ignore type))
-  value)
 
 (defun model-get-type-by-id (model typeid)
   (let ((typ (find-if #'(lambda (x) (string= (onetype-id x) typeid)) (model-types model))))
@@ -77,3 +74,4 @@
 (defun model-get-type-by-name (model name)
   (let ((typ (find-if #'(lambda (x) (string= (onetype-name x) name)) (model-types model))))
     typ))
+  
