@@ -15,18 +15,22 @@
                	:components
 	        	((:file "resource" :depends-on ()))
                 :depends-on ("package"))
-               (:module model
+               (:module negotiation
                	:components
                 	((:file "model" :depends-on ())
-	        	 (:file "model-kb" :depends-on ("model"))
-	        	 (:file "xml" :depends-on ("model" "model-kb"))
-                	 (:file "model2kb" :depends-on ("model" "model-kb")))
-                 :depends-on ("package" "resources"))
-               (:module message
+                	 (:file "message" :depends-on ())
+                	 (:file "negotiation" :depends-on ("model" "message"))))
+               (:module xml
                	:components
-                	((:file "message" :depends-on ())
-	        	 (:file "xml" :depends-on ("message"))
-                	 (:file "message2kb" :depends-on ("message")))
-                 :depends-on ("package" "resources" "model"))
+                	((:file "xml-model" :depends-on ())
+	        	 (:file "xml-message" :depends-on ())
+                	 (:file "xml-negotiation" :depends-on ("xml-model" "xml-message")))
+                 :depends-on ("package" "resources" "negotiation"))
+               (:module kb
+               	:components
+                	((:file "model-kb" :depends-on ())
+                	 (:file "model2kb" :depends-on ("model-kb"))
+                	 (:file "message2kb" :depends-on ()))
+                 :depends-on ("package" "resources" "negotiation"))
                )
   :depends-on ("cl-kb"))

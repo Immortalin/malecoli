@@ -2,6 +2,7 @@
 
 (in-package :clone-kb)
 
+; a message
 (defstruct message
   (type)
   (receiver)
