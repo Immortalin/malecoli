@@ -60,7 +60,7 @@
 
 (defun test-import (modelfile)
   (let ((neg (clone-kb:xml-negotiation-import modelfile)))
-    neg))
+    (clone-kb:negotiation->kb neg t)))
 
 ;(defun test-onecbr-all ()
 ;  (setf (clone-kb::onecbr-workspaces clone-kb::*onecbr*) nil)
