@@ -57,7 +57,9 @@
   (text nil)
   (literals nil)
   (attributes)
-  (inim nil))
+  (inim nil)
+  (parties)
+  (roles))
 
 
 ;
@@ -89,7 +91,10 @@
   (cond 
    ; negotiation
    ((eq name ':|negotiation|)
-    (setf (neginfo-attributes (model-neginfo (model-seed-model seed))) (model-seed-attributes seed)))
+    (setf (neginfo-attributes (model-neginfo (model-seed-model seed))) (model-seed-attributes seed))
+    (dolist (p (model-seed-parties seed))
+      (push (make-party :id (car p) :role (cdr (find-if #'(lambda (x) (string-equal (car x) (cdr p))) (model-seed-roles seed))))
+            (neginfo-parties (model-neginfo (model-seed-model seed))))))
    ; information model
    ((eq name ':|informationModel|)
     (setf (model-seed-inim parent-seed) nil))
@@ -104,7 +109,19 @@
                           :value (cdr (assoc ':|endDate| attributes)))
           (model-seed-attributes seed))
     (setf (protoinfo-attributes (model-protoinfo (model-seed-model seed))) 
-          (model-seed-attributes seed)))
+          (model-seed-attributes seed))
+    (setf (model-seed-roles parent-seed) (model-seed-roles seed)))
+   ; party
+   ((eq name ':|party|)
+    (push (cons 
+           (cdr (assoc ':|id| attributes))
+           (cdr (assoc ':|negotiationRole| attributes)))
+          (model-seed-parties parent-seed)))
+   ((eq name ':|negotiationRole|)
+    (push (cons 
+           (cdr (assoc 'xmi-ns:|id| attributes))
+           (cdr (assoc 'xmi-ns:|type| attributes)))
+          (model-seed-roles parent-seed)))
    ; items
    ((eq name ':|item|)
     (progn
