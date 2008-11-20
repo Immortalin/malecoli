@@ -92,11 +92,10 @@
           (cl-kb:with-kb kb t
                          (funcall import-fn model kb)))
         (if overwrite
-            (progn
-              (cl-kb:kb-clear kb)
               (cl-kb:with-kb kb t
+                             (cl-kb:kb-clear kb)
                              (init-model-kb model kb)
-                             (funcall import-fn model kb)))))
+                             (funcall import-fn model kb))))
     kb))
   
 (defun get-model-instance-kb (model import-fn &optional (overwrite nil))
@@ -107,11 +106,10 @@
           (cl-kb:with-kb kb t
                          (funcall import-fn model kb)))
         (if overwrite
-            (progn
-              (cl-kb:kb-clear kb)
-              (cl-kb:with-kb kb t
-                             (init-model-instance-kb model kb)
-                             (funcall import-fn model kb)))))
+            (cl-kb:with-kb kb t
+                           (cl-kb:kb-clear kb)
+                           (init-model-instance-kb model kb)
+                           (funcall import-fn model kb))))
     kb))
 
 ;

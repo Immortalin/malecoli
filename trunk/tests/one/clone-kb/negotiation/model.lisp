@@ -15,6 +15,7 @@
 
 ; info
 (defstruct neginfo 
+  (parties)
   (attributes))
 
 (defstruct protoinfo 
@@ -26,6 +27,11 @@
   (version)
   (id)
   (item (make-item)))
+
+; party
+(defstruct party 
+  (id)
+  (role))
 
 ; item 
 (defstruct item

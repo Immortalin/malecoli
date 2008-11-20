@@ -42,6 +42,15 @@
     (setf (cl-kb:frame-own-slot-value pr '|negotiation|::|neg_case_model|) (cl-kb:find-simple-instance (model-model-id model)))
     (dolist (attr (neginfo-attributes (model-neginfo model)))
       (attribute-value->slot-value model kb attr co))
+    (dolist (p (neginfo-parties (model-neginfo model)))
+      (let ((party-id (party-id p))
+            (party nil))
+        (setf party (cl-kb:mk-simple-instance (instance-party-id party-id model) 
+                                              (cl-kb:find-cls "one_party")))
+        (setf (cl-kb:frame-own-slot-value party '|onenegotiation|::|one_id|) party-id)
+        (if (string-equal (party-role p) "negmod:Owner")
+            (setf (cl-kb:frame-own-slot-value (cl-kb:find-simple-instance (instance-context-id model))
+                                             '|negotiation|::|neg_case_owner|) party))))
     (dolist (attr (protoinfo-attributes (model-protoinfo model)))
       (attribute-value->slot-value model kb attr pr))
     (dolist (attr (item-attributes (infomodel-item (model-infomodel model))))
@@ -168,6 +177,7 @@
 (defun issue-> (model kb is issue-id proposal-id)
   (let ((issuename (format nil "~A @ ~A~A " (issue-name is) (model-name model) (model-version model) )))
     (let ((issue (cl-kb:mk-cls issuename :kb kb :supercls (cl-kb:get-cls issue-id :kb kb))))
+      
       ;(format t "##@@ ~A ~%" issue)
       (dolist (attr (issue-attributes is))
         ;(format t "##@@ ~A ~%" attr)
@@ -180,13 +190,18 @@
           (setf (cl-kb:slot-allowed-clses sl) (list issue)))))))
 
       
-(defun date-instance (d m y)
-  (let ((date-id (format nil "date ~A ~A ~A" d m y)))
+(defun date-instance (d m y &optional (h "0") (mm "0") (s "0"))
+  (let ((date-id (format nil "date ~A ~A ~A ~A ~A ~A" d m y h mm s)))
     (multiple-value-bind (di new) (cl-kb:get-simple-instance date-id)
       (if new 
           (progn
             (cl-kb:instance-add-direct-type di '|dataset|::|time|)
             (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_year|) (parse-integer y))
             (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_month|) (parse-integer m))
-            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_day|) (parse-integer d))))
+            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_day|) (parse-integer d))
+            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_hour|) (parse-integer h))
+            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_minute|) (parse-integer mm))
+            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_sec|) (parse-integer s))
+            (setf (cl-kb:frame-own-slot-value di '|dataset|::|time_usec|) 0)))
       di)))
+

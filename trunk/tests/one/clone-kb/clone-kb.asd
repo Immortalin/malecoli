@@ -19,7 +19,8 @@
                	:components
                 	((:file "model" :depends-on ())
                 	 (:file "message" :depends-on ())
-                	 (:file "negotiation" :depends-on ("model" "message"))))
+                	 (:file "negotiation" :depends-on ("model" "message")))
+                 :depends-on ("package"))
                (:module xml
                	:components
                 	((:file "xml-model" :depends-on ())

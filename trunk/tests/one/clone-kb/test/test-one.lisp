@@ -44,7 +44,7 @@
         ;(gni "Gara+Servizi+IT")
         ;(gni "Mora_1")
         ;(gni "SAN")
-        ;(gnilog "668f31fa-53e9-4cb2-8da3-9d540f3bd995")
+        (gnilog "668f31fa-53e9-4cb2-8da3-9d540f3bd995")
         (gnilog "a34d5089-eed7-45a4-889b-c5e3aed3032a")
         ))
 
