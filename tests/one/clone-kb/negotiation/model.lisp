@@ -26,7 +26,7 @@
   (name)
   (version)
   (id)
-  (item (make-item)))
+  (items))
 
 ; party
 (defstruct party 

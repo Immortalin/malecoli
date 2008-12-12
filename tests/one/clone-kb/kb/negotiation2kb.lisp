@@ -6,3 +6,4 @@
   (model->kb (negotiation-model negotiation) overwritep)
   (model-instance->kb (negotiation-model negotiation)  overwritep)
   (messages->kb (negotiation-messages negotiation) (negotiation-model negotiation)))
+

@@ -4,13 +4,13 @@
 (in-package :common-lisp-user)
 
 (defvar *default-one-model-pathname*            
-  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/model/")
+  #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/examples/one/model/")
 
 (defvar *default-one-inst-pathname*            
-  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/instances/")
+  #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/examples/one/instances/")
 
 (defvar *default-one-log-pathname*            
-  #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/one/logs/")
+  #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/examples/one/logs/")
   
 
 (defvar *models* 
@@ -44,8 +44,11 @@
         ;(gni "Gara+Servizi+IT")
         ;(gni "Mora_1")
         ;(gni "SAN")
-        (gnilog "668f31fa-53e9-4cb2-8da3-9d540f3bd995")
-        (gnilog "a34d5089-eed7-45a4-889b-c5e3aed3032a")
+   ;(gnilog "3b03188e-e882-4d63-a355-1a7dbf3d227b")
+        ;(gnilog "668f31fa-53e9-4cb2-8da3-9d540f3bd995")
+        ;(gnilog "a34d5089-eed7-45a4-889b-c5e3aed3032a")
+   ;(gnilog "7d956f02-6ec9-4798-80ca-841174c7424e")
+   (gnilog "fce68abd-45f4-4f06-b47f-43c82f41baab")
         ))
 
 (defun test-import-all ()

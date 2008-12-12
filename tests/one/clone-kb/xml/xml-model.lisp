@@ -12,7 +12,7 @@
         (model nil))
     (setf model (model-seed-model seed))
     (setf (model-seed-infomodel seed) (model-infomodel model))
-    (setf (model-seed-item seed) (infomodel-item (model-infomodel model)))
+    ;(setf (model-seed-items seed) (infomodel-item (model-infomodel model)))
     (setf (model-seed-neginfo seed) (model-neginfo model))
     (with-open-file (strm pathname :direction :input)
                     (s-xml:start-parse-xml strm
@@ -42,8 +42,7 @@
    ))
 
 (s-xml:register-namespace "http://www.omg.org/XMI" "xmi" :xmi-ns)
-(s-xml:register-namespace "http://NegotiationMetaModel_v1.3.2.ecore" "negmod" :onemodel-ns)
-
+(s-xml:register-namespace "http://NegotiationMetaModel_v1.3.3.ecore" "negmod" :onemodel-ns)
 
 ;
 ; model seed
@@ -84,7 +83,9 @@
         (setf (infomodel-version infomodel) (cdr (assoc ':|version| attributes)))
         (setf (infomodel-id infomodel) (cdr (assoc ':|id| attributes))))
       (setf (model-seed-inim seed) t)
-      (setf (model-seed-inim new-seed) t)))
+      (setf (model-seed-inim new-seed) t))
+     ((eq name ':|item|)
+      (setf (model-seed-item new-seed) (make-item))))
      new-seed))
 
 (defun model-import-finish-element-hook (name attributes parent-seed seed)
@@ -126,7 +127,8 @@
    ((eq name ':|item|)
     (progn
       (setf (item-name (model-seed-item seed)) (cdr (assoc ':|name| attributes)))
-      (setf (item-attributes (model-seed-item seed)) (model-seed-attributes seed))))
+      (setf (item-attributes (model-seed-item seed)) (model-seed-attributes seed))
+      (push (model-seed-item seed) (infomodel-items (model-seed-infomodel seed)))))
    ; issues
    ((eq name ':|issue|)
     (let ((issue (make-issue)))
