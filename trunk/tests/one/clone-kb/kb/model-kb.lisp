@@ -112,6 +112,7 @@
                            (funcall import-fn model kb))))
     kb))
 
+
 ;
 ; element's ids
 ;
@@ -165,21 +166,32 @@
 (defun model-proposal-id (model)
   (format nil "proposal @ ~A" (model-kb-name model)))
 
-(defun model-issue-id (model)
-  (format nil "issue @ ~A" (model-kb-name model)))
+(defun model-itemset-id (model)
+  (format nil "itemset @ ~A" (model-kb-name model)))
 
-(defun model-item-id (model)
-  (format nil "item @ ~A" (model-kb-name model)))
+(defun model-item-id (model item)
+  (format nil "item ~A @ ~A" (item-name item) (model-kb-name model) ))
 
+(defun model-issueset-id (model item)
+  (format nil "issueset ~A @ ~A" (item-name item) (model-kb-name model)))
+
+(defun model-issue-id (model item issue)
+  (format nil "issue ~A of ~A @ ~A"  (issue-name issue) (item-name item) (model-kb-name model)))
 
 (defun instance-proposal-id (model)
   (format nil "proposal @ ~A" (model-instance-kb-name model)))
 
+;(defun instance-issueset-id (model)
+;  (format nil "issueset @ ~A" (model-instance-kb-name model)))
+
 (defun instance-issue-id (model)
   (format nil "issue @ ~A" (model-instance-kb-name model)))
   
-(defun instance-item-id (model)
-  (format nil "item @ ~A" (model-instance-kb-name model)))
+(defun instance-itemset-id (model)
+  (format nil "itemset @ ~A" (model-instance-kb-name model)))
+
+(defun instance-item-id (model item)
+  (format nil "item ~A @ ~A" (item-name item) (model-instance-kb-name model) ))
 
 (defun model-msg-offer-id (model)
   (declare (ignore model))

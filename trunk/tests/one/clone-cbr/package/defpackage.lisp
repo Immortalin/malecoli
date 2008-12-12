@@ -3,10 +3,18 @@
 
 (in-package :common-lisp-user)
 
-(defpackage :clone-ml
-  (:nicknames :clone-ml)
+(defpackage :clone-cbr
+  (:nicknames :clone-cbr)
   (:use :cl)
   (:export
-  
+    *negotiation-instance*
+    *messages*
+    *endstate*
+    update-case
+    learn-case
+    process-case
+    get-case-kb-project
+    get-case-kb
+    get-case-log
    ))
 

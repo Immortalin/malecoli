@@ -15,5 +15,6 @@
     model->kb
     model-instance->kb
     messages->kb
+    *default-one-model-kb-pathname*
    ))
 

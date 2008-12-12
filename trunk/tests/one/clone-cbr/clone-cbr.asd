@@ -1,23 +1,27 @@
 ;;;; 2008-08-21 12:54:28
 
-(defpackage #:clone-ml-asd
+(defpackage #:clone-cbr-asd
   (:use :cl :asdf))
 
-(in-package :clone-ml-asd)
+(in-package :clone-cbr-asd)
 
-(defsystem clone-ml
-  :name "clone-ml"
+(defsystem clone-cbr
+  :name "clone-cbr"
   :version "0.1"
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
-               (:module resources
+               ;(:module resources
+               ;	:components
+	       ; 	((:file "resource" :depends-on ()))
+               ; :depends-on ("package"))
+               ;(:module cbr
+               ;	:components
+	       ; 	((:file "onecbr" :depends-on ()))
+               ;  :depends-on ("package" "resources"))
+               (:module api
                	:components
-	        	((:file "resource" :depends-on ()))
-                :depends-on ("package"))
-               (:module cbr
-               	:components
-	        	((:file "onecbr" :depends-on ()))
-                 :depends-on ("package" "resources" "onemodel"))
+	        	((:file "cbr-api" :depends-on ()))
+                 :depends-on ("package"))
                )
-  :depends-on ("cl-kb" "mlcl" "mlcl-knn"))
+  :depends-on ("cl-kb" "clone-kb"))

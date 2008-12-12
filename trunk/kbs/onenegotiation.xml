@@ -1,0 +1,1083 @@
+<?xml version="1.0" ?>
+
+<knowledge_base
+	xmlns="http://protege.stanford.edu/xml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://protege.stanford.edu/xml http://protege.stanford.edu/xml/schema/protege.xsd">
+
+	<class>
+		<name>:STANDARD-CLASS</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>:CLASS</superclass>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:ROLE</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+	</class>
+
+	<class>
+		<name>:STANDARD-SLOT</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>:SLOT</superclass>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+		<template_slot>:DOCUMENTATION</template_slot>
+		<template_slot>:SLOT-CONSTRAINTS</template_slot>
+		<template_slot>:SLOT-MAXIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-MINIMUM-CARDINALITY</template_slot>
+		<template_slot>:SLOT-NUMERIC-MAXIMUM</template_slot>
+		<template_slot>:SLOT-NUMERIC-MINIMUM</template_slot>
+		<template_slot>:SLOT-INVERSE</template_slot>
+		<template_slot>:SLOT-DEFAULTS</template_slot>
+		<template_slot>:SLOT-VALUES</template_slot>
+		<template_slot>:ASSOCIATED-FACET</template_slot>
+		<template_slot>:DIRECT-SUBSLOTS</template_slot>
+		<template_slot>:DIRECT-SUPERSLOTS</template_slot>
+	</class>
+
+	<class>
+		<name>DatasetThing</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>:THING</superclass>
+	</class>
+
+	<class>
+		<name>neg_case</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetCase</superclass>
+		<template_slot>neg_case_process</template_slot>
+		<template_slot>neg_case_protocol</template_slot>
+		<template_slot>neg_case_conclusion</template_slot>
+		<template_slot>neg_case_context</template_slot>
+		<template_slot>neg_case_process</template_slot>
+		<template_slot>neg_case_protocol</template_slot>
+		<template_slot>neg_case_conclusion</template_slot>
+		<template_slot>neg_case_context</template_slot>
+	</class>
+
+	<class>
+		<name>one_case</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_case</superclass>
+	</class>
+
+	<class>
+		<name>neg_context</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_case_owner</template_slot>
+		<template_slot>neg_case_participant</template_slot>
+		<template_slot>neg_case_itemset</template_slot>
+		<template_slot>neg_case_owner</template_slot>
+		<template_slot>neg_case_participant</template_slot>
+		<template_slot>neg_case_itemset</template_slot>
+	</class>
+
+	<class>
+		<name>one_context</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_context</superclass>
+		<template_slot>one_creation_date</template_slot>
+		<template_slot>one_name</template_slot>
+		<template_slot>one_visibility</template_slot>
+		<template_slot>one_parent_id</template_slot>
+		<template_slot>one_id</template_slot>
+		<template_slot>one_allow_nested</template_slot>
+	</class>
+
+	<class>
+		<name>neg_conclusion</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_case_conclusion_date</template_slot>
+		<template_slot>neg_case_winner</template_slot>
+		<template_slot>neg_case_agreement</template_slot>
+		<template_slot>neg_case_conclusion_date</template_slot>
+		<template_slot>neg_case_winner</template_slot>
+		<template_slot>neg_case_agreement</template_slot>
+	</class>
+
+	<class>
+		<name>one_conclusion</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_conclusion</superclass>
+	</class>
+
+	<class>
+		<name>neg_protocol</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_case_ending_date</template_slot>
+		<template_slot>neg_case_starting_date</template_slot>
+		<template_slot>neg_case_model</template_slot>
+		<template_slot>neg_case_ending_date</template_slot>
+		<template_slot>neg_case_starting_date</template_slot>
+		<template_slot>neg_case_model</template_slot>
+	</class>
+
+	<class>
+		<name>one_protocol</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_protocol</superclass>
+	</class>
+
+	<class>
+		<name>neg_process</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_case_proposal</template_slot>
+		<template_slot>neg_case_proposal</template_slot>
+	</class>
+
+	<class>
+		<name>one_process</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_process</superclass>
+	</class>
+
+	<class>
+		<name>neg_item</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_item</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>neg_item</superclass>
+	</class>
+
+	<class>
+		<name>neg_party</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_party</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_party</superclass>
+		<template_slot>one_id</template_slot>
+	</class>
+
+	<class>
+		<name>neg_proposal</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_proposal</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>neg_proposal</superclass>
+		<template_slot>neg_proposal_response</template_slot>
+		<template_slot>neg_msg_timestamp</template_slot>
+		<template_slot>neg_msg_sender</template_slot>
+		<template_slot>neg_msg_receiver</template_slot>
+	</class>
+
+	<class>
+		<name>neg_model</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_model_version</template_slot>
+		<template_slot>neg_model_id</template_slot>
+		<template_slot>neg_model_version</template_slot>
+		<template_slot>neg_model_id</template_slot>
+	</class>
+
+	<class>
+		<name>one_model</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>neg_model</superclass>
+	</class>
+
+	<class>
+		<name>neg_issue</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_issue</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>neg_issue</superclass>
+	</class>
+
+	<class>
+		<name>neg_itemset</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+		<template_slot>neg_case_item</template_slot>
+	</class>
+
+	<class>
+		<name>one_itemset</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>neg_itemset</superclass>
+	</class>
+
+	<class>
+		<name>neg_issueset</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_issueset</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Abstract</value>
+		</own_slot_value>
+		<superclass>neg_issueset</superclass>
+	</class>
+
+	<class>
+		<name>one_binary_document</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<class>
+		<name>one_image</name>
+		<type>:STANDARD-CLASS</type>
+		<own_slot_value>
+			<slot_reference>:ROLE</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<superclass>DatasetThing</superclass>
+	</class>
+
+	<slot>
+		<name>neg_case_agreement</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_proposal</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_conclusion</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_conclusion</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_conclusion_date</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">time</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_context</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_context</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_ending_date</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_itemset</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_itemset</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_model</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_model</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_owner</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_party</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_participant</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_party</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_process</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_process</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_proposal</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_proposal</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_protocol</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_protocol</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_starting_date</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_case_winner</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_party</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_model_id</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_model_version</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_msg_receiver</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_party</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_msg_sender</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">neg_party</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_msg_timestamp</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">time</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>neg_proposal_response</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Symbol</value>
+			<value value_type="string">accept</value>
+			<value value_type="string">reject</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_allow_nested</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Boolean</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_creation_date</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">time</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_id</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_name</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_parent_id</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>one_visibility</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-MINIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Symbol</value>
+			<value value_type="string">public</value>
+			<value value_type="string">private</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>onenegotiation_Slot_0</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:ASSOCIATED-FACET</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-INVERSE</slot_reference>
+			<value value_type="slot">:ASSOCIATED-SLOT</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">:FACET</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:DIRECT-SUBSLOTS</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-INVERSE</slot_reference>
+			<value value_type="slot">:DIRECT-SUPERSLOTS</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">:SLOT</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:DIRECT-SUPERSLOTS</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-INVERSE</slot_reference>
+			<value value_type="slot">:DIRECT-SUBSLOTS</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">:SLOT</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:DOCUMENTATION</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:DOCUMENTATION-IN-FRAME</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">String</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:ROLE</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-DEFAULTS</slot_reference>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Symbol</value>
+			<value value_type="string">Abstract</value>
+			<value value_type="string">Concrete</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-CONSTRAINTS</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:CONSTRAINTS</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">:CONSTRAINT</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-DEFAULTS</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:DEFAULTS</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-INVERSE</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-INVERSE</slot_reference>
+			<value value_type="slot">:SLOT-INVERSE</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Instance</value>
+			<value value_type="class">:SLOT</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-MAXIMUM-CARDINALITY</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-DEFAULTS</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:MAXIMUM-CARDINALITY</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Integer</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-MINIMUM-CARDINALITY</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:MINIMUM-CARDINALITY</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Integer</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-NUMERIC-MAXIMUM</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:NUMERIC-MAXIMUM</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Float</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-NUMERIC-MINIMUM</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:SLOT-MAXIMUM-CARDINALITY</slot_reference>
+			<value value_type="integer">1</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:NUMERIC-MINIMUM</value>
+		</own_slot_value>
+		<own_slot_value>
+			<slot_reference>:SLOT-VALUE-TYPE</slot_reference>
+			<value value_type="string">Float</value>
+		</own_slot_value>
+	</slot>
+
+	<slot>
+		<name>:SLOT-VALUES</name>
+		<type>:STANDARD-SLOT</type>
+		<own_slot_value>
+			<slot_reference>:ASSOCIATED-FACET</slot_reference>
+			<value value_type="facet">:VALUES</value>
+		</own_slot_value>
+	</slot>
+</knowledge_base>
