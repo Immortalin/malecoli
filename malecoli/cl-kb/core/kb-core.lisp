@@ -73,7 +73,9 @@
     :INITFORM nil)
    (openedp
     :INITFORM nil
-    :ACCESSOR kb-openedp))
+    :ACCESSOR kb-openedp)
+   (refcount 
+    :INITFORM 0))
   (:documentation "A kb"))
 
 (defun kb-name (kb)
@@ -146,12 +148,12 @@ if ERRORP is false, otherwise an error is signalled."
   (check-type protege-pprj-file kb-file-designator)
   (if (find-kb protege-pprj-file nil)
       (error "Kb  ~s already exists." protege-pprj-file))
-  (if (typep protege-pprj-file 'string)
-      (setf protege-pprj-file 
-            (merge-pathnames 
-             (pathname protege-pprj-file)
-             *kb-default-path*)))
-  (make-instance 'kb :protege-pprj-file protege-pprj-file :use use))
+  (let ((ppf (if (typep protege-pprj-file 'string)
+                 (merge-pathnames 
+                  (pathname protege-pprj-file)
+                  *kb-default-path*)
+                 protege-pprj-file)))
+    (make-instance 'kb :protege-pprj-file ppf :use use)))
 
 (defun delete-kb (kb-des)
   (check-type kb-des kb-designator)

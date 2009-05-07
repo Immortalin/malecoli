@@ -20,16 +20,14 @@
 
 (in-package :mlcl)
 
-(push (if cl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl/resources/"
-          ;#p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl/resources/"
-          *load-truename*)
-      cl-kb:*kb-paths*)
+
+(push #.(make-pathname :directory (pathname-directory *compile-file-truename*)) cl-kb:*kb-paths*)
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "dataset" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "dataset"))))
+        (cl-kb:kb-open (cl-kb:make-kb (cl-kb:find-kb-file "dataset")))))
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "algorithm" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "algorithm"))))
+        (cl-kb:kb-open (cl-kb:make-kb (cl-kb:find-kb-file "algorithm")))))
+

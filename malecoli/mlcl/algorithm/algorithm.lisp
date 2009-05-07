@@ -30,6 +30,10 @@
     :READER algorithm-name
     :INITARG :name)))
 
+(defgeneric algorithm-init-workspace (algorithm workspace)
+  (:method ((algorithm algorithm) workspace)
+    nil))
+
 
 ;
 ; Algorithm Compiler

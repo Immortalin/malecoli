@@ -83,6 +83,7 @@
           (slots nil))
       (dolist (attr attributes)
         (let ((slot (cl-kb:mk-slot (format nil "~A_~A" relation-name (car attr)))))
+        ;(let ((slot (cl-kb:mk-slot (format nil "~A" (car attr)))))
           (cl-kb:cls-add-direct-template-slot cacl slot)
           (cond 
            ((eq (cdr attr) 'real)
@@ -140,6 +141,7 @@
                                ((eq (cdr attr) 'date)
                                 (setf valc nil)))
                               (setf (cl-kb:frame-own-slot-value seed (format nil "~A_~A" relation-name (car attr))) valc)))))))
+                              ;(setf (cl-kb:frame-own-slot-value seed (format nil "~A" (car attr))) valc)))))))
 
 
 ;

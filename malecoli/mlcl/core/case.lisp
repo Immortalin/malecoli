@@ -59,3 +59,40 @@
     :ACCESSOR |time_day|
     :INITFORM 0 
     :type fixnum)))
+
+(defclass |time| ()
+  ((|time_year|
+    :ACCESSOR |time_year|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_month|
+    :ACCESSOR |time_month|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_day| 
+    :ACCESSOR |time_day|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_hour| 
+    :ACCESSOR |time_hour|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_minute| 
+    :ACCESSOR |time_minute|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_sec| 
+    :ACCESSOR |time_sec|
+    :INITFORM 0 
+    :type fixnum)
+   (|time_usec| 
+    :ACCESSOR |time_usec|
+    :INITFORM 0 
+    :type fixnum)))
+
+(defun time->usec (ti)
+  (* (+ (* (+ (* (+ (* (|time_year| ti) 12)
+                    (|time_month| ti)) 31)
+              (|time_day| ti)) 24)
+        (|time_hour| ti)) 60))
+

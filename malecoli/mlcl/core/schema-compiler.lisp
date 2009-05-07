@@ -86,7 +86,8 @@
 
 (defun schema-compile-slot (package slot compinfo)
   (let ((slotsymb (cl-kb:frame->symbol slot package t)))
-    `(,slotsymb :accessor ,slotsymb :type ,(schema-compile-slot-type slot compinfo))))
+    (multiple-value-bind (typ ini) (schema-compile-slot-type slot compinfo)
+      `(,slotsymb :accessor ,slotsymb :type (or nil ,typ) :initform ,ini))))
                 
 (defun schema-compile-slot-type (slot compinfo)
   (if (eq (cl-kb:slot-maximum-cardinality slot) 1)
@@ -105,7 +106,7 @@
           'string)
          ((eq typ 'cl-kb:instance-type-value)
           t)))
-      'list))
+      (values 'list nil)))
         
 
 ;
