@@ -34,13 +34,18 @@
 
 (defgeneric knn-default-similarity  (x y)
   (:method (x y)
-    0)
+    nil)
   (:method ((x float) (y float))
-    (/ 1 (+ 1 (abs (- x y)))))
+    (/ 1.0 (+ 1 (abs (- x y)))))
   (:method ((x integer) (y integer))
-    (/ 1 (+ 1 (abs (- x y)))))
+    (/ 1.0 (+ 1 (abs (- x y)))))
   (:method ((x string) (y string))
-    (if (string-equal x y) 1 0)))
+    (if (string-equal x y) 1 0))
+  (:method ((x mlcl:|time|) (y mlcl:|time|))
+    (let ((usec-a (mlcl:time->usec x))
+          (usec-b (mlcl:time->usec y)))
+      (knn-default-similarity usec-a usec-b))))
+      
          
 
 ;
@@ -50,58 +55,124 @@
 (defclass knn-similarity-compiler (mlcl:algorithm-compiler)
   ())
 
+
 (defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-similarity-compiler) algo-frame schema)
-  (let* ((funsymb (cl-kb:string->symbol (format nil "~A" (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_algorithm_name|))
+  (let ((funsymb (cl-kb:string->symbol (format nil "~A" (cl-kb:frame-own-slot-value algo-frame '|algorithm|::|algorithm_function_name|))
                                         (mlcl:schema-package schema) t))
-         (funslot  (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_algorithm_slot|))
-         (funcls  (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_algorithm_cls|))
-         (funcode  (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_algorithm_code|)))
-    (let ((codes nil)
-          (weights nil)
-          (maincodes nil))
-      (if (null funslot)
-          (progn
-            (push `(defmethod ,funsymb (x y slot)
-                     (declare (ignore slot))
-                     (mlcl-knn:knn-default-similarity x y)) codes)
-            (push `(defgeneric ,funsymb (x y slot)) codes)
-            
-            (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|) el
-                                      (if (or (cl-kb:frame-in-kb-p el (mlcl:schema-kb schema)) 
-                                              (and  (not (cl-kb:frame-in-kb-p el (cl-kb:find-kb "dataset")))
-                                                    (member (cl-kb:frame-kb el) (cl-kb:kb-use-list (mlcl:schema-kb schema)))))
-                                          (progn 
-                                            (let ((s (similarity-function-gen funsymb el nil nil (mlcl:schema-package schema))))
-                                              (setf weights (append  (car s) weights))
-                                              (push (car (cdr s)) maincodes))))))
-          (progn            
-            (let ((s (similarity-function-gen funsymb funcls funslot funcode (mlcl:schema-package schema))))
-              (setf weights (car s))
-              (push (car (cdr s)) maincodes))))
+        (funsymbp (cl-kb:string->symbol (format nil "~A%" (cl-kb:frame-own-slot-value algo-frame '|algorithm|::|algorithm_function_name|))
+                                        (mlcl:schema-package schema) t))
+        (codes nil)
+        (weights nil)
+        (maincodes nil))
+    (push `(defun ,funsymbp (x y slot)  
+             (let ((sim
+                    (cond 
+                      ((and (not (SLOT-BOUNDP MLCL-KNN::X slot))
+                            (not (SLOT-BOUNDP MLCL-KNN::Y slot)))
+                      1.0)
+                      ((or (not (SLOT-BOUNDP MLCL-KNN::X slot))
+                           (not (SLOT-BOUNDP MLCL-KNN::Y slot)))
+                       0)
+                      ((and (null (SLOT-VALUE MLCL-KNN::X slot))
+                            (null (SLOT-VALUE MLCL-KNN::Y slot)))
+                       1.0)
+                      ((or (null (SLOT-VALUE MLCL-KNN::X slot))
+                           (null (SLOT-VALUE MLCL-KNN::Y slot)))
+                       0)
+                      (t
+                       (,funsymb
+                        (SLOT-VALUE MLCL-KNN::X slot)
+                        (SLOT-VALUE MLCL-KNN::Y slot)
+                        slot)))))
+               ;(format t "~A ~A ~A ~A ~%" x y slot sim)
+               sim))
+          codes)
+    (push `(defmethod ,funsymb (x y slot)
+               (declare (ignore slot))
+             (let ((sim (mlcl-knn:knn-default-similarity x y)))
+               (if sim 
+                   (values sim sim 1.0)
+                   (values 0.0 0.0 0.0))))
+          codes)
+    (push `(defgeneric ,funsymb (x y slot)) 
+          codes)
+    (let ((clses (make-hash-table)))
+      (setf (gethash nil clses) (list nil nil nil))
+      (cl-kb:cls-do-subcls-list (cl-kb:find-cls '|dataset|::|DatasetThing|) el 
+                                (if (or (cl-kb:frame-in-kb-p el (mlcl:schema-kb schema)) 
+                                        (and  (not (cl-kb:frame-in-kb-p el (cl-kb:find-kb "dataset")))
+                                              (member (cl-kb:frame-kb el) (cl-kb:kb-use-list (mlcl:schema-kb schema)))))
+                                    (setf (gethash el clses) (list nil nil nil))))
+      (cl-kb:cls-do-instance-list (cl-kb:find-cls '|knn|::|SimilarityMethod|) inst
+                                  (if (eq (cl-kb:frame-own-slot-value inst '|knn|::|knn_similary_fn|)
+                                          algo-frame)
+                                      (let ((funcls (cl-kb:frame-own-slot-value inst '|knn|::|knn_similarity_algorithm_cls|))
+                                            (funslot  (cl-kb:frame-own-slot-value inst '|knn|::|knn_similarity_algorithm_slot|))
+                                            (funrec  (cl-kb:frame-own-slot-value inst '|knn|::|knn_similarity_algorithm_cls_rec|))
+                                            (funcode  (cl-kb:frame-own-slot-value inst '|knn|::|knn_similarity_algorithm_code|)))
+                                        (if funrec
+                                            (cl-kb:cls-do-subcls-list funcls el
+                                                                      (if (or (cl-kb:frame-in-kb-p el (mlcl:schema-kb schema)) 
+                                                                              (and  (not (cl-kb:frame-in-kb-p el (cl-kb:find-kb "dataset")))
+                                                                                    (member (cl-kb:frame-kb el) (cl-kb:kb-use-list (mlcl:schema-kb schema)))))
+                                                                          (push inst (nth
+                                                                                      (if funslot 
+                                                                                          2 
+                                                                                          (if funcode 
+                                                                                              1
+                                                                                              0))
+                                                                                      (gethash el clses))))))
+                                        (push inst (nth
+                                                    (if funslot 
+                                                        2 
+                                                        (if funcode 
+                                                            1
+                                                            0))
+                                                    (gethash funcls clses))))))
+      (maphash #'(lambda (key mets) 
+                   (labels ((makefn (met)
+                              (let ((funslot  (cl-kb:frame-own-slot-value met '|knn|::|knn_similarity_algorithm_slot|))
+                                    (funcls  (cl-kb:frame-own-slot-value met '|knn|::|knn_similarity_algorithm_cls|))
+                                    (funcode  (cl-kb:frame-own-slot-value met '|knn|::|knn_similarity_algorithm_code|)))
+                                (if (or (null funcode) (eq funcls key))
+                                    (let ((s (similarity-function-gen funsymb funsymbp key funslot funcode (mlcl:schema-package schema))))
+                                      (setf weights (append  (car s) weights))
+                                      (push (car (cdr s)) maincodes))))))
+                     (if (nth 2 mets) 
+                         (dolist (m (nth 2 mets)) 
+                           (makefn m)))
+                     (if (nth 1 mets) 
+                         (makefn (car (nth 1 mets)))
+                         (if (nth 0 mets) (makefn (car (nth 0 mets)))))))  
+               clses))
+    (let ((weies (make-hash-table)))
       (dolist (w weights)
-        (push `(defvar ,w 1.0) codes))
-      (setf codes (append 
-                   codes 
-                   maincodes
-                   (let ((weight-slots nil))
-                     (cl-kb:cls-do-instance-list (cl-kb:find-cls '|knn|::|KnnSimilarityWeigh|) inst
-                                                 (if (eq (cl-kb:frame-own-slot-value inst '|knn|::|knn_similary_weight_fn|)
-                                                         algo-frame)
-                                                     (push inst weight-slots)))
-                     (mapcar #'(lambda(own-val) 
-                                 (let* ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
-                                        (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|))
-                                        (wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) (mlcl:schema-package schema) t)))
-                                   `(setf ,wd ,we)))
-                             weight-slots))))
-      (cons
-       `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema) t)
-          (make-instance 'similarity-measure 
-                         :name ,(cl-kb:frame-name algo-frame)))
-       codes))))
+        (setf (gethash w weies) 1.0))
+      (let ((weight-slots nil))
+        (cl-kb:cls-do-instance-list (cl-kb:find-cls '|knn|::|KnnSimilarityWeigh|) inst
+                                    (if (eq (cl-kb:frame-own-slot-value inst '|knn|::|knn_similary_fn|)
+                                            algo-frame)
+                                        (push inst weight-slots)))
+        (mapcar #'(lambda(own-val) 
+                    (let* ((slot (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight_slot|))
+                           (we (cl-kb:frame-own-slot-value own-val '|knn|::|knn_similarity_weight|))
+                           (wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) (mlcl:schema-package schema) t)))
+                      (setf (gethash wd weies) we)))
+                weight-slots))
+      (maphash #'(lambda (key val) 
+                   (push `(defvar ,key ,val) codes))
+               weies))
+    (setf codes (append 
+                 codes 
+                 maincodes))
+    (cons
+     `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema) t)
+        (make-instance 'similarity-measure 
+                       :name ,(cl-kb:frame-name algo-frame)))
+     codes)))
 
 
-(defun similarity-function-gen (funsymb funcls funslot funcode package)
+(defun similarity-function-gen (funsymb funsymbp funcls funslot funcode package)
   (let* ((codes nil)
          (weights nil))
     (setf codes `(defmethod ,funsymb ((x ,(if funcls (cl-kb:frame->symbol funcls package) t)) 
@@ -114,21 +185,16 @@
                                                        ((null c) nil)
                                                      (push c co)))
                            (nreverse co))
-                         `((if (or (null x) (null y))
-                               0
-                               (let ((s (call-next-method)) (w 1))
-                                 ,@(mapcar 
+                         `((MULTIPLE-VALUE-BIND (sim s w) (call-next-method)
+                             (declare (ignore sim))
+                             ,@(if funcls
+                                   (mapcar 
                                     #'(lambda (slot) (let ((wd (cl-kb:string->symbol (format nil "~A-~A-weight" (symbol-name funsymb) (cl-kb:frame-name slot)) package))
                                                            (sd (cl-kb:string->symbol (cl-kb:frame-name slot) package)))
                                                        (push wd weights) 
                                                        `(progn      
                                                           (setf w (+ w ,wd))
-                                                          (if (and (slot-boundp x ',sd) 
-                                                                   (slot-boundp y ',sd))
-                                                              (setf s (+ s (* ,wd 
-                                                                              (,funsymb (slot-value x ',sd) 
-                                                                                        (slot-value y ',sd)
-                                                                                        ',sd))))))))
-                                    (cl-kb:cls-direct-template-slots funcls))             
-                                 (float (/ s w))))))))
+                                                          (setf s (+ s (* ,wd (,funsymbp x y ',sd )))))))
+                                    (cl-kb:cls-direct-template-slots funcls)))             
+                             (values (float (if (> w 0) (/ s w) 1)) s w))))))
     (list weights codes)))
