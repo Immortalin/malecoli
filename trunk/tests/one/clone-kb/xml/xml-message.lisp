@@ -150,8 +150,6 @@
      (eq name ':|mimeType|))
     (let ((attr (message-seed-msg-attr seed))
           (val (message-seed-text seed)))
-      ;(format t "DDDDD: ~A ~A~%" name attr)
-      ;(format t "DDDDD: ~A ~A ~A~%" attributes parent-seed seed)
       (cond
       ((eq name ':|name|)
        (setf (msg-attr-name attr) val))
@@ -198,7 +196,7 @@
     (let ((msg (message-seed-offer seed)))
       (setf (message-seed-responseto parent-seed) msg)))
    (t 
-    (format t "Not implemented: ~A ~A~%" name attributes)))
+    (format t "Import xml messages. Element unknow: ~A ~A~%" name attributes)))
   parent-seed)
 
 (defun message-import-text-hook (string seed)

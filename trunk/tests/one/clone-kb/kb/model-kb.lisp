@@ -3,223 +3,205 @@
 
 (in-package :clone-kb)
 
-(progn
-  (defvar *default-one-model-kb-pathname*)
-  (eval-when (:COMPILE-TOPLEVEL :LOAD-TOPLEVEL :EXECUTE)
-    (if (null (boundp '*default-one-model-kb-pathname*))
-        (setq *default-one-model-kb-pathname*            
-              cl-kb:*kb-default-path*))))
+;
+; global variables
+;
 
+(defvar *model-id* nil)
+(defvar *model-instance-id* nil)
 
 ;
 ; kb names
 ;
 
-(defun model-kb-name (model)
-  (format nil "model-~A" (model-id model)))
+(defun model-kb-name (&optional (model-id *model-id*))
+  (format nil "model-~A" model-id))
 
-(defun model-instance-kb-name (model) 
-  (format nil "instance-~A" 
-          (attribute-value 
-           (find-if #'(lambda (x) (string-equal (attribute-name x) "id")) 
-                    (neginfo-attributes (model-neginfo model))))))
-
+(defun model-instance-kb-name (&optional (model-instance-id *model-instance-id*)) 
+  (format nil "instance-~A" model-instance-id))
 
 ;
 ; find kbs
 ;
 
-(defun find-model-kb (model)
-  (cl-kb:find-kb (model-kb-name model) nil t))
+(defun find-model-kb (&optional (model-id *model-id*))
+  (cl-kb:find-kb (model-kb-name model-id) nil t))
 
-(defun find-model-instance-kb (model)
-  (cl-kb:find-kb (model-instance-kb-name model) nil t))
+(defun find-model-instance-kb (&optional (model-id *model-id*) (model-instance-id *model-instance-id*))
+  (cl-kb:find-kb (model-instance-kb-name model-instance-id) nil t))
 
 
 ;
 ; make kbs
 ;
 
-(defun make-model-kb (model)
-  (let ((pathname (merge-pathnames
-                   (make-pathname
-                    :name (model-kb-name model)
-                    :type "pprj" :case :local)
-                   *default-one-model-kb-pathname*)))
-    (let ((kb (cl-kb:make-kb pathname :use '(cl-kbs::|onenegotiation|))))
-      (cl-kb:kb-create kb)
-      (init-model-kb model kb)
-      (cl-kb:kb-save kb)
-      kb)))
+(defun make-model-kb (&optional (model-id *model-id*))
+  (let ((kb (cl-kb:make-kb (format nil "~A.pprj" (model-kb-name model-id))
+            :use '(cl-kbs::|onenegotiation|))))
+    (cl-kb:kb-create kb)
+    (cl-kb:with-kb kb t
+                   (init-model-kb model-id kb))
+    kb))
 
-(defun make-model-instance-kb (model)
-  (let ((pathname (merge-pathnames
-                   (make-pathname
-                    :name (model-instance-kb-name model)
-                    :type "pprj" :case :local)
-                   *default-one-model-kb-pathname*)))
-    (let ((kb (cl-kb:make-kb pathname :use (list (find-model-kb model)))))
-      (cl-kb:kb-create kb)
-      (init-model-instance-kb model kb)
-      (cl-kb:kb-save kb)
-      kb)))
+(defun make-model-instance-kb (model-id model-instance-id)
+  (let ((kb (cl-kb:make-kb (format nil "~A.pprj" (model-instance-kb-name model-instance-id))
+                           :use (list (find-model-kb model-id)))))
+                           ;:use '(cl-kbs::|onenegotiation|))))
+    (cl-kb:kb-create kb)
+    (cl-kb:with-kb kb t
+                   (init-model-instance-kb model-id model-instance-id kb))
+    kb))
+
 
 ;
 ; init model kb
 ;
 
-(defun init-model-kb (model kb)
-  (let ((this (cl-kb:mk-simple-instance (format nil "model @ ~A" (model-kb-name model))
+(defun init-model-kb (model-id kb)
+  (let ((this (cl-kb:mk-simple-instance (g-model-id)
                                         '|onenegotiation|::|one_model| 
                                         :kb kb)))
-    (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_id|) (model-name model))
-    (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_version|) (model-version model))))
+    (setf (cl-kb:frame-own-slot-value this '|negotiation|::|neg_model_id|) model-id)))
   
-(defun init-model-instance-kb (model kb)
-  (declare (ignore model)
-           (ignore kb))
-  nil)
+(defun init-model-instance-kb (model-id model-instance-id kb)
+  (declare (ignore model-instance-id))
+  ;(init-model-kb model-id kb))
+  )
   
-;
-; get kbs
-;
-
-(defun get-model-kb (model import-fn &optional (overwrite nil))
-  (let ((kb (find-model-kb model)))
-    (if (not kb)
-        (progn
-          (setf kb (make-model-kb model))
-          (cl-kb:with-kb kb t
-                         (funcall import-fn model kb)))
-        (if overwrite
-              (cl-kb:with-kb kb t
-                             (cl-kb:kb-clear kb)
-                             (init-model-kb model kb)
-                             (funcall import-fn model kb))))
-    kb))
-  
-(defun get-model-instance-kb (model import-fn &optional (overwrite nil))
-  (let ((kb (find-model-instance-kb model)))
-    (if (not kb)
-        (progn
-          (setf kb (make-model-instance-kb model))
-          (cl-kb:with-kb kb t
-                         (funcall import-fn model kb)))
-        (if overwrite
-            (cl-kb:with-kb kb t
-                           (cl-kb:kb-clear kb)
-                           (init-model-instance-kb model kb)
-                           (funcall import-fn model kb))))
-    kb))
 
 
-;
-; element's ids
-;
+(defun g-model-id ()
+  (format nil "this-model"))
 
-(defun model-case-id (model)
-  (declare (ignore model))
+(defun g-model-proposal-id ()
+  (format nil "this-proposal"))
+
+(defun g-model-itemset-id ()
+  (format nil "this-itemset"))
+
+(defun g-model-item-id (item-name)
+  (format nil "item@~A" item-name))
+
+(defun g-model-m-item-id (item-name)
+  (format nil "m-item@~A" item-name))
+
+(defun g-model-m-item-attr-id (item-name attr-name)
+  (format nil "m-attr@~A ~A" item-name attr-name))
+
+(defun g-model-item-slot-id (item-name)
+  (format nil "has ~A" (g-model-item-id item-name)))
+
+(defun g-model-issueset-id (item-name)
+  (format nil "issueset of ~A" (g-model-item-id item-name)))
+
+(defun g-model-issueset-slot-id (item-name)
+  (format nil "has ~A" (g-model-issueset-id item-name)))
+
+(defun g-model-issue-id (item-name issue-name)
+  (format nil "issue@~A of ~A" issue-name (g-model-item-id item-name)))
+
+(defun g-model-m-issue-id (item-name issue-name)
+  (format nil "m-issue@~A of ~A" issue-name (g-model-item-id item-name)))
+
+(defun g-model-m-issue-attr-id (item-name issue-name attr-name)
+  (format nil "m-attr@~A ~A ~A" issue-name (g-model-item-id item-name) attr-name))
+
+(defun g-model-issue-slot-id (item-name issue-name)
+  (format nil "has ~A" (g-model-issue-id item-name issue-name)))
+
+
+(defun g-model-cls-slot-id (cls-name attr-name)
+    (cond
+     ((string-equal attr-name "allowNested")
+      "one_allow_nested")
+     ((string-equal attr-name "name")
+      "one_name")
+     ((string-equal attr-name "id")
+      "one_id")
+     ((string-equal attr-name "visibility")
+      "one_visibility")
+     ((string-equal attr-name "parentId")
+      "one_parent_id")
+     ((string-equal attr-name "creationDate")
+      "one_creation_date")
+     ((string-equal attr-name "endDate")
+      "neg_case_ending_date")
+     ((string-equal attr-name "startDate")
+      "neg_case_starting_date")
+     (t
+      (format nil "has ~A of ~A" attr-name cls-name))))
+
+(defun g-model-case-id ()
   (format nil "one_case"))
 
-(defun model-context-id (model)
-  (declare (ignore model))
+(defun g-model-context-id ()
   (format nil "one_context"))
 
-(defun model-protocol-id (model)
-  (declare (ignore model))
+(defun g-model-protocol-id ()
   (format nil "one_protocol"))
 
-(defun model-conclusion-id (model)
-  (declare (ignore model))
+(defun g-model-conclusion-id ()
   (format nil "one_conclusion"))
 
-(defun model-process-id (model)
-  (declare (ignore model))
+(defun g-model-process-id ()
   (format nil "one_process"))
 
+(defun g-instance-case-id ()
+  (format nil "the case"))
 
-(defun instance-case-id (model)
-  (format nil "case @ ~A" (model-instance-kb-name model)))
+(defun g-instance-context-id ()
+  (format nil "the context"))
 
-(defun instance-context-id (model)
-  (format nil "context @ ~A" (model-instance-kb-name model)))
+(defun g-instance-protocol-id ()
+  (format nil "the protocol"))
 
-(defun instance-protocol-id (model)
-  (format nil "protocol @ ~A" (model-instance-kb-name model)))
+(defun g-instance-conclusion-id ()
+  (format nil "the conclusion"))
 
-(defun instance-conclusion-id (model)
-  (format nil "conclusion @ ~A" (model-instance-kb-name model)))
+(defun g-instance-process-id ()
+  (format nil "the process"))
 
-(defun instance-process-id (model)
-  (format nil "process @ ~A" (model-instance-kb-name model)))
+(defun g-instance-itemset-id ()
+  (format nil "the itemset"))
 
+(defun g-instance-item-id (item-name)
+  (format nil "the ~A" (g-model-item-id item-name)))
 
+(defun g-instance-issueset-id (item-name msg-id)
+  (format nil "the ~A || ~A" (g-model-issueset-id item-name) msg-id))
 
+(defun g-instance-issue-id (item-name issue-name msg-id)
+  (format nil "the ~A || ~A" (g-model-issue-id item-name issue-name) msg-id))
 
-
-(defun model-model-id (model)
-  (format nil "model @ ~A" (model-kb-name model)))
-        
-
-
-
-(defun model-proposal-id (model)
-  (format nil "proposal @ ~A" (model-kb-name model)))
-
-(defun model-itemset-id (model)
-  (format nil "itemset @ ~A" (model-kb-name model)))
-
-(defun model-item-id (model item)
-  (format nil "item ~A @ ~A" (item-name item) (model-kb-name model) ))
-
-(defun model-issueset-id (model item)
-  (format nil "issueset ~A @ ~A" (item-name item) (model-kb-name model)))
-
-(defun model-issue-id (model item issue)
-  (format nil "issue ~A of ~A @ ~A"  (issue-name issue) (item-name item) (model-kb-name model)))
-
-(defun instance-proposal-id (model)
-  (format nil "proposal @ ~A" (model-instance-kb-name model)))
-
-;(defun instance-issueset-id (model)
-;  (format nil "issueset @ ~A" (model-instance-kb-name model)))
-
-(defun instance-issue-id (model)
-  (format nil "issue @ ~A" (model-instance-kb-name model)))
-  
-(defun instance-itemset-id (model)
-  (format nil "itemset @ ~A" (model-instance-kb-name model)))
-
-(defun instance-item-id (model item)
-  (format nil "item ~A @ ~A" (item-name item) (model-instance-kb-name model) ))
-
-(defun model-msg-offer-id (model)
-  (declare (ignore model))
-  (format nil "neg_offer"))
-
-(defun model-msg-adm-req-id (model)
-  (declare (ignore model))
-  (format nil "neg_adm_request"))
-
-(defun model-msg-adm-res-id (model)
-  (declare (ignore model))
-  (format nil "neg_adm_response"))
-
-(defun model-msg-offer-res-id (model)
-  (declare (ignore model))
-  (format nil "neg_offer_response"))
-
-(defun model-msg-agreement-id (model)
-  (declare (ignore model))
-  (format nil "neg_agreement"))
-
-(defun instance-msg-id (message model)
-  (declare (ignore model))
-  (format nil "msg ~A" (message-id message)))
-
-(defun instance-party-id (id model)
-  (declare (ignore model))
+(defun g-instance-party-id (id)
   (format nil "party ~A" id))
 
 
+(defun g-model-msg-offer-id ()
+  (format nil "neg_offer"))
 
+(defun g-model-msg-adm-req-id ()
+  (format nil "neg_adm_request"))
+
+(defun g-model-msg-adm-res-id ()
+  (format nil "neg_adm_response"))
+
+(defun g-model-msg-offer-res-id ()
+  (format nil "neg_offer_response"))
+
+(defun g-model-msg-agreement-id ()
+  (format nil "neg_agreement"))
+
+(defun g-instance-msg-id (message-id)
+  (format nil "msg ~A" message-id))
+
+
+(defun date->string (di) 
+  (let ((y (cl-kb:frame-own-slot-value di '|dataset|::|time_year|))
+        (m (cl-kb:frame-own-slot-value di '|dataset|::|time_month|))
+        (d (cl-kb:frame-own-slot-value di '|dataset|::|time_day|))
+        (h (cl-kb:frame-own-slot-value di '|dataset|::|time_hour|))
+        (mi (cl-kb:frame-own-slot-value di '|dataset|::|time_minute|))
+        (sec (cl-kb:frame-own-slot-value di '|dataset|::|time_sec|))
+        (usec (cl-kb:frame-own-slot-value di '|dataset|::|time_usec|)))
+    (format nil "~A-~A-~AT~A:~A:~A.~A" y m d h mi sec usec)))

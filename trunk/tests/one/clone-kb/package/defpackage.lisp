@@ -1,6 +1,5 @@
 ;;;; 2008-08-21 12:54:28
 
-
 (in-package :common-lisp-user)
 
 (defpackage :clone-kb
@@ -9,12 +8,13 @@
   (:export
     xml-negotiation-import
     xml-model-import
-    xml-messages-import
-    
+    negotiation-model->kb
     negotiation->kb
-    model->kb
-    model-instance->kb
-    messages->kb
-    *default-one-model-kb-pathname*
+    
+    kb->html
+    kb->html-as-string
+    agreement-issues->html-as-string
+    
+    date->string
    ))
 

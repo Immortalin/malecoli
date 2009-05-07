@@ -20,12 +20,15 @@
 
 (in-package :clone-kb)
 
+(push #.(make-pathname :directory (pathname-directory *compile-file-truename*)) cl-kb:*kb-paths*)
+
+
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "negotiation" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "negotiation"))))
+        (cl-kb:kb-open (cl-kb:make-kb (cl-kb:find-kb-file "negotiation")))))
 
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "onenegotiation" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "onenegotiation"))))
+        (cl-kb:kb-open (cl-kb:make-kb (cl-kb:find-kb-file "onenegotiation")))))
 
