@@ -1,7 +1,7 @@
-; Thu Sep 04 15:24:03 CEST 2008
+; Fri Jan 30 15:55:01 CET 2009
 ; 
 ;+ (version "3.4")
-;+ (build "Build 128")
+;+ (build "Build 513")
 
 ([ANNOTATED_INSTANCE_WIDGET] of  Widget
 
@@ -164,7 +164,7 @@
 	(name "source_file_name")
 	(string_value "onenegotiation.xml"))
 
-([KB_985497_Instance_164] of  Map
+([KB_911239_Class227] of  Map
 )
 
 ([LAYOUT_PROPERTIES] of  Property_List
@@ -172,319 +172,319 @@
 	(name "layout properties")
 	(properties [VERTICAL_STRETCHER]))
 
-([onenegotiation_ProjectKB_Instance_165] of  Widget
+([onenegotiation_ProjectKB_Class228] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_166])
-	(widget_class_name "TGViztab.TGVizTab"))
-
-([onenegotiation_ProjectKB_Instance_166] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_167] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_168])
-	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
-
-([onenegotiation_ProjectKB_Instance_168] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_169] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_170])
-	(widget_class_name "script.ProtegeScriptTab"))
-
-([onenegotiation_ProjectKB_Instance_170] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_171] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_172])
-	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
-
-([onenegotiation_ProjectKB_Instance_172] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_173] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_174])
-	(widget_class_name "edu.stanford.smi.protege.keywordsearch.StringSearch"))
-
-([onenegotiation_ProjectKB_Instance_174] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_175] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_176])
-	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
-
-([onenegotiation_ProjectKB_Instance_176] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_177] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_178])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.metadatatab.OWLMetadataTab"))
-
-([onenegotiation_ProjectKB_Instance_178] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_179] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_180])
-	(widget_class_name "edu.stanford.smi.protegex.changes.ChangesTab"))
-
-([onenegotiation_ProjectKB_Instance_180] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_181] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_182])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
-
-([onenegotiation_ProjectKB_Instance_182] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_183] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_184])
-	(widget_class_name "ezpal.EZPalTab"))
-
-([onenegotiation_ProjectKB_Instance_184] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_185] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_186])
-	(widget_class_name "edu.stanford.smi.protegex.owl.swrl.ui.tab.SWRLTab"))
-
-([onenegotiation_ProjectKB_Instance_186] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_187] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_188])
-	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
-
-([onenegotiation_ProjectKB_Instance_188] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_189] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_190])
-	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
-
-([onenegotiation_ProjectKB_Instance_190] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_191] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_192])
-	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
-
-([onenegotiation_ProjectKB_Instance_192] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_193] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_194])
-	(widget_class_name "edu.stanford.smi.protegex.prompt.PromptTab"))
-
-([onenegotiation_ProjectKB_Instance_194] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_195] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_196])
-	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
-
-([onenegotiation_ProjectKB_Instance_196] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_197] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_198])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.properties.OWLPropertiesTab"))
-
-([onenegotiation_ProjectKB_Instance_198] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_199] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_200])
-	(widget_class_name "edu.stanford.smi.protege.widget.ProtegePropertiesTab"))
-
-([onenegotiation_ProjectKB_Instance_200] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_201] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_202])
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
-
-([onenegotiation_ProjectKB_Instance_202] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_203] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_204])
-	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.KnowledgeTreeTab"))
-
-([onenegotiation_ProjectKB_Instance_204] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_205] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_206])
-	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
-
-([onenegotiation_ProjectKB_Instance_206] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_207] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_208])
-	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
-
-([onenegotiation_ProjectKB_Instance_208] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_209] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_210])
+	(property_list [onenegotiation_ProjectKB_Class229])
 	(widget_class_name "se.liu.ida.JessTab.JessTab"))
 
-([onenegotiation_ProjectKB_Instance_210] of  Property_List
+([onenegotiation_ProjectKB_Class229] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_211] of  Widget
+([onenegotiation_ProjectKB_Class230] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_212])
-	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
+	(property_list [onenegotiation_ProjectKB_Class231])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.metadatatab.OWLMetadataTab"))
 
-([onenegotiation_ProjectKB_Instance_212] of  Property_List
+([onenegotiation_ProjectKB_Class231] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_213] of  Widget
+([onenegotiation_ProjectKB_Class232] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_214])
-	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
+	(property_list [onenegotiation_ProjectKB_Class233])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.properties.OWLPropertiesTab"))
 
-([onenegotiation_ProjectKB_Instance_214] of  Property_List
+([onenegotiation_ProjectKB_Class233] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_215] of  Widget
+([onenegotiation_ProjectKB_Class234] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_216])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.individuals.OWLIndividualsTab"))
+	(property_list [onenegotiation_ProjectKB_Class235])
+	(widget_class_name "edu.stanford.smi.protege.widget.ProtegePropertiesTab"))
 
-([onenegotiation_ProjectKB_Instance_216] of  Property_List
+([onenegotiation_ProjectKB_Class235] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_217] of  Widget
+([onenegotiation_ProjectKB_Class236] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_218])
+	(property_list [onenegotiation_ProjectKB_Class237])
 	(widget_class_name "uk.ac.man.cs.mig.coode.debugger.test.DebuggerTestTab"))
 
-([onenegotiation_ProjectKB_Instance_218] of  Property_List
+([onenegotiation_ProjectKB_Class237] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_219] of  Widget
+([onenegotiation_ProjectKB_Class238] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_220])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
+	(property_list [onenegotiation_ProjectKB_Class239])
+	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
 
-([onenegotiation_ProjectKB_Instance_220] of  Property_List
+([onenegotiation_ProjectKB_Class239] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_221] of  Widget
+([onenegotiation_ProjectKB_Class240] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_222])
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
+	(property_list [onenegotiation_ProjectKB_Class241])
+	(widget_class_name "ezpal.EZPalTab"))
 
-([onenegotiation_ProjectKB_Instance_222] of  Property_List
+([onenegotiation_ProjectKB_Class241] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_223] of  Widget
+([onenegotiation_ProjectKB_Class242] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_224])
-	(widget_class_name "org.algernon.kb.okbc.protege.plugins.AlgernonTab"))
-
-([onenegotiation_ProjectKB_Instance_224] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_225] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_226])
-	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
-
-([onenegotiation_ProjectKB_Instance_226] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_227] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_228])
-	(widget_class_name "edu.stanford.smi.RemoteKBTab.UMLSTab"))
-
-([onenegotiation_ProjectKB_Instance_228] of  Property_List
-)
-
-([onenegotiation_ProjectKB_Instance_229] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_230])
+	(property_list [onenegotiation_ProjectKB_Class243])
 	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
 
-([onenegotiation_ProjectKB_Instance_230] of  Property_List
+([onenegotiation_ProjectKB_Class243] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_231] of  Widget
+([onenegotiation_ProjectKB_Class244] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_232])
+	(property_list [onenegotiation_ProjectKB_Class245])
+	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
+
+([onenegotiation_ProjectKB_Class245] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class246] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class247])
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
+
+([onenegotiation_ProjectKB_Class247] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class248] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class249])
+	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
+
+([onenegotiation_ProjectKB_Class249] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class250] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class251])
 	(widget_class_name "uk.ac.man.ac.mig.coode.individuals.ui.OWLDLIndividualsTab"))
 
-([onenegotiation_ProjectKB_Instance_232] of  Property_List
+([onenegotiation_ProjectKB_Class251] of  Property_List
 )
 
-([onenegotiation_ProjectKB_Instance_233] of  Widget
+([onenegotiation_ProjectKB_Class252] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [onenegotiation_ProjectKB_Instance_234])
+	(property_list [onenegotiation_ProjectKB_Class253])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
+
+([onenegotiation_ProjectKB_Class253] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class254] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class255])
 	(widget_class_name "uk.ac.man.cs.mig.coode.owlviz.ui.OWLVizTab"))
 
-([onenegotiation_ProjectKB_Instance_234] of  Property_List
+([onenegotiation_ProjectKB_Class255] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class256] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class257])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
+
+([onenegotiation_ProjectKB_Class257] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class258] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class259])
+	(widget_class_name "edu.stanford.smi.RemoteKBTab.UMLSTab"))
+
+([onenegotiation_ProjectKB_Class259] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class260] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class261])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.individuals.OWLIndividualsTab"))
+
+([onenegotiation_ProjectKB_Class261] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class262] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class263])
+	(widget_class_name "TGViztab.TGVizTab"))
+
+([onenegotiation_ProjectKB_Class263] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class264] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class265])
+	(widget_class_name "org.algernon.kb.okbc.protege.plugins.AlgernonTab"))
+
+([onenegotiation_ProjectKB_Class265] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class266] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class267])
+	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
+
+([onenegotiation_ProjectKB_Class267] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class268] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class269])
+	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
+
+([onenegotiation_ProjectKB_Class269] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class270] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class271])
+	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
+
+([onenegotiation_ProjectKB_Class271] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class272] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class273])
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
+
+([onenegotiation_ProjectKB_Class273] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class274] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class275])
+	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
+
+([onenegotiation_ProjectKB_Class275] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class276] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class277])
+	(widget_class_name "edu.stanford.smi.protege.keywordsearch.StringSearch"))
+
+([onenegotiation_ProjectKB_Class277] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class278] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class279])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
+
+([onenegotiation_ProjectKB_Class279] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class280] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class281])
+	(widget_class_name "script.ProtegeScriptTab"))
+
+([onenegotiation_ProjectKB_Class281] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class282] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class283])
+	(widget_class_name "edu.stanford.smi.protegex.changes.ChangesTab"))
+
+([onenegotiation_ProjectKB_Class283] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class284] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class285])
+	(widget_class_name "edu.stanford.smi.protegex.owl.swrl.ui.tab.SWRLTab"))
+
+([onenegotiation_ProjectKB_Class285] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class286] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class287])
+	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
+
+([onenegotiation_ProjectKB_Class287] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class288] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class289])
+	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.KnowledgeTreeTab"))
+
+([onenegotiation_ProjectKB_Class289] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class290] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class291])
+	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
+
+([onenegotiation_ProjectKB_Class291] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class292] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class293])
+	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
+
+([onenegotiation_ProjectKB_Class293] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class294] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class295])
+	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
+
+([onenegotiation_ProjectKB_Class295] of  Property_List
+)
+
+([onenegotiation_ProjectKB_Class296] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [onenegotiation_ProjectKB_Class297])
+	(widget_class_name "edu.stanford.smi.protegex.prompt.PromptTab"))
+
+([onenegotiation_ProjectKB_Class297] of  Property_List
 )
 
 ([onenegotiation_ProjectKB_Instance_97] of  String
@@ -558,16 +558,19 @@
 
 	(browser_slot_names [BROWSER_SLOT_NAMES])
 	(customized_instance_widgets
-		[STANDARD_SLOT_FORM_WIDGET]
-		[STANDARD_CLASS_FORM_WIDGET]
-		[STANDARD_FACET_FORM_WIDGET]
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
-		[PAL_FORM_WIDGET])
+		[STANDARD_FACET_FORM_WIDGET]
+		[STANDARD_SLOT_FORM_WIDGET]
+		[PAL_FORM_WIDGET]
+		[STANDARD_CLASS_FORM_WIDGET])
 	(default_cls_metaclass ":STANDARD-CLASS")
 	(default_facet_metaclass ":STANDARD-FACET")
 	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(default_slot_metaclass ":STANDARD-SLOT")
-	(included_projects "negotiation.pprj")
+	(included_projects
+		"protege.pprj"
+		"dataset.pprj"
+		"negotiation.pprj")
 	(next_frame_number 0)
 	(options [KB_682407_Instance_3])
 	(property_map [KB_682407_Instance_1])
