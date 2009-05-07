@@ -51,6 +51,10 @@
       (storage-add-case (dataset-storage dataset) cas))
   (push cas (slot-value dataset 'cases)))
 
+(defun dataset-remove-case (dataset cas)
+  (setf (slot-value dataset 'cases)
+        (remove cas (dataset-cases dataset))))
+
 (defun dataset-import-case-from-kb (dataset si-cas)
   (let ((c (dataset-kb-import-simple-instance (schema-package (dataset-schema dataset)) si-cas)))
     (setf (slot-value c 'id) nil)
@@ -82,6 +86,7 @@
                                                           :name name 
                                                           :schema *clstore-schema*
                                                           :storage *clstore-storage*)))
+                                  (format t "~A ~A ~%" name cases-list)
                                   (dolist (c cases-list)
                                     (push  (aref (storage-cases (dataset-storage obj)) c)
                                            (slot-value obj 'cases)))

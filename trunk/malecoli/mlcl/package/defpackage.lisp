@@ -30,12 +30,17 @@
     |DatasetThing|
     |DatasetCase|
     |date|
+    |time|
     dataset-thing-name-id
     dataset-case-id
     |time_year| 
     |time_month|
     |time_day| 
-
+    |time_hour|
+    |time_minute|
+    |time_sec|
+    |time_usec|
+    time->usec
     #|
     dataset
     |#
@@ -45,6 +50,7 @@
     dataset-storage
     dataset-cases  
     dataset-add-case
+    dataset-remove-case
     
     dataset-temporaryp
     dataset-import-case-from-kb
@@ -108,6 +114,7 @@
     algorithm
     |#
     algorithm
+    ALGORITHM-INIT-WORKSPACE
     trivial-algorithm
     algorithm-compiler
     trivial-algorithm-compiler

@@ -57,7 +57,8 @@
                                             (make-pathname :type "xml")
                                             (kb-protege-pprj-file kb))))
         (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb t t)
-        (setf (kb-openedp kb) t))))
+        (dolist (ukb (kb-use-list kb))
+          (kb-close ukb)))))
 
 (defun kb-createdp (&optional (kb *kb*))
   (check-type kb kb)
@@ -71,18 +72,27 @@
 ; open/close
 (defun kb-open (&optional (kb *kb*))
   (check-type kb kb)  
+  ;(format t "&&&& kb-open ~A ~%" (kb-name kb))
+  (dolist (ukb (kb-use-list kb))
+    (kb-open ukb))
   (if (not (kb-openedp kb))
       (progn
-        (dolist (ukb (kb-use-list kb))
-          (kb-open ukb))
         (kb-import-from-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb)
-        (setf (kb-openedp kb) t))))
+        (setf (kb-openedp kb) t)))
+  (setf (slot-value kb 'refcount) (1+ (slot-value kb 'refcount))))
 
 (defun kb-close (&optional (kb *kb*))
   (check-type kb kb)
+  ;(format t "&&&& kb-close ~A ~%" (kb-name kb))
   (if (kb-openedp kb)
       (progn
+        (setf (slot-value kb 'refcount) (1- (slot-value kb 'refcount)))
         (kb-export-to-protege-file (kb-protege-pprj-file kb) (kb-protege-xml-file kb) kb nil nil)
-        (kb-clear kb)
-        (setf (kb-openedp kb) nil))))
+        (if (= 0 (slot-value kb 'refcount))
+            (progn
+              ;(format t "&&&& kb-cleaned ~A ~%" (kb-name kb))
+              (kb-clear kb)
+              (setf (kb-openedp kb) nil)))
+        (dolist (ukb (kb-use-list kb))
+          (kb-close ukb)))))
 

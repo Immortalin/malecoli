@@ -20,7 +20,7 @@
 
 (in-package :cl-kb)
 
-(setf *kb-default-path* #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/kbs/")
+(setf *kb-default-path* #.(make-pathname :directory (pathname-directory *compile-file-truename*)))
 (setf *kb-paths* (list *kb-default-path*))
 
 (defmacro init-variable (var code)
