@@ -11,17 +11,15 @@
   :components ((:module package
                	:components
 	        	((:file "defpackage" :depends-on ())))
-               ;(:module resources
-               ;	:components
-	       ; 	((:file "resource" :depends-on ()))
-               ; :depends-on ("package"))
-               ;(:module cbr
-               ;	:components
-	       ; 	((:file "onecbr" :depends-on ()))
-               ;  :depends-on ("package" "resources"))
                (:module api
                	:components
 	        	((:file "cbr-api" :depends-on ()))
+                 :depends-on ("log" "package"))
+               (:module log
+               	:components
+	                ((:file "who" :depends-on ())	
+	        	 (:file "log" :depends-on ("who")))
                  :depends-on ("package"))
                )
-  :depends-on ("cl-kb" "clone-kb"))
+  
+  :depends-on ("cl-kb" "clone-kb" "cl-who" "clone-ml"))
