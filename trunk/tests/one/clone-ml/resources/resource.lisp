@@ -20,32 +20,6 @@
 
 (in-package :clone-ml)
 
-(push (if cl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/"
-          ;#p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/tests/one/clone-ml/resources/"
-          *load-truename*)
-      cl-kb:*kb-paths*)
-
-
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (cl-kb:find-kb "negotiation" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "negotiation"))))
-
-
-(eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (cl-kb:find-kb "onenegotiation" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "onenegotiation"))))
-
-
-(eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (cl-kb:find-kb "gare" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "gare"))))
-
-
-
-(eval-when (:LOAD-TOPLEVEL :EXECUTE)
-  (if (null (cl-kb:find-kb "gare-instances" nil))
-        (cl-kb:make-kb 
-         #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/workspace/extra/gare/resources/gare-instances.pprj"
-         )))
-
+  (make-instance 'mlcl:schema 
+                 :file (cl-kb:find-kb-file "onenegotiation")))
