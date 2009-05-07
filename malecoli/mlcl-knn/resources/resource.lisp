@@ -20,11 +20,7 @@
 
 (in-package :mlcl-knn)
 
-(push (if cl-kb::*cusp-developmentp* 
-          #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-knn/resources/"
-          ;#p"/home/alex/Software/Developing/MaLeCoLi/code.google.com/workspace/malecoli-trunk/malecoli/mlcl-knn/resources/"
-          *load-truename*)
-      cl-kb:*kb-paths*)
+(push #.(make-pathname :directory (pathname-directory *compile-file-truename*)) cl-kb:*kb-paths*)
 
 ;
 ; knn knowledge base
@@ -32,4 +28,4 @@
 
 (eval-when (:LOAD-TOPLEVEL :EXECUTE)
   (if (null (cl-kb:find-kb "knn" nil))
-        (cl-kb:make-kb (cl-kb:find-kb-file "knn"))))
+        (cl-kb:kb-open (cl-kb:make-kb (cl-kb:find-kb-file "knn")))))

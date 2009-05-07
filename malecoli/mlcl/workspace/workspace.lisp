@@ -73,27 +73,35 @@
 ; i/o 
 
 (defun workspace-load (workspace)
+  (storage-load (workspace-storage workspace))
   (let ((storefile (workspace-file workspace)))
     (if (probe-file storefile)
-        (with-open-file (strm storefile :direction :input :element-type '(unsigned-byte 8))
-                        (let ((*clstore-schema* (workspace-schema workspace))
-                              (*clstore-storage* (workspace-storage workspace)))
-                          (setf (slot-value workspace 'datasets) (cl-store:restore strm))
-                          (setf (slot-value workspace 'algorithms) (cl-store:restore strm))
-                          (dolist (mk (cl-store:restore strm))
-                            (workspace-add-makefile workspace mk))
-                          (dolist (var (cl-store:restore strm))
-                            (workspace-add-variable workspace (car var) (cdr var))))))))
+        (progn
+          (with-open-file (strm storefile :direction :input :element-type '(unsigned-byte 8))
+                          (let ((*clstore-schema* (workspace-schema workspace))
+                                (*clstore-storage* (workspace-storage workspace)))
+                            (setf (slot-value workspace 'datasets) (cl-store:restore strm))
+                            ;(setf (slot-value workspace 'algorithms) (cl-store:restore strm))
+                            (dolist (mk (cl-store:restore strm))
+                              (workspace-add-makefile workspace mk))
+                            (dolist (var (cl-store:restore strm))
+                              (workspace-add-variable workspace (car var) (cdr var)))))
+          (dolist (makefile (workspace-makefiles workspace))
+            (dolist (algo (makefile-make makefile))
+              (workspace-add-algorithm workspace algo)))))))
                         
 (defun workspace-save (workspace)
+  (format t "workspace saving~%")
+  (storage-save (workspace-storage workspace))
   (let ((storefile (workspace-file workspace)))
     (with-open-file (strm storefile :direction :output :if-exists :supersede :element-type '(unsigned-byte 8))
                     (cl-store:store (workspace-datasets workspace) strm)
-                    (cl-store:store (workspace-algorithms workspace) strm)
+                    ;(cl-store:store (workspace-algorithms workspace) strm)
                     (cl-store:store (mapcar #'(lambda(x) (makefile-algorithms-pprj-file x))
                                             (workspace-makefiles workspace)) strm)
                     (cl-store:store (mapcar #'(lambda(x) (cons (symbol-name x) (symbol-value x)))
-                                            (workspace-variables workspace)) strm))))
+                                            (workspace-variables workspace)) strm)))
+  (format t "workspace saved~%"))
 
 ; datasets
 (defun workspace-find-dataset (workspace dadasetname)
@@ -132,6 +140,7 @@
 
 ; workspace algorithms
 (defun workspace-add-algorithm (workspace algo)
+  (algorithm-init-workspace algo workspace)
   (push algo (slot-value workspace 'algorithms)))
 
 (defun workspace-find-algorithm (workspace algoname)
@@ -145,7 +154,7 @@
                                     :schema (workspace-schema workspace))))
   (push makefile (slot-value workspace 'makefiles))
   (dolist (algo (makefile-make makefile))
-    (push algo (slot-value workspace 'algorithms))))
+    (workspace-add-algorithm workspace algo)))
 
 (defun workspace-add-makefile (workspace makefile)
   (if (typep makefile 'pathname)

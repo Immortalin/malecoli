@@ -35,6 +35,11 @@
     :ACCESSOR knn-similarity-fn
     :INITFORM nil
     :INITARG :similarity-fn)
+   (result-fn
+    :TYPE symbol
+    :ACCESSOR knn-result-fn
+    :INITFORM nil
+    :INITARG :result-fn)
    (dataset-name
     :TYPE string
     :ACCESSOR knn-dataset-name
@@ -45,7 +50,7 @@
 ; knn algorithms
 ;
 
-(defun knn-init (knn workspace)
+(defmethod mlcl:algorithm-init-workspace ((knn knn) workspace)
   (let ((ds (mlcl:workspace-find-dataset workspace (knn-dataset-name knn))))
     (if (null ds)
         (progn 
@@ -57,7 +62,9 @@
 (defun knn-search (knn workspace cas)
   (let ((ds (mlcl:workspace-find-dataset workspace (knn-dataset-name knn)))
         (fn (symbol-function (find-symbol (knn-similarity-fn knn) (mlcl:schema-package (mlcl:workspace-schema workspace)))))
-        (tops nil))
+        (rfn (symbol-function (find-symbol (knn-result-fn knn) (mlcl:schema-package (mlcl:workspace-schema workspace)))))
+        (tops nil)
+        (results nil))
     (dolist (c (mlcl:dataset-cases ds))
       (let ((s (funcall fn c cas t)))
         (push (cons s c) tops)))
@@ -65,7 +72,9 @@
       (if (< (length so) (knn-k knn))
           (setf tops so)
           (setf tops (nthcdr (- (length so) (knn-k knn)) so))))
-    tops))
+    (dolist (c tops)
+      (push (list (car c) (funcall rfn (cdr c))) results))
+    results))
 
 
 ;
@@ -78,13 +87,15 @@
 (defmethod mlcl:algorithm-compiler-compile ((algorithm-compiler knn-algorithm-compiler) algo-frame schema)
   (let ((k (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_k|))
         (datasetname (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_dataset_name|))
-        (simfn (cl-kb:frame-own-slot-value (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|) '|knn|::|knn_similarity_algorithm_name|)))
+        (simfn (cl-kb:frame-own-slot-value (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_similarity_measure|) '|algorithm|::|algorithm_function_name|))
+        (resfn (cl-kb:frame-own-slot-value (cl-kb:frame-own-slot-value algo-frame '|knn|::|knn_result_function|) '|algorithm|::|algorithm_function_name|)))
     (cons
      `(defvar ,(cl-kb:frame->symbol algo-frame (mlcl:schema-package schema))
         (make-instance 'knn 
                        :name ,(cl-kb:frame-name algo-frame)
                        :k ,k
                        :similarity-fn ,simfn
+                       :result-fn ,resfn
                        :dataset-name ,datasetname))
      nil)))
 

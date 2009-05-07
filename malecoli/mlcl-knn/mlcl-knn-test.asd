@@ -13,4 +13,4 @@
                	:components
 	        	((:file "test-arff" :depends-on ())))
                )
-  :depends-on ("mlcl"))
+  :depends-on ("mlcl-knn"))

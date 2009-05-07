@@ -18,8 +18,8 @@
                     "zoo"))
 
 
-(defvar UCI-dir #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/arff/UCI/") 
-(setf cl-kb:*kb-default-path* #p"/hardmnt/tharpe0/sra/serra/Software/Developing/MaLeCoLi/runtime_ws/arff-kbs/")
+(defvar UCI-dir #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/examples/arff/UCI/") 
+(setf cl-kb:*kb-default-path* #p"/home/serra/Software/Developing/MaLeCoLi/runtime_ws/examples/arff-kbs/")
 
 ;(defvar UCI-dir #p"/home/alex/Software/Developing/MaLeCoLi/runtime-ws/arff/UCI/")
 ;(setf cl-kb:*kb-default-path* #p"/home/alex/Software/Developing/MaLeCoLi/runtime-ws/arff-kbs/")
@@ -41,22 +41,28 @@
                                            :type "workspace")
                                           cl-kb:*kb-default-path*)))
          (storage (mlcl::workspace-storage workspace)))
-    (if (eq (length (mlcl::workspace-algorithms workspace)) 0)
-        (mlcl::workspace-make-algorithms workspace (merge-pathnames
-                                                 (make-pathname 
-                                                  :name "make-knn-01"
-                                                  :type "pprj")
-                                                 cl-kb:*kb-default-path*))
-        (mlcl:workspace-save workspace))
+    ;(format t "#cases=~A~%" (length (mlcl::storage-cases storage)))
+    ;(format t "#datasets=~A~%" (length (mlcl::workspace-datasets workspace)))        
+    ;(format t "#algorithms=~A~%" (length (mlcl::workspace-algorithms workspace)))
+    ;(format t "#makefiles=~A~%" (length (mlcl::workspace-makefiles workspace)))
+    
+    (if (eq (length (mlcl::workspace-makefiles workspace)) 0)
+        (progn
+          (mlcl::workspace-make-algorithms workspace (merge-pathnames
+                                                      (make-pathname 
+                                                       :name "make-knn-01"
+                                                       :type "pprj")
+                                                      cl-kb:*kb-default-path*))
+          (mlcl:workspace-save workspace)))
     (format t "#cases=~A~%" (length (mlcl::storage-cases storage)))
     (format t "#datasets=~A~%" (length (mlcl::workspace-datasets workspace)))        
     (format t "#algorithms=~A~%" (length (mlcl::workspace-algorithms workspace)))
+    (format t "#makefiles=~A~%" (length (mlcl::workspace-makefiles workspace)))
     (test-knn workspace)
     ))
 
 (defun test-knn (workspace)
   (let ((knn (mlcl:workspace-find-algorithm workspace "make-knn-01")))
-    (mlcl-knn:knn-init knn workspace)
     (let ((cas (nth 10 (mlcl:dataset-cases (mlcl:workspace-find-dataset workspace (mlcl-knn:knn-dataset-name knn))))))
       (let ((tops (mlcl-knn:knn-search knn workspace cas)))
         (list workspace knn tops)))))
