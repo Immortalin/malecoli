@@ -122,7 +122,7 @@
       (let ((filename (make-pathname :name (format nil "caseinfo-learned") :type "lsp" 
                                      :directory (format nil "~A" cl-kb:*kb-default-path*))))
         (setf *learned-instances* (if (probe-file filename)
-                                      (with-open-file (strm casefilename)
+                                      (with-open-file (strm filename)
                                                       (read strm))
                                       nil))))
   *learned-instances*)
